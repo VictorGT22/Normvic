@@ -1,0 +1,6 @@
+int
+unsigned
+long
+double
+float
+short
