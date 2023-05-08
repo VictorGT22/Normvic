@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:00:33 by vics              #+#    #+#             */
-/*   Updated: 2023/04/30 17:07:01 by vics             ###   ########.fr       */
+/*   Updated: 2023/05/08 12:56:15 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,10 @@ char *check_name_define(lst_dir *lst, int *i, int j)
 	n = ft_chr_index(lst->info[*i], '"');
 	lst->info[*i][n - 1] = ' ';
 	name = malloc(sizeof(char) * (ft_strlen(lst->info[*i]) - j) + 1);
+	while (lst->info[*i][j] && (lst->info[*i][j] == ' ' || lst->info[*i][j] == '\t'))
+		j++;
+	j--;
+	lst->info[*i][j] = ' ';
 	while (lst->info[*i][j])
 	{
 		name[x] = lst->info[*i][j];
@@ -207,11 +211,11 @@ void	check_define(lst_dir *lst, int *i)
 
 void	check_endif(lst_dir *lst, int *i)
 {
-	if (ft_strcmp("#endif", lst->info[*i]) != 0)
+	if (ft_strcmp("#endif\n", lst->info[*i]) != 0)
 	{
 		free(lst->info[*i]);
 		lst->info[*i] = ft_strdup("#endif");
-		print_error(lst->path, ERROR_INCLUDE_HEADER_FILE, *i, 1);
+		print_error(lst->path, ERROR_ENDIF, *i, 1);
 	}
 }
 
@@ -298,7 +302,7 @@ void	check_misaligned_prototipes(lst_dir *lst, int max_indent, int start)
 	error = false;
 	empty_lines = 0;
 	int i = 0;
-	while (lst->info[i])
+	while (lst->info[i] && lst->info[i][0] != '\0')
 	{
 		if (ft_strrchr(lst->info[i], ';') && ft_strrchr(lst->info[i], ')'))
 		{
@@ -308,18 +312,14 @@ void	check_misaligned_prototipes(lst_dir *lst, int max_indent, int start)
 		}
 		empty = empty_line(lst->info[i]);
 		!empty ? empty_lines = 0 , error = 0 : empty_lines++;
-		if (empty_lines > 1)
+		if (empty_lines > 1 || lst->info[i] == NULL)
 		{
+			//printf("str: #%s#, linea: %d\n", lst->info[i], i + 1);
 			mark_empty_line(lst, i, error);
 			error = true;
 		}
+		printf("str: #%s#\n", lst->info[i]);
 		i++;
-	}
-	if (!empty_line(lst->info[i - 1]))
-	{
-		str = ft_strjoin(lst->info[i - 1], "\n");
-		free(lst->info[i - 1]);
-		lst->info[i - 1] = str;
 	}
 }
 
@@ -386,19 +386,21 @@ void	check_strcture(s_variables *var, lst_dir *lst, int *i)
 	lstadd_back_arr(&var->var_type, node2);
 	if (!empty_line(lst->info[*i - 2]))
 	{
+		remove_last_spaces(var, lst, *i);
 		print_error(lst->path, ERROR_NO_EMPTY_LINE, *i - 1, 1);
 		new = ft_strjoin(lst->info[*i - 2], "\n");
 		free(lst->info[*i - 2]);
 		lst->info[*i - 2] = ft_strdup(new);
 	}
 	*i += 1;
-	while (!ft_strrchr(lst->info[*i], '}'))
+	while (!ft_strrchr(lst->info[*i], '}'))///var inside struct
 	{
+		remove_last_spaces(var, lst, *i);
 		if (ft_strrchr(lst->info[*i], ';'))
 			max = correct_var(var, lst, i, max);
 		*i += 1;
 	}
-	while (!ft_strrchr(lst->info[start], '}'))
+	while (!ft_strrchr(lst->info[start], '}'))// correct var inside struct
 	{
 		num_misaligned =  get_real_hor_pos(lst->info[start]);
 			if (max > num_misaligned)
@@ -409,7 +411,8 @@ void	check_strcture(s_variables *var, lst_dir *lst, int *i)
 	}
 	if (ft_strrchr(lst->info[*i], '}'))
 	{
-		if (!ft_strstr(lst->info[*i], "t_"))
+		remove_last_spaces(var, lst, *i);
+		if (!ft_strstr(lst->info[*i], "\tt_"))
 			print_error(lst->path, ERROR_STRUCT_NAME, *i + 1, 1);
 		if (replace_chr_chr(lst->info[*i], ' ', '\t'))
 			print_error(lst->path, ERROR_WRONG_TAB, *i + 1, 1);
@@ -454,17 +457,16 @@ void	read_lines_h(s_variables *var, lst_dir *lst, int *add_i)
 		{
 			if (ft_strrchr(lst->info[i], ')'))
 			{
+				remove_btw_semicolon(var, lst, i);
 				remove_extra_spaces(var, lst, i);
 				if (!first_prototipe)
 					first_prototipe = i;
-				check_prototipe_func(var, lst, i);
+				check_prototipe_func(var, lst, i, true);
 				max_aligned_proto = get_max(max_aligned_proto, get_real_hor_pos(lst->info[i]));
 			}
 		}
 		else if (ft_strrchr(lst->info[i], '{'))
-		{
-			check_strcture(var, lst, &i);				
-		}
+			check_strcture(var, lst, &i);
 		i++;
 	}
 	check_misaligned_prototipes(lst, max_aligned_proto, first_prototipe);

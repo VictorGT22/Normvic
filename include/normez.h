@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:43:48 by victgonz          #+#    #+#             */
-/*   Updated: 2023/04/30 12:03:52 by vics             ###   ########.fr       */
+/*   Updated: 2023/05/08 11:59:17 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <time.h>
-# include <pwd.h>
+	# include <pwd.h>
 # include <grp.h>
 # include <string.h>
 # include <stdbool.h>
@@ -50,7 +50,8 @@
 # define ERROR_INCLUDE_HEADER_FILE "Error Include in header file\n"
 # define ERROR_NO_EMPTY_LINE "Error no empty line\n"
 # define ERROR_STRUCT_NAME "Struct abreviation needs to start with 't_'\n"
-
+# define ERROR_SEMICOLON "Space/Tab before semicolon at the endo of the line\n"
+# define ERROR_ENDIF "Error at the ENDIF\n"
 
 //PROTOTIPES
 lst_dir *new_node(char *filepath);
@@ -67,8 +68,9 @@ void	remove_extra_spaces(s_variables *var, lst_dir *lst, int i);
 void	remove_last_spaces(s_variables *var, lst_dir *lst, int i);
 void	remove_extra_spaces_2(s_variables *var, lst_dir *lst, int i);
 void	remove_mid_spaces(s_variables *var, lst_dir *lst, int i);
-void	check_prototipe_func(s_variables *var, lst_dir *lst, int i);
+void	remove_btw_semicolon(s_variables *var, lst_dir *lst, int i);
 int		check_name_prototipe(s_variables *var, lst_dir *lst, int j, int i);
+void	check_prototipe_func(s_variables *var, lst_dir *lst, int i, bool proto);
 
 //CHECKER _H
 void	check_errors_h(s_variables *var, lst_dir *lst);

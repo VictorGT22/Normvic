@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/04/30 15:03:38 by vics             ###   ########.fr       */
+/*   Updated: 2023/05/08 12:29:05 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,30 @@ void	remove_last_spaces(s_variables *var, lst_dir *lst, int i)
 	}
 	if (!ft_strchr(lst->info[i], '\n'))
 		lst->info[i][j + 1] = '\n';
+}
+
+void	remove_btw_semicolon(s_variables *var, lst_dir *lst, int i)
+{
+	int j;
+	int x;
+	int line;
+
+	line = 0;
+	//printf("entra\n");
+	j = ft_strlen(lst->info[i]) - 3;
+	while(j >= 0 && lst->info[i][j] !=  ')')
+	{
+		if (line == 0)
+		{
+			line = i;
+			print_error(lst->path, ERROR_TRALING_SPACE, line + 1, 2);
+		}
+		lst->info[i][j] = '\0';
+		j--;
+	}
+	lst->info[i][j + 1] = ';';
+	lst->info[i][j + 2] = '\n';
+	lst->info[i][j + 3] = '\0';
 }
 
 int	check_name_prototipe(s_variables *var, lst_dir *lst, int j, int i)
@@ -150,7 +174,7 @@ void	remove_mid_spaces(s_variables *var, lst_dir *lst, int i)
 	lst->info[i] = str;
 }
 
-void	add_void(s_variables *var, lst_dir *lst, int i, bool empty)
+char	*add_void(s_variables *var, char *info, bool empty, bool proto)
 {
 	int j;
 	int len;
@@ -159,23 +183,29 @@ void	add_void(s_variables *var, lst_dir *lst, int i, bool empty)
 	j = 0;
 	if (empty)
 	{
-		len =  ft_strlen(lst->info[i]);
-		str = malloc(sizeof(char) * len + 5);
-		ft_bzero(str, len + 5);
-		while (lst->info[i][j] && lst->info[i][j] != '(')
+		len =  ft_strlen(info);
+		str = malloc(sizeof(char) * len + 10);
+		ft_bzero(str, len + 10);
+		while (info[j] && info[j] != '(')
 		{
-			str[j] = lst->info[i][j];
+			str[j] = info[j];
 			j++;
 		}
-		ft_strlcat(str, "(void)\n", len + 6);
-		free(lst->info[i]);
-		lst->info[i] = str;
+		ft_strlcat(str, "(void)", len + 6);
+		if (proto)
+			ft_strlcat(str, ";\n", len + 8);
+		else
+			ft_strlcat(str, "\n", len + 7);
+		free(info);
+		return (str);
 	}
+	return (info);
 }
 
-void	check_prototipe_func(s_variables *var, lst_dir *lst, int i)
+void	check_prototipe_func(s_variables *var, lst_dir *lst, int i, bool proto)
 {
 	int 	j;
+	int		x;
 	bool	error;
 	bool	empty;
 	int 	bracket;
@@ -184,7 +214,6 @@ void	check_prototipe_func(s_variables *var, lst_dir *lst, int i)
 	error = false;
 	empty = true;
 	j = ft_strlen(lst->info[i]);
-	printf("proto: %s\n", lst->info[i]);
 	while (j >= 0)
 	{
 		if (lst->info[i][j] == '\t' && bracket > 0)
@@ -203,6 +232,23 @@ void	check_prototipe_func(s_variables *var, lst_dir *lst, int i)
 			bracket--;
 		if (lst->info[i][j] == '(' && bracket == 0 && (lst->info[i][j - 1] == ' ' || lst->info[i][j - 1] == '\t'))
 		{
+			x = j;
+			j--;
+			while (j >= 0 && lst->info[i][j] == ' ' || lst->info[i][j] == '\t')
+				j--;
+			j++;
+			x = j;
+			while (lst->info[i][x])
+			{
+				if (lst->info[i][x] != ' ' && lst->info[i][x] != '\t')
+				{
+					lst->info[i][j] = lst->info[i][x];
+					j++;
+				}
+				x++;
+			}
+			lst->info[i][j] = '\0';
+			remove_extra_spaces_2(var, lst, i);
 			print_error(lst->path, ERROR_SPACE_NAME_FUNC, i + 1, 1);
 			j--;
 		}
@@ -210,7 +256,7 @@ void	check_prototipe_func(s_variables *var, lst_dir *lst, int i)
 			j = check_name_prototipe(var, lst, j, i);
 		j--;
 	}
-	add_void(var, lst, i, empty);
+	lst->info[i] = add_void(var, lst->info[i], empty, proto);
 }
 
 void	check_variables(s_variables *var, lst_dir *lst, int i)
@@ -236,7 +282,7 @@ int	inside_function(s_variables *var, lst_dir *lst, int *add_i)
 	check_var = true;
 	first_line = i;
 	printf("linea: %d\n", i);
-	check_prototipe_func(var, lst, i - 1);
+	check_prototipe_func(var, lst, i - 1, false);
 	remove_extra_spaces(var, lst, i - 1);
 	//while (lst->info[i] && )
 	//	i++;

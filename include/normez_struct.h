@@ -6,14 +6,12 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 11:43:01 by vics              #+#    #+#             */
-/*   Updated: 2023/04/30 11:59:13 by vics             ###   ########.fr       */
+/*   Updated: 2023/05/02 15:59:43 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef NORMEZ_STRUCT_H
 # define NORMEZ_STRUCT_H
-
-# include <stdarg.h>
 
 typedef struct lst_dir
 {

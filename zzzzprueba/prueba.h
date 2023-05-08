@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:42:14 by vics              #+#    #+#             */
-/*   Updated: 2023/05/08 09:15:04 by vics             ###   ########.fr       */
+/*   Updated: 2023/05/08 12:57:48 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 # define ERROR_STRUCT_NAME "Struct abreviation needs to start with 't_'\n"
 
 //PROTOTIPES
-lst_dir			*new_node(char *filepath);
+lst_dir			*new_node(void);
 void			lstadd_back(lst_dir **lst, lst_dir *new);
 lst_dir			*lstlast(lst_dir *lst);
 t_lst_arr		*new_node_arr(char *line);
@@ -107,4 +107,3 @@ typedef struct s_variables
 }	s_variables;
 
 #endif
-

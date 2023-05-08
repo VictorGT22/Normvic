@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/04/30 12:39:21 by vics             ###   ########.fr       */
+/*   Updated: 2023/05/08 12:57:01 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,7 @@ int main()
 			{
 				//printf("%s\n", tmp->info[i]);
 				len = ft_strlen(tmp->info[i]);
+				printf("str 2: #%s#, linea: %d\n", tmp->info[i], i + 1);
 				if (ft_strcmp(tmp->info[i], "@#~#@\n") != 0)
 					write (fd, tmp->info[i], len);
 				i++;
@@ -209,11 +210,11 @@ int main()
 		}
 		tmp = tmp->next;
 	}
-	t_lst_arr *tmp2 = var->var_type;
+	/*t_lst_arr *tmp2 = var->var_type;
 	while (tmp2)
 	{
 		printf("%s\n", tmp2->str);
 		tmp2 = tmp2->next;
-	}
+	}*/
 	return (0);
 }

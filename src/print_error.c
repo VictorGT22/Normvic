@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:37:15 by vics              #+#    #+#             */
-/*   Updated: 2023/04/27 11:48:56 by vics             ###   ########.fr       */
+/*   Updated: 2023/05/07 11:19:55 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	get_code_color(int code)
 void	print_error(char *path, char *msg_error, int line, int code_error)
 {
 	get_code_color(code_error);
-	printf("[File: %s -> Line: %d]:", path, line);
+	printf("[File: %12s -> Line: %3d]:", path, line);
 	get_code_color(0);
 	printf("\t%s\n", msg_error);
 }
