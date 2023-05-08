@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:42:14 by vics              #+#    #+#             */
-/*   Updated: 2023/04/30 17:09:21 by vics             ###   ########.fr       */
+/*   Updated: 2023/05/08 09:15:04 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ typedef struct lst_dir
 	int				no_error;
 	struct lst_dir	*next;
 	struct lst_dir	*prev;
-}	lst_dir;
+}	i_dir;
 
 typedef struct lst_array
 {
@@ -107,3 +107,4 @@ typedef struct s_variables
 }	s_variables;
 
 #endif
+
