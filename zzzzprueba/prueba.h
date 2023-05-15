@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:42:14 by vics              #+#    #+#             */
-/*   Updated: 2023/05/08 12:57:48 by vics             ###   ########.fr       */
+/*   Updated: 2023/05/11 12:42:48 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,12 +98,12 @@ typedef struct lst_array
 
 typedef struct s_variables
 {
-	lst_dir		*lst_dir;
-	lst_dir		*lst_files;
-	t_lst_arr	*var_type;
-	char		**keywords;
-	char		**operators;
-	//char		**var_type;
+	lst_dir	*lst_dir;
+	lst_dir	*lst_files;
+	lst_arr	*var_type;
+	char	**keywords;
+	char	**operators;
+	char	**var_type;
 }	s_variables;
 
 #endif
