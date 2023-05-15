@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:00:33 by vics              #+#    #+#             */
-/*   Updated: 2023/05/08 12:56:15 by vics             ###   ########.fr       */
+/*   Updated: 2023/05/08 19:43:39 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,11 +283,13 @@ char	*correct_misaligned(char *line, int max, int num_tabs)
 	char *str;
 
 	num_tabs = (max - num_tabs) / 4;
+	//if (num_tabs != 0)
+	//	print_error();
 	str = calloc(sizeof(char), num_tabs + 1);
 	ft_bzero(str, num_tabs + 1);
 	ft_memset(str, '\t', num_tabs);
 	result = ft_strjoin_accurate(line, str, ft_last_chr_index(line, '\t'));
-	//free(line);
+	free(line);
 	return (result);
 }
 
@@ -318,7 +320,7 @@ void	check_misaligned_prototipes(lst_dir *lst, int max_indent, int start)
 			mark_empty_line(lst, i, error);
 			error = true;
 		}
-		printf("str: #%s#\n", lst->info[i]);
+		//printf("str: #%s#\n", lst->info[i]);
 		i++;
 	}
 }
