@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft copy.h                                       :+:      :+:    :+:   */
+/*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 10:21:08 by victgonz          #+#    #+#             */
-/*   Updated: 2023/04/29 01:14:56 by vics             ###   ########.fr       */
+/*   Updated: 2023/06/19 11:50:51 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void 			*ft_calloc(int nmemb, int size);
 char 			*ft_strdup(char *str);
 void			ft_add_in_str(char *str, char c);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
-unsigned	int	ft_strlcat(char *dest, char *src, unsigned int nb);
+unsigned int	ft_strlcat(char *dest, char *src, unsigned int nb);
 void			*ft_memchr(const void *str, int c, size_t n);
 char			*ft_strrchr(const char *str, char c);
 char			*ft_strchr(const char *str, char c);
@@ -66,13 +66,14 @@ void			ft_arrset(char **arr, char *str, int len);
 int				ft_strcmp(const char *s1, const char *s2);
 void			ft_putptr(uintptr_t num, char *base);
 void			ft_add_in_arr(char *arr, char c);
-long    int	    ft_atoi(const char *str);
+long int	    ft_atoi(const char *str);
 char			*get_next_line(int fd);
 char			*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char			*ft_strstr(const char *haystack, const char *needle);
 int				ft_chr_index(char *str, char c);
 int				ft_strstr_index(const char *haystack, const char *needle);
 int				ft_last_chr_index(char *str, char c);
+int				ft_strrchr_index(const char *str, char c);
 //t_list			*ft_lstnew(void *content);
 //void 			ft_lstadd_front(t_list **lst, t_list *new);
 //int 			ft_lstsize(t_list *lst);

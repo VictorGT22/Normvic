@@ -6,17 +6,18 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 15:53:06 by vics              #+#    #+#             */
-/*   Updated: 2023/05/15 09:32:28 by vics             ###   ########.fr       */
+/*   Updated: 2023/06/19 12:00:16 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 void	check_errors(s_variables *var, lst_dir *lst)
 {
-	int		num;
+	int	num;
 	int		len;
 	char	*brackets;
 
 	num = 0;
+	len = 9;
 	brackets = 0;
 	len = ft_strlen(str);
 	if (ft_strchr_nocomented(str, ';') == - 1)

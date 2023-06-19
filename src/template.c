@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/05/11 15:59:56 by vics             ###   ########.fr       */
+/*   Updated: 2023/06/19 11:59:50 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,18 +156,18 @@ int main()
 	var->keywords = ft_split(KEY_WORDS, ',');
 	var->operators = ft_split(OPPERATORS_BOTH_SPACE, ',');
 	var->operators_nospace = ft_split(OPPERATORS_NO_SPACE, ',');
-	char **type_vars = ft_split(TYPE_VAR, ',');
+	//char **type_vars = ft_split(TYPE_VAR, ',');
 	int i = 0;
 	
 	t_lst_arr *node2;
-	while (type_vars[i])
+	/*while (type_vars[i])
 	{
 		node2 = new_node_arr(type_vars[i]);
 		if (!node2)
 			return (-1);
 		lstadd_back_arr(&var->var_type, node2);
 		i++;
-	}
+	}*/
 	/*printf("KEY_WORDS:\n");
 	print_array(var->keywords);
 	
@@ -215,6 +215,12 @@ int main()
 	}
 	printf("entra?\n");
 	t_lst_arr *tmp2 = var->var_bad_decl;
+	while (tmp2)
+	{
+		printf("bad: %s\n", tmp2->str);
+		tmp2 = tmp2->next;
+	}
+	tmp2 = var->var_bad_line;
 	while (tmp2)
 	{
 		printf("bad: %s\n", tmp2->str);

@@ -6,7 +6,7 @@
 #    By: vics <vics@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 15:37:53 by victgonz          #+#    #+#              #
-#    Updated: 2023/04/28 12:36:39 by vics             ###   ########.fr        #
+#    Updated: 2023/06/19 11:57:42 by vics             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,7 @@ WHITE = \033[0;97m
 
 #### COMMANDS ####
 
-all: libft $(EXECUTABLE) write_name
+all: save_previous libft $(EXECUTABLE) write_name
 	cp normez zzzzprueba
 
 $(EXECUTABLE): $(OBJECTS)
@@ -82,7 +82,7 @@ $(OBJF):
 
 write_name:
 		@echo "$(MAGENTA)╔═════════════════════════════════════════╗$(DEF_COLOR)"
-		@echo "$(MAGENTA)║                 $(CYAN)$(PROJECT)$(MAGENTA)                ║$(DEF_COLOR)"
+		@echo "$(MAGENTA)║                 $(CYAN)$(PROJECT)$(MAGENTA)                  ║$(DEF_COLOR)"
 		@echo "$(MAGENTA)╚═══════════════╦═════════╦═══════════════╝$(DEF_COLOR)"
 		@echo "$(MAGENTA)                ║  $(GREEN)VIC'S$(MAGENTA)  ║$(DEF_COLOR)"
 		@echo "$(MAGENTA)                ╚═════════╝     $(DEF_COLOR)"
@@ -102,3 +102,7 @@ re: fclean all
 libft:
 	make -C $(LIB_DIR)
 	make -C $(FT_PRINTF_DIR)
+
+save_previous:
+	rm -rf /home/vics/Documents/Copia_Seguridad
+	cp -r /home/vics/Documents/normez_rest /home/vics/Documents/Copia_Seguridad

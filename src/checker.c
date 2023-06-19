@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/05/15 09:36:01 by vics             ###   ########.fr       */
+/*   Updated: 2023/06/19 11:48:29 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,29 @@ void	remove_mid_spaces(s_variables *var, lst_dir *lst, int i)
 	lst->info[i] = str;
 }
 
+void	remove_mid_spaces_2(s_variables *var, lst_dir *lst, int i)
+{
+	int j;
+	int	x;
+	char *str;
+	
+	j = 0;
+	x = 0;
+	str = malloc(sizeof(char) * ft_strlen(lst->info[i]) + 1);
+	ft_bzero(str, ft_strlen(lst->info[i]) + 1);
+	while (lst->info[i][j] && (lst->info[i][j] == ' ' || lst->info[i][j] == '\t'))
+		str[x++] = lst->info[i][j++];
+	while (lst->info[i][j])
+	{
+		if ((lst->info[i][j] != ' ' && lst->info[i][j] != '\t')
+		|| (lst->info[i][j + 1] != ' ' && lst->info[i][j + 1] != '\t'))
+			str[x++] = lst->info[i][j];
+		j++;
+	}
+	free(lst->info[i]);
+	lst->info[i] = str;
+}
+
 char	*add_void(s_variables *var, char *info, bool empty, bool proto)
 {
 	int j;
@@ -259,7 +282,7 @@ void	check_prototipe_func(s_variables *var, lst_dir *lst, int i, bool proto)
 	lst->info[i] = add_void(var, lst->info[i], empty, proto);
 }
 
-int	check_variables(s_variables *var, lst_dir *lst, int i, int max)
+void	check_variables(s_variables *var, lst_dir *lst, int i)
 {
 	int len;
 	int end;
@@ -281,9 +304,6 @@ int	check_variables(s_variables *var, lst_dir *lst, int i, int max)
 			lstadd_back_arr(&var->var_bad_decl, node);
 		print_error(lst->path, ERROR_VAR_ASIGNATION, i + 1, 2);
 	}
-	max = correct_var(var, lst, &i, max);
-	
-	return (max);
 }
 
 bool	is_var(char *str)
@@ -356,7 +376,6 @@ int	ft_strstr_index_nocomented(const char *haystack, const char *needle, int ini
 		return (-1);
 	if (ini > ft_strlen(haystack))
 		return (-1);
-	//printf("%s\n", haystack);
 	while (haystack[i])
 	{
 		j = 0;
@@ -403,6 +422,23 @@ void	ft_str_pop_pos(char *str, int pos)
 	}
 	str[x] = '\0';
 	
+}
+void	ft_str_pop_interval(char *str, int ini, int end)
+{
+	int i;
+	int x;
+
+	i = 0;
+	x = 0;
+	while (str[i])
+	{
+		while (str[i] && i >= ini && i <= end)
+			i++;
+		str[x] = str[i];
+		x++;
+		i++;
+	}
+	str[x] = '\0';
 }
 
 void	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int lower)
@@ -486,19 +522,20 @@ void	check_operators(s_variables *var, lst_dir *lst, int *i)
 	}
 }
 
-int is_keyword(s_variables *var, lst_dir *lst, int *i)
+int is_keyword(s_variables *var, lst_dir *lst, int i, char **keywords)
 {
 	int x;
 	int index;
 	
 	x = 0;
-	while (var->keywords[x])
+	while (keywords[x])
 	{
-		index = ft_strstr_index_nocomented(lst->info[*i], var->keywords[x], 0);
+		index = ft_strstr_index_nocomented(lst->info[i], keywords[x], 0);
 		if (index != -1)
 			return (index);
 		x++;
 	}
+	return (-1);
 }
 
 void	check_keywords(s_variables *var, lst_dir *lst, int *i)
@@ -584,6 +621,72 @@ void	check_brackets(s_variables *var, lst_dir *lst, int i)
 	}
 }
 
+void	save_var_bad_line(s_variables *var, lst_dir *lst, int *i)
+{
+	char c;
+	int index;
+	t_lst_arr *node;
+
+	index = ft_strchr_nocomented(lst->info[*i], '=');
+	c = index != -1 ? ' ' : '\n';
+	node = new_node_arr(ft_substr(lst->info[*i], 0, ft_strchr_nocomented(lst->info[*i], c)));
+	if (index != -1)
+		node->str = new_old_str(ft_strjoin_accurate(node->str, ";\n", ft_strlen(node->str)), node->str);
+	else
+		node->str = new_old_str(ft_strjoin_accurate(node->str, "\n", ft_strlen(node->str)), node->str);
+	if (node)
+		lstadd_back_arr(&var->var_bad_line, node);
+	if (index == -1)
+		mark_empty_line(lst, *i, true);
+	else
+		ft_str_pop_interval(lst->info[*i], 1, 4);
+}
+
+void	keywords_indent(s_variables *var, lst_dir *lst, int *i, int pos_keyword)
+{
+	int x;
+	int num_brackets;
+
+	num_brackets = -1;
+	while (lst->info[*i] && num_brackets != 0)
+	{
+		printf("ENTRAAA vaa %s\n", lst->info[*i]);
+		x = 0;
+		if (num_brackets == -1)
+			num_brackets = 0;
+		
+		printf("pos: %d, pos tab: %d, indent que deberia tener: %d\n", pos_keyword, ft_strrchr_index(lst->info[*i], '\t'), lst->indent);
+		if (ft_strrchr_index(lst->info[*i], '\t') != lst->indent)
+		{
+			printf("ERROR INDENTACION LINEA %d\n", *i + 1);
+		}
+		
+		
+		
+		if (is_keyword(var, lst, *i, var->keywords_indent) == -1 && pos_keyword != ft_strrchr_index(lst->info[*i], '\t'))
+			printf("bad indent: %s\n", lst->info[*i]);
+		while (lst->info[*i][x])
+		{
+			if (lst->info[*i][x] == '(')
+				num_brackets++;
+			else if (lst->info[*i][x] == ')')
+				num_brackets--;
+			x++;
+		}
+		*i += 1;
+		if (lst->info[*i] && ft_strchr_nocomented(lst->info[*i], '{') != -1)
+		{
+			printf("Entra llave %s\n", lst->info[*i]);
+			if (ft_strrchr_index(lst->info[*i], '\t') != lst->indent)
+			{
+				printf("ERROR INDENTACION LINEA %d\n", *i + 1);
+			}
+			*i += 1;
+		}
+		lst->indent++;
+	}
+}
+
 void	inside_function(s_variables *var, lst_dir *lst, int *i)
 {
 	int max;
@@ -605,7 +708,7 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 	start = *i + 1;
 	printf("line: %d\n", *i + 1);
 	check_prototipe_func(var, lst, *i - 1, false);
-	remove_extra_spaces(var, lst, *i - 1);
+	remove_mid_spaces(var, lst, *i - 1);
 	*i += 1;
 	if (empty_line(lst->info[start]))
 	{
@@ -619,12 +722,18 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 			print_error(lst->path, ERROR_TO_LONG_LINE, *i + 1, 1);
 		remove_last_spaces(var, lst, *i);
 		check_brackets(var, lst, *i);
+		remove_mid_spaces_2(var, lst, *i);
 		if (is_var(lst->info[*i]))
 		{
 			num_var++;
+			max = correct_var(var, lst, i, max);
 			if (!followed_var)
+			{
+				save_var_bad_line(var, lst, i);
 				print_error(lst->path, ERROR_VARIBALES_FOLLOWED, *i + 1, 2);
-			max = check_variables(var, lst, *i, max);
+			}
+			else
+				check_variables(var, lst, *i);
 		}
 		else
 		{
@@ -659,15 +768,22 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 	}
 	if (num_var > 5)
 		print_error(lst->path, ERROR_MANY_VAR, start + 1, 2);
-	lst->indent = 1;
 	lst->num_bracket = 1;
+	temp = var->var_bad_line;
+	while (temp) // ADD BAD DECLARATION LINE VARIABLES (ASIGNATION AND DECLARATION)
+	{
+		lst->info[start] = new_old_str(ft_strjoin_accurate(lst->info[start], temp->str, ft_strlen(lst->info[start])), lst->info[start]);
+		temp = temp->next;
+	}
+	lst->indent = 0;
 	while (lst->info[start] && lst->num_bracket != 0)
 	{
 		check_brackets(var, lst, start);
-		
+		//int pos = is_keyword(var, lst, start, var->keywords);
+		//if (pos !=-1)
+		//	keywords_indent(var, lst, &start, pos);
 		if (is_var(lst->info[start]))
 		{
-			printf("ES VAR: %s\n", lst->info[start]);
 			num_misaligned =  get_real_hor_pos(lst->info[start]);
 				if (max > num_misaligned)
 					lst->info[start] = correct_misaligned(lst->info[start], max, num_misaligned);
@@ -707,9 +823,3 @@ void	check_errors(s_variables *var, lst_dir *lst)
 	//if (!empty_line(lst->info[i]))
 		//añadir linea nueva
 }
-
-/*
-__attribute__((constructor))
-{
-	
-}*/

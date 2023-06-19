@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft copy.h                                       :+:      :+:    :+:   */
+/*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 10:21:08 by victgonz          #+#    #+#             */
-/*   Updated: 2023/04/29 01:14:56 by vics             ###   ########.fr       */
+/*   Updated: 2023/06/19 11:51:06 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ char			*ft_strstr(const char *haystack, const char *needle);
 int				ft_chr_index(char *str, char c);
 int				ft_strstr_index(const char *haystack, const char *needle);
 int				ft_last_chr_index(char *str, char c);
+int				ft_strrchr_index(const char *str, char c);
 //t_list			*ft_lstnew(void *content);
 //void 			ft_lstadd_front(t_list **lst, t_list *new);
 //int 			ft_lstsize(t_list *lst);

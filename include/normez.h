@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:43:48 by victgonz          #+#    #+#             */
-/*   Updated: 2023/05/15 09:32:01 by vics             ###   ########.fr       */
+/*   Updated: 2023/06/19 11:56:46 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@
 //MACROS
 # define TAB_SIZE 4
 # define TYPE_VAR "short,int,long,char,void,unsigned"
-# define KEY_WORDS "auto,break,case,char,const,continue,default,do,else,extern,for,goto,if,register,return,static,struct,switch,typedef,union,while"
+# define KEY_WORDS "auto,break,case,char,const,continue,default,do,else,extern,for,goto,if,register,return,switch,while"
+# define KEY_WORDS_INDENT "case,default,do,else,for,if,switch,while"
 # define OPPERATORS_BOTH_SPACE "==,||,++,--,&&,+=,*=,-=,%=,/=,!=,->,<=,>=,<,>,=,/,+,-,%,."
 # define OPPERATORS_NO_SPACE "++,--"
 
@@ -67,38 +68,37 @@
 # define ERROR_VARIBALES_FOLLOWED "Variable declaration must be at the start of the function\n"
 
 //PROTOTIPES
-lst_dir *new_node(char *filepath);
-void	lstadd_back(lst_dir **lst, lst_dir *new);
-lst_dir	*lstlast(lst_dir *lst);
-t_lst_arr *new_node_arr(char *line);
-void	lstadd_back_arr(t_lst_arr **lst, t_lst_arr *new);
-t_lst_arr	*lstlast_arr(t_lst_arr *lst);
-int	get_real_hor_pos(char *str);
-int	correct_var(s_variables *var, lst_dir *lst, int *i, int max);
+lst_dir			*new_node(char *filepath);
+void			lstadd_back(lst_dir **lst, lst_dir *new);
+lst_dir			*lstlast(lst_dir *lst);
+t_lst_arr		*new_node_arr(char *line);
+void			lstadd_back_arr(t_lst_arr **lst, t_lst_arr *new);
+t_lst_arr		*lstlast_arr(t_lst_arr *lst);
+int				get_real_hor_pos(char *str);
+int				correct_var(s_variables *var, lst_dir *lst, int *i, int max);
 
 //CHECKER
 unsigned int	check_header(s_variables *var, lst_dir *lst, int *add_i);
-void	check_errors(s_variables *var, lst_dir *lst);
-void	remove_extra_spaces(s_variables *var, lst_dir *lst, int i);
-void	remove_last_spaces(s_variables *var, lst_dir *lst, int i);
-void	remove_extra_spaces_2(s_variables *var, lst_dir *lst, int i);
-void	remove_mid_spaces(s_variables *var, lst_dir *lst, int i);
-void	remove_btw_semicolon(s_variables *var, lst_dir *lst, int i);
-int		check_name_prototipe(s_variables *var, lst_dir *lst, int j, int i);
-void	check_prototipe_func(s_variables *var, lst_dir *lst, int i, bool proto);
-char	*correct_misaligned(char *line, int max, int num_tabs);
-void	mark_empty_line(lst_dir *lst, int i, bool error);
-char *ft_strjoin_accurate(char *str_1, char *str_2, int pos);
-bool	empty_line(char *line);
-int	ft_strchr_nocomented(char *str, char c);
-char	*new_old_str(char *new, char *old);
-
+void			check_errors(s_variables *var, lst_dir *lst);
+void			remove_extra_spaces(s_variables *var, lst_dir *lst, int i);
+void			remove_last_spaces(s_variables *var, lst_dir *lst, int i);
+void			remove_extra_spaces_2(s_variables *var, lst_dir *lst, int i);
+void			remove_mid_spaces(s_variables *var, lst_dir *lst, int i);
+void			remove_btw_semicolon(s_variables *var, lst_dir *lst, int i);
+int				check_name_prototipe(s_variables *var, lst_dir *lst, int j, int i);
+void			check_prototipe_func(s_variables *var, lst_dir *lst, int i, bool proto);
+char			*correct_misaligned(char *line, int max, int num_tabs);
+void			mark_empty_line(lst_dir *lst, int i, bool error);
+char			*ft_strjoin_accurate(char *str_1, char *str_2, int pos);
+bool			empty_line(char *line);
+int				ft_strchr_nocomented(char *str, char c);
+char			*new_old_str(char *new, char *old);
 
 //CHECKER _H
-void	check_errors_h(s_variables *var, lst_dir *lst);
+void			check_errors_h(s_variables *var, lst_dir *lst);
 
 //PRINT ERROR
-void	print_error(char *path, char *msg_error, int line, int code_error);
+void			print_error(char *path, char *msg_error, int line, int code_error);
 
 #endif
 
