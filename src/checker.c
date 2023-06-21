@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/06/19 11:48:29 by vics             ###   ########.fr       */
+/*   Updated: 2023/06/20 16:09:27 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -358,7 +358,6 @@ int	ft_strchr_nocomented(char *str, char c)
 		if (str[i] == c)
 			return (i);
 		i++;
-		
 	}
 	return (-1);
 }
@@ -441,6 +440,20 @@ void	ft_str_pop_interval(char *str, int ini, int end)
 	str[x] = '\0';
 }
 
+int	operator_start(lst_dir *lst, int *i, int lower)
+{
+	int x;
+
+	x = lower - 1;
+	while (x >= 0)
+	{
+		if (lst->info[*i][x] != ' ' && lst->info[*i][x] != '\t')
+			return (0);
+		x--;
+	}
+	return (1);
+}
+
 void	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int lower)
 {
 	int x;
@@ -473,13 +486,13 @@ void	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int l
 	}
 	else
 	{
-		if (lst->info[*i][lower - 1] != ' ')
+		if (lst->info[*i][lower - 1] != ' ' && lst->info[*i][lower - 2] != '=')
 		{
 			print_error(lst->path, ERROR_NO_SPACE_BEFORE_OPERATOR, *i + 1, 2);
 			space++;
 			lst->info[*i] = new_old_str(ft_strjoin_accurate(lst->info[*i], " ", lower), lst->info[*i]);
 		}
-		if (lst->info[*i][lower + len + space] != ' ')
+		if (lst->info[*i][lower + len + space] != ' ' && lst->info[*i][lower - 2] != '=')
 		{
 			print_error(lst->path, ERROR_NO_SPACE_AFTER_OPERATOR, *i + 1, 2);
 			lst->info[*i] = new_old_str(ft_strjoin_accurate(lst->info[*i], " ", lower + len + space), lst->info[*i]);
@@ -516,7 +529,7 @@ void	check_operators(s_variables *var, lst_dir *lst, int *i)
 			}
 			x++;
 		}
-		if (op != -1)
+		if (op != -1 && !operator_start(lst, i, lower))
 			check_spaces_operator(var, lst, i, op, lower);
 		prev = lower;
 	}
@@ -642,31 +655,65 @@ void	save_var_bad_line(s_variables *var, lst_dir *lst, int *i)
 		ft_str_pop_interval(lst->info[*i], 1, 4);
 }
 
-void	keywords_indent(s_variables *var, lst_dir *lst, int *i, int pos_keyword)
+void correct_indentation(s_variables *var, lst_dir *lst, int i, int indentation)
+{
+	char *num_tabs;
+
+	if (lst->indent > indentation && !empty_line(lst->info[i]))
+	{
+		num_tabs = malloc(sizeof(char) * (lst->indent - indentation) + 2);
+		ft_bzero(num_tabs, (lst->indent - indentation) + 2);
+		memset(num_tabs, '\t', lst->indent - indentation);
+		lst->info[i] = new_old_str(ft_strjoin_accurate(lst->info[i], num_tabs, 0), lst->info[i]);
+		free(num_tabs);
+		print_error(lst->path, ERROR_INDENTATION, i + 1, 2);
+	}
+	else if (lst->indent < indentation && !empty_line(lst->info[i]))
+	{
+		ft_str_pop_interval(lst->info[i], 0, (indentation - lst->indent) - 1);
+		print_error(lst->path, ERROR_INDENTATION, i + 1, 2);
+	}
+}
+
+int count_indentations(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i] == '\t' || str[i] == ' ')
+	{
+		if (str[i] == ' ')
+			str[i] = '\t';
+		i++;
+	}
+	return (i);
+}
+
+void	inside_keyword(s_variables *var, lst_dir *lst, int *i)
 {
 	int x;
 	int num_brackets;
+	char comment_open;
+	int  indentation;
 
 	num_brackets = -1;
 	while (lst->info[*i] && num_brackets != 0)
 	{
-		printf("ENTRAAA vaa %s\n", lst->info[*i]);
 		x = 0;
 		if (num_brackets == -1)
 			num_brackets = 0;
-		
-		printf("pos: %d, pos tab: %d, indent que deberia tener: %d\n", pos_keyword, ft_strrchr_index(lst->info[*i], '\t'), lst->indent);
-		if (ft_strrchr_index(lst->info[*i], '\t') != lst->indent)
-		{
-			printf("ERROR INDENTACION LINEA %d\n", *i + 1);
-		}
-		
-		
-		
-		if (is_keyword(var, lst, *i, var->keywords_indent) == -1 && pos_keyword != ft_strrchr_index(lst->info[*i], '\t'))
-			printf("bad indent: %s\n", lst->info[*i]);
+		indentation = count_indentations(lst->info[*i]);
+		correct_indentation(var, lst, *i, indentation);
 		while (lst->info[*i][x])
 		{
+			if (lst->info[*i][x] == '"')
+			{
+				comment_open = lst->info[*i][x];
+				x++;
+				while (lst->info[*i][x] && lst->info[*i][x] != comment_open)
+					x++;
+				x++;
+			}
 			if (lst->info[*i][x] == '(')
 				num_brackets++;
 			else if (lst->info[*i][x] == ')')
@@ -674,16 +721,50 @@ void	keywords_indent(s_variables *var, lst_dir *lst, int *i, int pos_keyword)
 			x++;
 		}
 		*i += 1;
-		if (lst->info[*i] && ft_strchr_nocomented(lst->info[*i], '{') != -1)
+	}
+}
+
+void	check_indentation(s_variables *var, lst_dir *lst, int i)
+{
+	int		pos;
+	int		indentation;
+	int		keyword_no_bracket;
+	
+	lst->indent = 1;
+	lst->num_bracket = 1;
+	keyword_no_bracket = 0;
+	//printf("ENTRAA CHECK");
+	while (lst->info[i] && lst->num_bracket != 0)
+	{
+		//printf(": %s\n", lst->info[i]);
+		if (keyword_no_bracket)
 		{
-			printf("Entra llave %s\n", lst->info[*i]);
-			if (ft_strrchr_index(lst->info[*i], '\t') != lst->indent)
-			{
-				printf("ERROR INDENTACION LINEA %d\n", *i + 1);
-			}
-			*i += 1;
+			keyword_no_bracket = 0;
+			lst->indent--;
 		}
-		lst->indent++;
+		if (ft_strchr_nocomented(lst->info[i], '}') != -1)
+		{
+			lst->num_bracket--;
+			lst->indent--;
+		}
+		pos = is_keyword(var, lst, i, var->keywords);
+		if (pos != -1)
+		{
+			inside_keyword(var, lst, &i);
+			if (ft_strchr_nocomented(lst->info[i], '{') != -1)
+				keyword_no_bracket = 0;
+			else
+				keyword_no_bracket = 1;
+			lst->indent++;
+		}
+		indentation = count_indentations(lst->info[i]);
+		if (ft_strchr_nocomented(lst->info[i], '{') != -1)
+		{
+			lst->num_bracket--;
+			indentation++;
+		}
+		correct_indentation(var, lst, i, indentation);
+		i += 1;
 	}
 }
 
@@ -776,20 +857,22 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 		temp = temp->next;
 	}
 	lst->indent = 0;
-	while (lst->info[start] && lst->num_bracket != 0)
+	*i = start;
+	while (lst->info[*i] && lst->num_bracket != 0)
 	{
-		check_brackets(var, lst, start);
+		check_brackets(var, lst, *i);
 		//int pos = is_keyword(var, lst, start, var->keywords);
 		//if (pos !=-1)
 		//	keywords_indent(var, lst, &start, pos);
-		if (is_var(lst->info[start]))
+		if (is_var(lst->info[*i]))
 		{
-			num_misaligned =  get_real_hor_pos(lst->info[start]);
+			num_misaligned =  get_real_hor_pos(lst->info[*i]);
 				if (max > num_misaligned)
-					lst->info[start] = correct_misaligned(lst->info[start], max, num_misaligned);
+					lst->info[*i] = correct_misaligned(lst->info[*i], max, num_misaligned);
 		}
-		start += 1;
+		*i += 1;
 	}
+	check_indentation(var, lst, start);
 }
 
 void	check_errors(s_variables *var, lst_dir *lst)

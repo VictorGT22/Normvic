@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:43:48 by victgonz          #+#    #+#             */
-/*   Updated: 2023/06/19 11:56:46 by vics             ###   ########.fr       */
+/*   Updated: 2023/06/20 15:19:38 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 //MACROS
 # define TAB_SIZE 4
 # define TYPE_VAR "short,int,long,char,void,unsigned"
-# define KEY_WORDS "auto,break,case,char,const,continue,default,do,else,extern,for,goto,if,register,return,switch,while"
+# define KEY_WORDS "do,else,for,if,switch,while"
 # define KEY_WORDS_INDENT "case,default,do,else,for,if,switch,while"
 # define OPPERATORS_BOTH_SPACE "==,||,++,--,&&,+=,*=,-=,%=,/=,!=,->,<=,>=,<,>,=,/,+,-,%,."
 # define OPPERATORS_NO_SPACE "++,--"
@@ -66,6 +66,9 @@
 # define ERROR_SPACE_AFTER_STRUCT_OPERATOR "Space after a struct operator\n"
 # define ERROR_TO_LONG_LINE "Line to long, more than 80 columns\n"
 # define ERROR_VARIBALES_FOLLOWED "Variable declaration must be at the start of the function\n"
+# define ERROR_INDENTATION "Wrong Indentation\n"
+
+
 
 //PROTOTIPES
 lst_dir			*new_node(char *filepath);
