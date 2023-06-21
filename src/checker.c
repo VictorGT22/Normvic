@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/06/20 16:09:27 by vics             ###   ########.fr       */
+/*   Updated: 2023/06/21 22:45:54 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -306,33 +306,6 @@ void	check_variables(s_variables *var, lst_dir *lst, int i)
 	}
 }
 
-bool	is_var(char *str)
-{
-	int num;
-	int brackets;
-	int len;
-
-	num = 0;
-	brackets = 0;
-	len = ft_strlen(str);
-	if (ft_strchr_nocomented(str, ';') == -1)
-		return (false);
-	len = ft_strchr(str, '=') ? ft_chr_index(str, '=') - 2 : ft_chr_index(str, ';');
-	while (len > 0)
-	{
-		if (str[len] == ')' || str[len] == '+' || str[len] == '-')
-			return (false);
-		if ((str[len] == ' ' || str[len] == '\t')
-		&& (str[len - 1] != ' ' && str[len - 1] != '\t' && str[len - 1] != '\n'))
-			num++;
-		len--;
-	}
-	if (num == 0)
-		return (false);
-	return (true);
-}
-
-
 int	ft_strchr_nocomented(char *str, char c)
 {
 	int	i;
@@ -361,6 +334,34 @@ int	ft_strchr_nocomented(char *str, char c)
 	}
 	return (-1);
 }
+
+bool	is_var(char *str)
+{
+	int num;
+	int brackets;
+	int len;
+
+	num = 0;
+	brackets = 0;
+	len = ft_strlen(str);
+	if (ft_strchr_nocomented(str, ';') == -1)
+		return (false);
+	len = ft_strchr_nocomented(str, '=') != -1 ? ft_strchr_nocomented(str, '=') - 2 : ft_strchr_nocomented(str, ';');
+	while (len > 0)
+	{
+		if (str[len] == ')' || str[len] == '+' || str[len] == '-')
+			return (false);
+		if ((str[len] == ' ' || str[len] == '\t')
+		&& (str[len - 1] != ' ' && str[len - 1] != '\t' && str[len - 1] != '\n'))
+			num++;
+		len--;
+	}
+	if (num == 0)
+		return (false);
+	return (true);
+}
+
+
 
 int	ft_strstr_index_nocomented(const char *haystack, const char *needle, int ini)
 {
@@ -484,6 +485,11 @@ void	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int l
 		if (lst->info[*i][lower + len - space] == ' ' || lst->info[*i][lower + len] == '\t')
 			print_error(lst->path, ERROR_SPACE_AFTER_STRUCT_OPERATOR, *i + 1, 2);
 	}
+	else if (!ft_strcmp(var->operators[op], "//") || !ft_strcmp(var->operators[op], "/*")
+	|| !ft_strcmp(var->operators[op], "*/"))
+	{
+		print_error(lst->path, ERROR_COMMENT_FUNCTION, *i + 1, 3);
+	}
 	else
 	{
 		if (lst->info[*i][lower - 1] != ' ' && lst->info[*i][lower - 2] != '=')
@@ -508,7 +514,7 @@ void	check_operators(s_variables *var, lst_dir *lst, int *i)
 	int index;
 	int op;
 
-	prev = -1;
+	prev = -3;
 	lower = 0;
 	while (lower != -1)
 	{
@@ -521,7 +527,7 @@ void	check_operators(s_variables *var, lst_dir *lst, int *i)
 			if (index != -1 && (lower > index || lower == -1))
 			{
 				if ((prev < index && prev + ft_strlen(var->operators[x]) < index)
-					|| prev == -1)
+					|| prev == -3)
 				{
 					lower = index;
 					op = x;
@@ -529,7 +535,8 @@ void	check_operators(s_variables *var, lst_dir *lst, int *i)
 			}
 			x++;
 		}
-		if (op != -1 && !operator_start(lst, i, lower))
+		if (op != -1 && (!operator_start(lst, i, lower) || !ft_strcmp(var->operators[op], "//")
+		|| !ft_strcmp(var->operators[op], "/*")))
 			check_spaces_operator(var, lst, i, op, lower);
 		prev = lower;
 	}
@@ -566,7 +573,7 @@ void	check_keywords(s_variables *var, lst_dir *lst, int *i)
 		if (index != -1)
 		{
 			index = index + ft_strlen(var->keywords[x]);
-			if (lst->info[*i][index] != ' ' && !ft_isalpha(lst->info[*i][index]))
+			if (lst->info[*i][index] != ' ' && !ft_isalpha(lst->info[*i][index]) && lst->info[*i][index] != '\n')
 			{
 				print_error(lst->path, ERROR_NO_SPACE_KEYWORD, *i + 1, 1);
 				lst->info[*i] =  new_old_str(
@@ -706,7 +713,7 @@ void	inside_keyword(s_variables *var, lst_dir *lst, int *i)
 		correct_indentation(var, lst, *i, indentation);
 		while (lst->info[*i][x])
 		{
-			if (lst->info[*i][x] == '"')
+			if (lst->info[*i][x] == '"' || lst->info[*i][x] == '\'')
 			{
 				comment_open = lst->info[*i][x];
 				x++;
@@ -736,7 +743,6 @@ void	check_indentation(s_variables *var, lst_dir *lst, int i)
 	//printf("ENTRAA CHECK");
 	while (lst->info[i] && lst->num_bracket != 0)
 	{
-		//printf(": %s\n", lst->info[i]);
 		if (keyword_no_bracket)
 		{
 			keyword_no_bracket = 0;
@@ -760,10 +766,11 @@ void	check_indentation(s_variables *var, lst_dir *lst, int i)
 		indentation = count_indentations(lst->info[i]);
 		if (ft_strchr_nocomented(lst->info[i], '{') != -1)
 		{
-			lst->num_bracket--;
+			lst->num_bracket++;
 			indentation++;
 		}
-		correct_indentation(var, lst, i, indentation);
+		if (ft_strcmp(lst->info[i], "@#~#@\n") != 0)
+			correct_indentation(var, lst, i, indentation);
 		i += 1;
 	}
 }
@@ -783,18 +790,18 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 	
 	max = 0;
 	error_empty = false;
-	followed_var = true;
+	followed_var = is_var(lst->info[*i + 1]);
 	num_var = 0;
 	lst->num_bracket = 1;
 	start = *i + 1;
-	printf("line: %d\n", *i + 1);
+	//printf("line: %d, %s\n", *i + 1, lst->info[*i]);
 	check_prototipe_func(var, lst, *i - 1, false);
 	remove_mid_spaces(var, lst, *i - 1);
 	*i += 1;
 	if (empty_line(lst->info[start]))
 	{
+		mark_empty_line(lst, start, true);
 		print_error(lst->path, ERROR_WRONG_EMPTY_LINE, start + 1, 2);
-		mark_empty_line(lst, start, false);
 	}
 	while (lst->info[*i] && lst->num_bracket != 0)
 	{
@@ -819,12 +826,12 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 		else
 		{
 			
-			if (!followed_var && empty_line(lst->info[*i]))
+			/*if (!followed_var && empty_line(lst->info[*i]))
 			{
 				mark_empty_line(lst, *i, true);
 				print_error(lst->path, ERROR_WRONG_EMPTY_LINE, *i + 1, 2);
-			}
-			else if (followed_var)
+			}*/
+			if (followed_var)
 			{
 				if (!empty_line(lst->info[*i]))
 				{

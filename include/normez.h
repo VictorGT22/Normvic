@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:43:48 by victgonz          #+#    #+#             */
-/*   Updated: 2023/06/20 15:19:38 by vics             ###   ########.fr       */
+/*   Updated: 2023/06/21 15:11:57 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define TYPE_VAR "short,int,long,char,void,unsigned"
 # define KEY_WORDS "do,else,for,if,switch,while"
 # define KEY_WORDS_INDENT "case,default,do,else,for,if,switch,while"
-# define OPPERATORS_BOTH_SPACE "==,||,++,--,&&,+=,*=,-=,%=,/=,!=,->,<=,>=,<,>,=,/,+,-,%,."
+# define OPPERATORS_BOTH_SPACE "==,||,++,--,&&,//,/*,*/,+=,*=,-=,%=,/=,!=,->,<=,>=,<,>,=,/,+,-,%,."
 # define OPPERATORS_NO_SPACE "++,--"
 
 //MACROS ERRORS
@@ -67,7 +67,7 @@
 # define ERROR_TO_LONG_LINE "Line to long, more than 80 columns\n"
 # define ERROR_VARIBALES_FOLLOWED "Variable declaration must be at the start of the function\n"
 # define ERROR_INDENTATION "Wrong Indentation\n"
-
+# define ERROR_COMMENT_FUNCTION "Comment inside a function\n"
 
 
 //PROTOTIPES

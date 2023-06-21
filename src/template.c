@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/06/21 11:14:10 by vics             ###   ########.fr       */
+/*   Updated: 2023/06/21 15:01:40 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,8 +171,7 @@ int main()
 	/*printf("KEY_WORDS:\n");
 	print_array(var->keywords);
 	
-	printf("OPPERATORS:\n");
-	print_array(var->operators);
+	
 	
 	printf("TYPE_VAR:\n");
 	print_array(var->var_type);*/
@@ -185,6 +184,9 @@ int main()
 	//print_linked(var->lst_dir);
 	//printf("FILES:\n");
 	//print_linked(var->lst_files);
+	
+	// printf("OPPERATORS:\n");
+	// print_array(var->operators);
 	
 	tmp = var->lst_files;
 	bool replace = true;

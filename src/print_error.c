@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:37:15 by vics              #+#    #+#             */
-/*   Updated: 2023/05/10 13:24:28 by vics             ###   ########.fr       */
+/*   Updated: 2023/06/21 15:34:40 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,16 @@ void	red()
 void	yellow()
 {
   printf("\033[1;33m");
+}
+
+void	green()
+{
+  printf("\033[1;32m");
+}
+
+void	blue()
+{
+  printf("\033[1;34m");
 }
 
 void	reset() {
@@ -38,6 +48,9 @@ void	get_code_color(int code)
 			break;
 		case 2:
 			yellow();
+			break;
+		case 3:
+			green();
 			break;
 	}
 }
