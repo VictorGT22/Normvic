@@ -14,9 +14,9 @@
 
 int	func_p(va_list list, t_list *info)
 {
-	int width;
-	int total;
-	unsigned long long ptr;
+	int					width;
+	int					total;
+	unsigned long long	ptr;
 
 	total = 0;
 	ptr = va_arg(list, unsigned long long);

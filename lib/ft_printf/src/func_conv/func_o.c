@@ -14,10 +14,10 @@
 
 int	func_o(va_list list, t_list *info)
 {
-	int len;
-	int total;
-	long long int nbr;
-	int width;
+	int				len;
+	int				total;
+	long long int	nbr;
+	int				width;
 
 	total = 0;
 	len = 0;

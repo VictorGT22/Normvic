@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static	void	putnbr_fd(long int nbr, int fd)
+static void	putnbr_fd(long int nbr, int fd)
 {
 	if (nbr < 0)
 	{

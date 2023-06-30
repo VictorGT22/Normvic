@@ -12,9 +12,9 @@
 
 #include "libft.h"
 
-void ft_arrset(char **arr, char *str, int len)
+void	ft_arrset(char **arr, char *str, int len)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < len)

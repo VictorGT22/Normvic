@@ -7,3 +7,4 @@
 	
 
 cd /home/vics/Documents/normez_rest && make && cd /home/vics/Documents/normez_rest/zzzzprueba
+espacio entre ; y la frase

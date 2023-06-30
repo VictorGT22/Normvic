@@ -40,9 +40,9 @@ int	ft_chr_index(char *str, char c)
 		i++;
 	}
 	return (i);// he cambiado esto cuidado
-}
+		}
 
-int	ft_last_chr_index(char *str, char c)
+ int	ft_last_chr_index(char *str, char c)
 {
 	int		i;
 

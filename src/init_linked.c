@@ -12,9 +12,9 @@
 
 #include "normez.h"
 
-lst_dir *new_node(char *filepath)
+lst_dir	*new_node(char *filepath)
 {
-	lst_dir *node;
+	lst_dir	*node;
 
 	node = malloc(sizeof(lst_dir) * 1);
 	if (!node)
@@ -56,7 +56,7 @@ lst_dir	*lstlast(lst_dir *lst)
 	return (temp);
 }
 
-t_lst_arr *new_node_arr(char *line)
+t_lst_arr	*new_node_arr(char *line)
 {
 	t_lst_arr *node;
 

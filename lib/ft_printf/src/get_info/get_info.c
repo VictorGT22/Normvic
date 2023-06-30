@@ -15,9 +15,11 @@
 void	get_parameter(s_Main *var, char *str, int *add_i)
 {
 	int	j;
-	int	i = *add_i;
-	int	start = *add_i;
+	int	i;
+	int	start;
 
+	start = *add_i;
+	i = *add_i;
 	j = 0;
 	var->current_ptr->parameter = malloc(sizeof(char) * 5);
 	while (str[i] != '\0' && ft_isdigit(str[i]))
@@ -44,7 +46,6 @@ void	get_width(s_Main *var, char *str, int *add_i)
 	j = 0;
 	i = *add_i;
 	var->current_ptr->width = malloc(sizeof(char) * 5);
-	
 	while (str[i] != '\0' && ft_isdigit(str[i]))
 	{
 		var->current_ptr->width[j] = str[i];
@@ -85,7 +86,7 @@ int	ext_get_flags(s_Main *var, char *str, int *i, int j)
 	&& str[*i + 1] == var->flags[j][1])
 	{
 		var->current_ptr->flag[var->current_ptr->num_flags]
-			= var->flags[j];
+		= var->flags[j];
 		var->current_ptr->num_flags++;
 		var->current_ptr->flag[var->current_ptr->num_flags] = NULL;
 		*i += 2;
@@ -109,7 +110,7 @@ int	get_flags(s_Main *var, char *str, int *i)
 		if (str[*i] == var->flags[j][0])
 		{
 			var->current_ptr->flag[var->current_ptr->num_flags]
-				= var->flags[j];
+			= var->flags[j];
 			var->current_ptr->num_flags++;
 			var->current_ptr->flag[var->current_ptr->num_flags] = NULL;
 			*i += 1;

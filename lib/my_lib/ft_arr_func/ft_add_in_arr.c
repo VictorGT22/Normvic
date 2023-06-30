@@ -14,12 +14,11 @@
 
 void	ft_add_in_arr(char *arr, char c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (arr[i] != '\0')
 		i++;
 	arr[i] = c;
 	arr[i + 1] = '\0';
-		
 }

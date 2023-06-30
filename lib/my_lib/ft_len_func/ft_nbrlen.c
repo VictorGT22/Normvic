@@ -15,6 +15,7 @@
 int	ft_nbrlen(long long int nbr)
 {
 	int	i;
+
 	i = 0;
 	if (nbr <= 0)
 	{

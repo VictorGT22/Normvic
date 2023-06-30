@@ -39,15 +39,15 @@ int	ext_get_params(s_Main *var, char *str, int i)
 	i++;
 	get_parameter(var, str, &i);
 	while (get_flags(var, str, &i));
-	get_width(var, str, &i);
+		get_width(var, str, &i);
 	get_precision(var, str, &i);
 	while (get_flags(var, str, &i));
-	get_conv(var, str, &i);
+		get_conv(var, str, &i);
 	var->current_ptr->len = i - len;
 	if (ft_is_inarr(var->current_ptr->flag, ".") && !var->current_ptr->precision[0])
 		var->current_ptr->no_val_prec = 1;
 	var->current_ptr->precision = !var->current_ptr->precision[0] ?
-		strcpy(var->current_ptr->precision, "6") : var->current_ptr->precision;
+	strcpy(var->current_ptr->precision, "6") : var->current_ptr->precision;
 	return (i);
 }
 

@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:43:48 by victgonz          #+#    #+#             */
-/*   Updated: 2023/06/21 15:11:57 by vics             ###   ########.fr       */
+/*   Updated: 2023/06/30 20:16:32 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@
 # define OPPERATORS_BOTH_SPACE "==,||,++,--,&&,//,/*,*/,+=,*=,-=,%=,/=,!=,->,<=,>=,<,>,=,/,+,-,%,."
 # define OPPERATORS_NO_SPACE "++,--"
 
+//MACROS ERROR COLOR
+# define LOW 1
+# define MEDIUM 2
+# define HIGH 3
+# define COMMENT 4
+
 //MACROS ERRORS
 # define ERROR_MSG "Error\n"
 # define ERROR_HEADER "Header corrupted, try to verify\n"
@@ -47,7 +53,7 @@
 # define ERROR_WRONG_TAB "There is a Tab, where needs to be a Space\n"
 # define ERROR_WRONG_SPACE "There is a Space, where needs to be a Tab\n"
 # define ERROR_SPACE_NAME_FUNC "Space between function name and brakets\n"
-# define ERROR_CONSECUTIVE_TABS "Two o more consecutive new lines\n"
+# define ERROR_CONSECUTIVE_NEWLINES "Two o more consecutive new lines\n"
 # define ERROR_HEADER_FILE "Corrupted initialization header file\n"
 # define ERROR_INCLUDE_HEADER_FILE "Error Include in header file\n"
 # define ERROR_NO_EMPTY_LINE "Error no empty line\n"
@@ -68,6 +74,13 @@
 # define ERROR_VARIBALES_FOLLOWED "Variable declaration must be at the start of the function\n"
 # define ERROR_INDENTATION "Wrong Indentation\n"
 # define ERROR_COMMENT_FUNCTION "Comment inside a function\n"
+# define ERROR_NO_EMPTY_LINE_VAR "Error no empty line between Variables and your code\n"
+# define ERROR_OPPERATOR_END "Operator at the end of the line\n"
+# define ERROR_BRACKET_KEYWORD "Curly bracket in the same line than a keyword or prototipe function\n"
+# define ERROR_BRACKET_NOEMPTY "Curly bracket must be alone in the line\n"
+# define ERROR_CLOSE_BRACKET_NOEMPTY "No empty line after a close curly bracket\n"
+# define ERROR_ENTER_FUNCTIONS "Need to be a empty line between functions\n"
+# define ERROR_ENTER_END_FILE "Need to be a empty line at the end of the file\n"
 
 
 //PROTOTIPES
@@ -97,11 +110,21 @@ bool			empty_line(char *line);
 int				ft_strchr_nocomented(char *str, char c);
 char			*new_old_str(char *new, char *old);
 
+//FUNCIONES UTILES
+int				count_indentations(char *str);
+
 //CHECKER _H
 void			check_errors_h(s_variables *var, lst_dir *lst);
 
 //PRINT ERROR
 void			print_error(char *path, char *msg_error, int line, int code_error);
 
+//COLORS
+void			red(void);
+void			green(void);
+void			yellow(void);
+void			blue(void);
+void			purple(void);
+void			reset(void);
 #endif
 

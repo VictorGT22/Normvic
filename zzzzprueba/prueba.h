@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:42:14 by vics              #+#    #+#             */
-/*   Updated: 2023/05/11 12:42:48 by vics             ###   ########.fr       */
+/*   Updated: 2023/06/22 21:39:18 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 # define ERROR_WRONG_TAB "There is a Tab, where needs to be a Space\n"
 # define ERROR_WRONG_SPACE "There is a Space, where needs to be a Tab\n"
 # define ERROR_SPACE_NAME_FUNC "Space between function name and brakets\n"
-# define ERROR_CONSECUTIVE_TABS "Two o more consecutive new lines\n"
+# define ERROR_CONSECUTIVE_NEWLINES "Two o more consecutive new lines\n"
 # define ERROR_HEADER_FILE "Corrupted initialization header file\n"
 # define ERROR_INCLUDE_HEADER_FILE "Error Include in header file\n"
 # define ERROR_NO_EMPTY_LINE "Error no empty line\n"

@@ -20,10 +20,9 @@
 # include <unistd.h>
 # include <string.h>
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1000
-# endif
-
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
+#endif
 char	*get_next_line(int fd);
 char	*ft_read_to_left_str(int fd, char *left_str);
 char	*get_strchr(char *s, int c);

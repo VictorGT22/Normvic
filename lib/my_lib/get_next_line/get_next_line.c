@@ -15,7 +15,7 @@
 char	*get_full_line(int fd, char *spare_line)
 {
 	char	*buffer;
-	char 	*temp;
+	char	*temp;
 	int		bytes_read;
 
 	bytes_read = 1;
@@ -110,6 +110,7 @@ int	main(void)
 	int		fd1;
 	int		fd2;
 	int		fd3;
+
 	fd1 = open("test.txt", O_RDONLY);
 	fd2 = open("test2.txt", O_RDONLY);
 	fd3 = open("test3.txt", O_RDONLY);
@@ -132,6 +133,5 @@ int	main(void)
 	close(fd3);
 	return (0);
 }
-
 
 */

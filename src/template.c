@@ -6,22 +6,22 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/06/21 15:01:40 by vics             ###   ########.fr       */
+/*   Updated: 2023/06/22 17:10:54 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "normez.h"
-	
-void print_linked(lst_dir *lst)
+
+void	print_linked(lst_dir *lst)
 {
-	lst_dir *temp;
+	lst_dir	*temp;
 
 	temp = lst;
 	while (temp)
 	{
 		printf("path: %s\n", temp->path);
 		temp = temp->next;
-	}	
+	}
 }
 
 int	get_postfix(char *str, char *postfix)
@@ -43,26 +43,26 @@ int	get_postfix(char *str, char *postfix)
 
 int	get_directories(s_variables *var, char *filepath)
 {
-    DIR *dp;
+	DIR *dp;
 	char *str;
 	lst_dir *node;
 	struct dirent *dirp;
 	struct stat fileStat;
 
-    dp = opendir(filepath);
-    while ((dirp = readdir(dp)) != NULL)
+	dp = opendir(filepath);
+	while ((dirp = readdir(dp)) != NULL)
 	{
 		str = ft_strjoin(filepath, dirp->d_name);
 		node = new_node(str);
 		if (!node)
 			return (-1);
-    	stat(str, &fileStat);
-        if (dirp->d_name[0] != '.' && dirp->d_name[1] != '.' && S_ISDIR(fileStat.st_mode))
+		stat(str, &fileStat);
+		if (dirp->d_name[0] != '.' && dirp->d_name[1] != '.' && S_ISDIR(fileStat.st_mode))
 			lstadd_back(&var->lst_dir, node);
 		else if (dirp->d_name[0] != '.' && dirp->d_name[1] != '.'
-			&& (get_postfix(dirp->d_name, ".c") || get_postfix(dirp->d_name, ".h")))
+		&& (get_postfix(dirp->d_name, ".c") || get_postfix(dirp->d_name, ".h")))
 			lstadd_back(&var->lst_files, node);
-    }
+	}
 	closedir(dp);
 	return (0);
 }
@@ -117,20 +117,27 @@ void	save_data_files(s_variables *var)
 	}	
 }
 
-void	print_array(char **arr)
+void	print_header_program(void)
 {
-	int i;
-
-	i = 0;
-	while (arr[i])
-	{
-		write(1, arr[i], ft_strlen(arr[i]));
-		write(1, "\n", 1);
-		i++;
-	}	
+	purple();
+	printf("╔═════════════════════════════════════════╗\n");
+	printf("║		");
+	blue();
+	printf("NORMVIC  ");
+	green();
+	printf("(ALFA)");
+	purple();
+	printf("		  ║\n");
+	printf("╚═══════════════╦═════════╦═══════════════╝\n");
+	printf("		║  ");
+	green();
+	printf("VIC's");
+	purple();
+	printf("  ║\n");
+	printf("		╚═════════╝\n");
 }
 
-int main()
+int	main(void)
 {
 	lst_dir *tmp;
 	lst_dir *node;
@@ -141,7 +148,7 @@ int main()
 	var->lst_files = NULL;
 	var->var_type = NULL;
 	var->var_bad_decl = NULL;
-	
+	var->var_bad_line = NULL;
 	node = new_node(".");
 	if (!node)
 		return (-1);
@@ -152,13 +159,13 @@ int main()
 		get_directories(var, ft_strjoin(tmp->path, "/"));
 		tmp = tmp->next;
 	}
+	print_header_program();
 	/*LINKEDS Y ARR*/
 	var->keywords = ft_split(KEY_WORDS, ',');
 	var->operators = ft_split(OPPERATORS_BOTH_SPACE, ',');
 	var->operators_nospace = ft_split(OPPERATORS_NO_SPACE, ',');
 	//char **type_vars = ft_split(TYPE_VAR, ',');
 	int i = 0;
-	
 	t_lst_arr *node2;
 	/*while (type_vars[i])
 	{
@@ -167,27 +174,20 @@ int main()
 			return (-1);
 		lstadd_back_arr(&var->var_type, node2);
 		i++;
-	}*/
+	}
+	*/
 	/*printf("KEY_WORDS:\n");
 	print_array(var->keywords);
-	
-	
-	
 	printf("TYPE_VAR:\n");
 	print_array(var->var_type);*/
-
 	save_data_files(var);
-	
-	
 	//get_type_var(var);
 	//printf("DIRECTORIES:\n");
 	//print_linked(var->lst_dir);
 	//printf("FILES:\n");
 	//print_linked(var->lst_files);
-	
 	// printf("OPPERATORS:\n");
-	// print_array(var->operators);
-	
+	//print_array(var->operators);
 	tmp = var->lst_files;
 	bool replace = true;
 	int len;
@@ -198,15 +198,12 @@ int main()
 			check_errors_h(var, tmp);
 		else if (get_postfix(tmp->path, ".c"))
 			check_errors(var, tmp);
-		
 		if (replace == true)
 		{
 			int fd = open(tmp->path, O_WRONLY | O_TRUNC);
 			while (tmp->info[i])
 			{
-				//printf("%s\n", tmp->info[i]);
 				len = ft_strlen(tmp->info[i]);
-				//printf("str 2: #%s#, linea: %d\n", tmp->info[i], i + 1);
 				if (ft_strcmp(tmp->info[i], "@#~#@\n") != 0)
 					write (fd, tmp->info[i], len);
 				i++;
@@ -214,19 +211,6 @@ int main()
 			close(fd);
 		}
 		tmp = tmp->next;
-	}
-	printf("entra?\n");
-	t_lst_arr *tmp2 = var->var_bad_decl;
-	while (tmp2)
-	{
-		printf("bad: %s\n", tmp2->str);
-		tmp2 = tmp2->next;
-	}
-	tmp2 = var->var_bad_line;
-	while (tmp2)
-	{
-		printf("bad: %s\n", tmp2->str);
-		tmp2 = tmp2->next;
 	}
 	return (0);
 }

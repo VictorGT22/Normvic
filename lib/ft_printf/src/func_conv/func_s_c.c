@@ -14,8 +14,8 @@
 
 int	func_c(va_list list, t_list *info)
 {
-	char c;
-	int width;
+	char	c;
+	int		width;
 
 	if (atoi(info->precision) > 0)
 	{
@@ -82,7 +82,7 @@ int	func_s(va_list list, t_list *info)
 	char *s;
 	int total;
 	int width;
-	int	len;
+	int		len;
 
 	s = va_arg(list, char *);
 	len = get_len(info, s);
@@ -103,7 +103,7 @@ int	func_S(va_list list, t_list *info)
 	char *s;
 	int total;
 	int width;
-	int	len;
+	int		len;
 
 	s = va_arg(list, char *);
 	len = get_len(info, s);

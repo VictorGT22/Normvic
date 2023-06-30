@@ -30,7 +30,6 @@ void	ft_putnbr_base_u(unsigned long long int nb, char *base)
 
 void	ft_putnbr_base(long int nb, char *base)
 {
-
 	if (nb >= ft_strlen(base))
 	{
 		ft_putnbr_base(nb / ft_strlen(base), base);

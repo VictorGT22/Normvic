@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:00:33 by vics              #+#    #+#             */
-/*   Updated: 2023/06/21 14:32:08 by vics             ###   ########.fr       */
+/*   Updated: 2023/06/30 22:13:57 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,16 @@
 	{
 		if (get_postfix(tmp->path, ".h"))
 			while (tmp->info[i])
-			{
-				if (ft_strnstr(tmp->info[i], "{", len))
-					tmp->num_key++;
-				i++;
-			}
-			printf("%s\n", tmp->path);
-		tmp = tmp->next;
+	{
+		if (ft_strnstr(tmp->info[i], "{", len))
+			tmp->num_key++;
+		i++;
 	}
-}*/
+	printf("%s\n", tmp->path);
+	tmp = tmp->next;
+}
+
+*/
 
 bool	empty_line(char *line)
 {
@@ -50,13 +51,11 @@ bool	empty_line(char *line)
 }
 
 void	mark_empty_line(lst_dir *lst, int i, bool error)
-{	
+{
 	if (!error)
-		print_error(lst->path, ERROR_CONSECUTIVE_TABS, i + 1, 1);
+		print_error(lst->path, ERROR_CONSECUTIVE_NEWLINES, i + 1, MEDIUM);
 	if (lst->info[i])
 		free(lst->info[i]);
-	//lst->info[i] = malloc(sizeof(char) * 6);
-	//bzero(lst->info[i], 6);
 	lst->info[i] = ft_strdup("@#~#@\n");
 }
 
@@ -79,7 +78,7 @@ int	replace_chr_chr(char *str, char find, char replace)
 	return (n);
 }
 
-char *check_name_header(lst_dir *lst, int *i, char *str)
+char	*check_name_header(lst_dir *lst, int *i, char *str)
 {
 	int 	n;
 	int		x;
@@ -111,7 +110,7 @@ void	check_indef(lst_dir *lst, int *i)
 	{
 		free(lst->info[*i]);
 		lst->info[*i] = ft_strdup(str);
-		print_error(lst->path, ERROR_HEADER_FILE, *i + 1, 1);
+		print_error(lst->path, ERROR_HEADER_FILE, *i + 1, LOW);
 		free(str);
 	}
 	*i += 1;
@@ -121,12 +120,12 @@ void	check_indef(lst_dir *lst, int *i)
 	{
 		free(lst->info[*i]);
 		lst->info[*i] = ft_strdup(str);
-		print_error(lst->path, ERROR_HEADER_FILE, *i + 1, 1);
+		print_error(lst->path, ERROR_HEADER_FILE, *i + 1, LOW);
 		free(str);
 	}
 }
 
-char *check_name_include(lst_dir *lst, int *i, char *str)
+char	*check_name_include(lst_dir *lst, int *i, char *str)
 {
 	int 	n;
 	int		x;
@@ -146,7 +145,6 @@ char *check_name_include(lst_dir *lst, int *i, char *str)
 	return (ft_strjoin(str, name));	
 }
 
-
 void	check_include(lst_dir *lst, int *i)
 {
 	char *str;
@@ -157,12 +155,12 @@ void	check_include(lst_dir *lst, int *i)
 	{
 		free(lst->info[*i]);
 		lst->info[*i] = ft_strdup(str);
-		print_error(lst->path, ERROR_INCLUDE_HEADER_FILE, *i + 1, 1);
+		print_error(lst->path, ERROR_INCLUDE_HEADER_FILE, *i + 1, LOW);
 		free(str);
 	}
 }
 
-char *check_name_define(lst_dir *lst, int *i, int j)
+char	*check_name_define(lst_dir *lst, int *i, int j)
 {
 	int x;
 	int n;
@@ -204,7 +202,7 @@ void	check_define(lst_dir *lst, int *i)
 	{
 		free(lst->info[*i]);
 		lst->info[*i] = ft_strdup(str);
-		print_error(lst->path, ERROR_INCLUDE_HEADER_FILE, *i, 1);
+		print_error(lst->path, ERROR_INCLUDE_HEADER_FILE, *i, LOW);
 		free(str);
 	}
 }
@@ -215,7 +213,7 @@ void	check_endif(lst_dir *lst, int *i)
 	{
 		free(lst->info[*i]);
 		lst->info[*i] = ft_strdup("#endif");
-		print_error(lst->path, ERROR_ENDIF, *i, 1);
+		print_error(lst->path, ERROR_ENDIF, *i, LOW);
 	}
 }
 
@@ -255,7 +253,7 @@ int	get_max(int num_1, int num_2)
 	return (num_2);
 }
 
-char *ft_strjoin_accurate(char *str_1, char *str_2, int pos)
+char	*ft_strjoin_accurate(char *str_1, char *str_2, int pos)
 {
 	int	i;
 	int	j;
@@ -283,8 +281,6 @@ char	*correct_misaligned(char *line, int max, int num_tabs)
 	char *str;
 
 	num_tabs = (max - num_tabs) / 4;
-	//if (num_tabs != 0)
-	//	print_error();
 	str = calloc(sizeof(char), num_tabs + 1);
 	ft_bzero(str, num_tabs + 1);
 	ft_memset(str, '\t', num_tabs);
@@ -389,7 +385,7 @@ void	check_strcture(s_variables *var, lst_dir *lst, int *i)
 	if (!empty_line(lst->info[*i - 2]))
 	{
 		remove_last_spaces(var, lst, *i);
-		print_error(lst->path, ERROR_NO_EMPTY_LINE, *i - 1, 1);
+		print_error(lst->path, ERROR_NO_EMPTY_LINE, *i - 1, LOW);
 		new = ft_strjoin(lst->info[*i - 2], "\n");
 		free(lst->info[*i - 2]);
 		lst->info[*i - 2] = ft_strdup(new);
@@ -405,8 +401,8 @@ void	check_strcture(s_variables *var, lst_dir *lst, int *i)
 	while (!ft_strrchr(lst->info[start], '}'))// correct var inside struct
 	{
 		num_misaligned =  get_real_hor_pos(lst->info[start]);
-			if (max > num_misaligned)
-				lst->info[start] = correct_misaligned(lst->info[start], max, num_misaligned);
+		if (max > num_misaligned)
+			lst->info[start] = correct_misaligned(lst->info[start], max, num_misaligned);
 		if (empty_line(lst->info[start]))
 			mark_empty_line(lst, start, true);
 		start += 1;
@@ -415,9 +411,9 @@ void	check_strcture(s_variables *var, lst_dir *lst, int *i)
 	{
 		remove_last_spaces(var, lst, *i);
 		if (!ft_strstr(lst->info[*i], "\tt_"))
-			print_error(lst->path, ERROR_STRUCT_NAME, *i + 1, 1);
+			print_error(lst->path, ERROR_STRUCT_NAME, *i + 1, LOW);
 		if (replace_chr_chr(lst->info[*i], ' ', '\t'))
-			print_error(lst->path, ERROR_WRONG_TAB, *i + 1, 1);
+			print_error(lst->path, ERROR_WRONG_TAB, *i + 1, LOW);
 		j = ft_strlen(lst->info[*i]) - 2;
 		while (j >= 0 && lst->info[*i][j] != ' ' && lst->info[*i][j] != '\t')
 			j--;
@@ -434,7 +430,6 @@ void	read_lines_h(s_variables *var, lst_dir *lst, int *add_i)
 	int max_aligned_var;
 	bool error;
 	
-
 	i = *add_i;
 	first_prototipe = 0;
 	error = false;

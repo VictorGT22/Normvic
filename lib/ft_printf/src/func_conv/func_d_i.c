@@ -12,10 +12,10 @@
 
 #include "ft_printf.h"
 
-void write_external(t_list *info, long long int nbr, int width, int precision)
+void	write_external(t_list *info, long long int nbr, int width, int precision)
 {
-	if (width > 0 && !ft_is_inarr(info->flag, "-") &&
-		(!ft_is_inarr(info->flag, "0") || ft_is_inarr(info->flag, ".")))
+	if (width > 0 && !ft_is_inarr(info->flag, "-") && 
+	(!ft_is_inarr(info->flag, "0") || ft_is_inarr(info->flag, ".")))
 		write_width(width);
 	if (ft_is_inarr(info->flag, " ") && nbr >= 0 && (!width || !precision))
 		write(1, " ", 1);
@@ -29,7 +29,7 @@ void write_external(t_list *info, long long int nbr, int width, int precision)
 	if (precision > 0)
 		put_c_num('0', precision);
 	if (width > 0 && !ft_is_inarr(info->flag, ".")
-		&& ft_is_inarr(info->flag, "0"))
+	&& ft_is_inarr(info->flag, "0"))
 		put_c_num('0', width + ft_is_inarr(info->flag, " "));
 	if (nbr != 0 || !ft_is_inarr(info->flag, "."))
 		ft_putnbr_base(nbr, "0123456789");
@@ -37,7 +37,7 @@ void write_external(t_list *info, long long int nbr, int width, int precision)
 		write_width(width);
 }
 
-int get_width_precision(t_list *info, long long int nbr, int *len, int *precision)
+int	get_width_precision(t_list *info, long long int nbr, int *len, int *precision)
 {
 	int	width;
 
@@ -63,7 +63,7 @@ int get_width_precision(t_list *info, long long int nbr, int *len, int *precisio
 	return (width);
 }
 
-int func_d(va_list list, t_list *info)
+int	func_d(va_list list, t_list *info)
 {
 	int				len;
 	long long int	nbr;
@@ -101,7 +101,7 @@ int func_d(va_list list, t_list *info)
 	return (width + len + precision);
 }
 
-int func_D(va_list list, t_list *info)
+int	func_D(va_list list, t_list *info)
 {
 	int				len;
 	long long int	nbr;

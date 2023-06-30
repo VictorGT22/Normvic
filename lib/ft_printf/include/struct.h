@@ -21,20 +21,19 @@ typedef struct t_list
 
 typedef struct s_func_ptr
 {
-    char op;
-    int (*ptr)(va_list list, t_list *info);
-} s_fnc_ptr;
+	char							op;
+	int (*ptr)(va_list list, t_list	*info);
+}	s_fnc_ptr;
 
 typedef struct s_Main
 {
 	char		**flags;
 	char		*conv;
-	int 		num_conv;
+	int			num_conv;
 	t_list		*first_ptr;
 	t_list		*current_ptr;
 	s_fnc_ptr	*arr_func;
 	int			total_len;
 }s_Main;
-
 
 #endif

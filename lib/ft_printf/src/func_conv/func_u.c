@@ -14,12 +14,14 @@
 
 int	func_u(va_list list, t_list *info)
 {
-	int len;
-	unsigned int nbr;
-	unsigned int nbr1;
-	int width = 0;
-	int precision = 0;
+	int				len;
+	unsigned int	nbr;
+	unsigned int	nbr1;
+	int				width;
+	int				precision;
 
+	precision = 0;
+	width = 0;
 	len = 0;
 	nbr = va_arg(list, unsigned int);
 	ft_len_nbr_base_u(nbr, "0123456789", &len);
@@ -62,7 +64,7 @@ int	func_u(va_list list, t_list *info)
 	if (width > 0 && ft_is_inarr(info->flag, "-"))
 		write_width(width);
 	if (ft_is_inarr(info->flag, " ") && nbr >= 0 && (!width || !precision))
-	width += ft_is_inarr(info->flag, " ") && nbr1 >= 0 ? 1 : 0;
+		width += ft_is_inarr(info->flag, " ") && nbr1 >= 0 ? 1 : 0;
 	width += ft_is_inarr(info->flag, "+") && nbr1 >= 0 ? 1 : 0;
 	return (width + len + precision);
 }

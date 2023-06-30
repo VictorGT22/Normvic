@@ -29,8 +29,8 @@ char	*ft_strrchr(const char *str, char c)
 }
 int	ft_strrchr_index(const char *str, char c)
 {
-	int	i;
-	int	index;
+	int		i;
+	int		index;
 
 	i = 0;
 	index = -1;

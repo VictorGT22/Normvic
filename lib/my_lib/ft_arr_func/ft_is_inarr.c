@@ -14,7 +14,7 @@
 
 int	ft_is_inarr(char **arr, char *to_find)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (arr[i] != NULL)

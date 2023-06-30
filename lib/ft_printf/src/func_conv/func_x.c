@@ -14,12 +14,13 @@
 
 int	func_x(va_list list, t_list *info)
 {
-	int len;
-	int total;
-	unsigned int nbr;
-	int width;
-	int precision = 0;
+	int				len;
+	int				total;
+	unsigned int	nbr;
+	int				width;
+	int				precision;
 
+	precision = 0;
 	total = 0;
 	len = 0;
 	nbr = va_arg(list, unsigned int);

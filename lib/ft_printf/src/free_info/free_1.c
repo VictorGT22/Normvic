@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-void free_atr(s_Main *var)
+void	free_atr(s_Main *var)
 {
 	if (var->first_ptr->precision)
 		free(var->first_ptr->precision);
@@ -55,7 +55,6 @@ void	free_all(s_Main *var)
 			free(var->flags[i++]);
 		free(var->flags);
 	}
-
 	if (var->conv)
 		free(var->conv);
 	if (var->first_ptr != var->current_ptr)

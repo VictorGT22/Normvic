@@ -23,11 +23,12 @@
 	while (s[i] != '\0')
 		i++;
 	return (i);
-}*/
+}
+*/
 
 char	*get_strchr(char *s, int c)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	if (!s)

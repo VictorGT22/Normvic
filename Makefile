@@ -6,7 +6,7 @@
 #    By: vics <vics@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 15:37:53 by victgonz          #+#    #+#              #
-#    Updated: 2023/06/19 11:57:42 by vics             ###   ########.fr        #
+#    Updated: 2023/06/22 21:37:30 by vics             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,7 @@ all: save_previous libft $(EXECUTABLE) write_name
 	cp normez zzzzprueba
 
 $(EXECUTABLE): $(OBJECTS)
-	$(CC) $(CFLAGS) $(INCLUDES) $(INCLUDES_FT_PRINTF) $(INCLUDES_MY_LIB) $(OBJECTS) $(FT_LIB) $(LIB) -o $(EXECUTABLE)
+	@$(CC) $(CFLAGS) $(INCLUDES) $(INCLUDES_FT_PRINTF) $(INCLUDES_MY_LIB) $(OBJECTS) $(FT_LIB) $(LIB) -o $(EXECUTABLE)
 	@echo "$(MAGENTA)======>$(GREEN)$(EXECUTABLE) compiled! $(MAGENTA)<======$(DEF_COLOR)"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJF)

@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-s_Main *inti_structs()
+s_Main	*inti_structs(void)
 {
 	s_Main	*var;
 
