@@ -21,7 +21,7 @@ unsigned int	check_header(s_variables *var, lst_dir *lst, int *add_i)
 
 	error = false;
 	i = *add_i;
-	while (lst->info[i] && i < 11) 
+	while (lst->info[i] && i < 11)
 	{
 		len = ft_strlen(lst->info[i]);
 		if ((!ft_strnstr(lst->info[i], "/*", len)
@@ -38,6 +38,4 @@ unsigned int	check_header(s_variables *var, lst_dir *lst, int *add_i)
 		lst->no_error = false;
 	}
 	*add_i = i;
-	/*prueba
-	a ver como borro esto*/
 }
