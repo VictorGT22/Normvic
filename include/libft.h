@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 10:21:08 by victgonz          #+#    #+#             */
-/*   Updated: 2023/06/22 15:08:44 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/01 22:53:38 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 #endif
-# define BUFF_SIZE 10 # include <unistd.h>
+# define BUFF_SIZE 10
+
+# include <unistd.h>
 # include <stdlib.h>
 # include <stddef.h>
 # include <fcntl.h>
@@ -78,6 +80,8 @@ int				ft_chr_index(char *str, char c);
 int				ft_strstr_index(const char *haystack, const char *needle);
 int				ft_last_chr_index(char *str, char c);
 int				ft_strrchr_index(const char *str, char c);
+int				ft_str_isupper(char *str);
+void			ft_str_toupper(char *str);
 //t_list		*ft_lstnew(void *content);
 //void			ft_lstadd_front(t_list **lst, t_list *new);
 //int			ft_lstsize(t_list *lst);

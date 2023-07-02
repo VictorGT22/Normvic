@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/06/22 17:10:54 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/02 18:54:30 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,80 +137,221 @@ void	print_header_program(void)
 	printf("		╚═════════╝\n");
 }
 
-int	main(void)
+
+void line_help(char *letter, char *message)
+{
+	purple();
+	printf("║   ");
+	blue();
+	printf("-%s:\t\t", letter);
+	reset();
+	printf("%-25s", message);
+	purple();
+	printf("	  ║\n");
+	printf("║						  ║\n");
+}
+
+void print_help(void)
+{
+	purple();
+	printf("╔═════════════════════════════════════════════════╗\n");
+	
+	//RED
+	purple();
+	printf("║   ");
+	red();
+	printf("▓▓▓");
+	purple();
+	printf("						  ║\n");
+	printf("║   ");
+	red();
+	printf("▓▓▓\t  ");
+	reset();
+	printf("ERROR NO FIXABLE");
+	purple();
+	printf("	  		  ║\n");
+	printf("║						  ║\n");
+
+	//GREEN
+	purple();
+	printf("║   ");
+	green();
+	printf("▓▓▓");
+	purple();
+	printf("						  ║\n");
+	printf("║   ");
+	green();
+	printf("▓▓▓\t  ");
+	reset();
+	printf("ERROR FIXABLE");
+	purple();
+	printf("		  		  ║\n");
+	printf("║						  ║\n");
+
+
+	//YELLOW
+	purple();
+	printf("║   ");
+	yellow();
+	printf("▓▓▓");
+	purple();
+	printf("						  ║\n");
+	printf("║   ");
+	yellow();
+	printf("▓▓▓\t  ");
+	reset();
+	printf("WHY YOU MAKE THIS ERROR? :')");
+	purple();
+	printf("		  ║\n");
+	printf("║						  ║\n");
+
+	line_help("r", "Replace the errors");
+	line_help("C", "Check only .c files");
+	line_help("H", "Check only .h files");
+	printf("╚═════════════════════════════════════════════════╝\n");
+}
+
+void	check_flags(s_variables *var, char **arr)
+{
+	var->flags->all = true;
+	var->flags->replace = false;
+	var->flags->only_c = false;
+	var->flags->only_h = false;
+	var->flags->help = false;
+	
+	if (ft_is_inarr(arr, "h"))
+		var->flags->help = true;
+	if (ft_is_inarr(arr, "r"))
+		var->flags->replace = true;
+	if (ft_is_inarr(arr, "C"))
+	{
+		var->flags->only_c = true;
+		var->flags->all = false;
+	}
+	if (ft_is_inarr(arr, "H"))
+	{
+		var->flags->all = false;
+		var->flags->only_h = true;
+	}
+}
+
+void save_flags(s_variables *var, char **argv)
+{
+	int i;
+	int j;
+	char *str;
+	int index;
+	char **arr;
+
+	i = 1;
+	arr = malloc(sizeof(char *) * 3);
+	arr[0] = NULL;
+	while (argv[i])
+	{
+		index = ft_strchr_nocomented(argv[i], '-');
+		if (index != -1)
+		{
+			j = 0;
+			str = ft_substr(argv[i], index + 1, ft_strlen(argv[i]));
+			while (str[j])
+			{
+				arr = ft_add_chr_arr(arr, str[j], 1);
+				j++;
+			}
+			//free(str);
+		}
+		i++;
+	}
+	check_flags(var, arr);
+}
+
+void	check_path(lst_dir *lst)
+{
+	int i;
+
+	i = 0;
+	while (lst->path[i])
+	{
+		if (ft_isalpha(lst->path[i]) && lst->path[i] != ft_tolower(lst->path[i]))
+			print_error(lst->path, ERROR_FILE_NAME, i + 1, LOW);
+
+		i++;
+			
+	}
+}
+
+int	main(int argc, char **argv)
 {
 	lst_dir *tmp;
 	lst_dir *node;
 	s_variables *var;
 
 	var = malloc(sizeof(s_variables) * 1);
-	var->lst_dir = NULL;
-	var->lst_files = NULL;
-	var->var_type = NULL;
-	var->var_bad_decl = NULL;
-	var->var_bad_line = NULL;
-	node = new_node(".");
-	if (!node)
-		return (-1);
-	lstadd_back(&var->lst_dir, node);
-	tmp = var->lst_dir;
-	while (tmp)
+	var->flags = malloc(sizeof(t_flags) * 1);
+
+	/// checkear flags
+	save_flags(var, argv);
+	if (var->flags->help)
 	{
-		get_directories(var, ft_strjoin(tmp->path, "/"));
-		tmp = tmp->next;
+		print_help();
 	}
-	print_header_program();
-	/*LINKEDS Y ARR*/
-	var->keywords = ft_split(KEY_WORDS, ',');
-	var->operators = ft_split(OPPERATORS_BOTH_SPACE, ',');
-	var->operators_nospace = ft_split(OPPERATORS_NO_SPACE, ',');
-	//char **type_vars = ft_split(TYPE_VAR, ',');
-	int i = 0;
-	t_lst_arr *node2;
-	/*while (type_vars[i])
+	else
 	{
-		node2 = new_node_arr(type_vars[i]);
-		if (!node2)
+		var->lst_dir = NULL;
+		var->lst_files = NULL;
+		var->var_type = NULL;
+		var->var_bad_decl = NULL;
+		var->var_bad_line = NULL;
+		node = new_node(".");
+		if (!node)
 			return (-1);
-		lstadd_back_arr(&var->var_type, node2);
-		i++;
-	}
-	*/
-	/*printf("KEY_WORDS:\n");
-	print_array(var->keywords);
-	printf("TYPE_VAR:\n");
-	print_array(var->var_type);*/
-	save_data_files(var);
-	//get_type_var(var);
-	//printf("DIRECTORIES:\n");
-	//print_linked(var->lst_dir);
-	//printf("FILES:\n");
-	//print_linked(var->lst_files);
-	// printf("OPPERATORS:\n");
-	//print_array(var->operators);
-	tmp = var->lst_files;
-	bool replace = true;
-	int len;
-	while (tmp)
-	{
-		int i = 0;
-		if (get_postfix(tmp->path, ".h"))
-			check_errors_h(var, tmp);
-		else if (get_postfix(tmp->path, ".c"))
-			check_errors(var, tmp);
-		if (replace == true)
+		lstadd_back(&var->lst_dir, node);
+		tmp = var->lst_dir;
+		while (tmp)
 		{
-			int fd = open(tmp->path, O_WRONLY | O_TRUNC);
-			while (tmp->info[i])
-			{
-				len = ft_strlen(tmp->info[i]);
-				if (ft_strcmp(tmp->info[i], "@#~#@\n") != 0)
-					write (fd, tmp->info[i], len);
-				i++;
-			}
-			close(fd);
+			get_directories(var, ft_strjoin(tmp->path, "/"));
+			tmp = tmp->next;
 		}
-		tmp = tmp->next;
-	}
+		print_header_program();
+		/*LINKEDS Y ARR*/
+		var->keywords = ft_split(KEY_WORDS, ',');
+		var->operators = ft_split(OPPERATORS_BOTH_SPACE, ',');
+		var->operators = ft_add_chr_arr(var->operators, ',', 0);
+
+		var->operators_nospace = ft_split(OPPERATORS_NO_SPACE, ',');
+		int i = 0;
+		t_lst_arr *node2;
+		save_data_files(var);
+		tmp = var->lst_files;
+		bool replace = true;
+		int len;
+		while (tmp)
+		{
+			int i = 0;
+			if (get_postfix(tmp->path, ".h") && (var->flags->only_h || var->flags->all))
+			{
+				check_path(tmp);
+				check_errors_h(var, tmp);
+			}
+			else if (get_postfix(tmp->path, ".c") && (var->flags->only_c || var->flags->all))
+			{
+				check_path(tmp);
+				check_errors(var, tmp);
+			}
+			if (var->flags->replace)
+			{
+				int fd = open(tmp->path, O_WRONLY | O_TRUNC);
+				while (tmp->info[i])
+				{
+					len = ft_strlen(tmp->info[i]);
+					//if (ft_strcmp(tmp->info[i], "@#~#@\n") != 0)
+					write (fd, tmp->info[i], len);
+					i++;
+				}
+				close(fd);
+			}
+			tmp = tmp->next;
+		}
+	}	
 	return (0);
 }

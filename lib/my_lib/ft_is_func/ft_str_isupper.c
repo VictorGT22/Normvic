@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_is_inarr.c                                      :+:      :+:    :+:   */
+/*   ft_str_is_upper.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/01 17:25:32 by victgonz          #+#    #+#             */
-/*   Updated: 2023/07/01 15:34:01 by vics             ###   ########.fr       */
+/*   Created: 2023/07/01 22:36:38 by vics              #+#    #+#             */
+/*   Updated: 2023/07/01 22:45:41 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_is_inarr(char **arr, char *to_find)
+int	ft_str_isupper(char *str)
 {
-	int	i;
+	int x;
 
-	i = 0;
-	if (!arr)
-		return (0);
-	while (arr[i] != NULL)
+	x = 0;
+	while (str[x])
 	{
-		if (ft_strcmp(arr[i], to_find) == 0)
-			return (1);
-		i++;
+		if (str[x] != '_' && (str[x] < 'A' || str[x] > 'Z'))
+			return (0);
+		x++;
 	}
-	return (0);
+	return (1);
 }

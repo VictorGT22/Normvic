@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:43:48 by victgonz          #+#    #+#             */
-/*   Updated: 2023/06/30 20:16:32 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/02 17:54:50 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,12 @@
 # define ERROR_CLOSE_BRACKET_NOEMPTY "No empty line after a close curly bracket\n"
 # define ERROR_ENTER_FUNCTIONS "Need to be a empty line between functions\n"
 # define ERROR_ENTER_END_FILE "Need to be a empty line at the end of the file\n"
-
+# define ERROR_NAME_MACRO "Macros needs to be named with all letters uppercase\n"
+# define ERROR_NUM_FUNCTIONS "Too many functions inside a file "
+# define ERROR_NUM_LINES "Too many lines in a function "
+# define ERROR_FILE_NAME "Files and folders names must be in lowercase\n"
+# define ERROR_SPACE_BEFORE_COMMA "Must be no space before a comma\n"
+# define ERROR_SPACE_AFTER_COMMA "Must be a space after a comma\n"
 
 //PROTOTIPES
 lst_dir			*new_node(char *filepath);
@@ -112,12 +117,19 @@ char			*new_old_str(char *new, char *old);
 
 //FUNCIONES UTILES
 int				count_indentations(char *str);
+char			**ft_add_chr_arr(char **src_arr, char c, int pos);
+char			**ft_add_str_arr(char **src_arr, char *str, int pos);
+void			print_array(char **arr);
+void			ft_str_pop_interval(char *str, int ini, int end);
+void			check_operators(s_variables *var, lst_dir *lst, int *i);
+void			check_keywords(s_variables *var, lst_dir *lst, int *i);
 
 //CHECKER _H
 void			check_errors_h(s_variables *var, lst_dir *lst);
 
 //PRINT ERROR
 void			print_error(char *path, char *msg_error, int line, int code_error);
+void			print_error_var(char *path, char *msg_error, int line, int code_error);
 
 //COLORS
 void			red(void);

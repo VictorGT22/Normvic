@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/06/30 22:38:36 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/02 19:04:15 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -470,10 +470,10 @@ int	operator_end(lst_dir *lst, int *i, int lower, char *op)
 
 	len = ft_strlen(op);
 	x = lower + len;
+	if (!ft_strcmp(op, "/*") || !ft_strcmp(op, "*/") || !ft_strcmp(op, "//"))
+		return (0);
 	while (lst->info[*i][x])
 	{
-		if (lst->info[*i][x] == '/' && (lst->info[*i][x + 1] == '/' || lst->info[*i][x + 1] == '*'))
-			break ;
 		if (lst->info[*i][x] != ' ' && lst->info[*i][x] != '\t' && lst->info[*i][x] != '\n')
 			return (0);
 		x++;
@@ -504,6 +504,47 @@ char	**ft_add_str_arr(char **src_arr, char *str, int pos)
 	}
 	arr[i] = NULL;
 	return (arr);
+}
+
+
+char	**ft_add_chr_arr(char **src_arr, char c, int pos)
+{
+	int i;
+	int len;
+	char	**arr;
+
+	i = 0;
+	len = ft_arrlen(src_arr);
+	arr = malloc(sizeof(char *) * len + 2);
+	while (src_arr[i] && i < pos)
+	{
+		arr[i] = strdup(src_arr[i]);
+		i++;
+	}
+	arr[i] = malloc(sizeof(char) * 2);
+	arr[i][0] = c;
+	arr[i][1] = '\0';
+	i++;
+	while (src_arr[i - 1])
+	{
+		arr[i] = strdup(src_arr[i - 1]);
+		i++;
+	}
+	arr[i] = NULL;
+	return (arr);
+}
+
+void	remove_comment(lst_dir *lst, int lower, int *i)
+{
+	bool	long_comment;
+	int index;
+
+	index = ft_strstr_index_nocomented(lst->info[*i], "*/", 0);
+	long_comment = false;
+	if (index == -1)
+		long_comment = true;
+	if (operator_start(lst, i, lower))
+		mark_empty_line(lst, *i, false);
 }
 
 void	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int lower)
@@ -539,14 +580,31 @@ void	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int l
 	else if (!ft_strcmp(var->operators[op], "//") || !ft_strcmp(var->operators[op], "/*")
 	|| !ft_strcmp(var->operators[op], "*/"))
 	{
-		if (true)//var->flags->remove_comment)
+		/*if (true)//var->flags->remove_comment)
 		{
 			lst->info[*i][lower] = '\n';
 			lst->info[*i][lower + 1] = '\0';
 		}
 		if (ft_strcmp(lst->info[*i], "/*"))
-			lst->inside_comment = 1;
+			lst->inside_comment = 1;*/
+		remove_comment(lst, lower, i);
 		print_error(lst->path, ERROR_COMMENT_FUNCTION, *i + 1, 3);
+	}
+	else if (!ft_strcmp(var->operators[op], ","))
+	{
+		if (lst->info[*i][lower - 1] == ' ' || lst->info[*i][lower - 1] == '\t')
+		{
+			ft_str_pop_pos(lst->info[*i], lower - 1);
+			print_error(lst->path, ERROR_SPACE_BEFORE_COMMA, *i + 1, MEDIUM);
+		}
+		if (lst->info[*i][lower + 1] != ' ')
+		{
+			if (lst->info[*i][lower + 1] == '\t')
+				lst->info[*i][lower + 1] = ' ';
+			else
+				lst->info[*i] = new_old_str(ft_strjoin_accurate(lst->info[*i], " ", lower + 1), lst->info[*i]);
+			print_error(lst->path, ERROR_SPACE_AFTER_COMMA, *i + 1, MEDIUM);
+		}	
 	}
 	else
 	{
@@ -874,6 +932,7 @@ void	print_array(char **arr)
 	int i;
 
 	i = 0;
+	printf("PRINT ARRAY: \n");
 	while (arr[i])
 	{
 		write(1, arr[i], ft_strlen(arr[i]));
@@ -940,7 +999,7 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 			}
 			else if (lst->inside_comment)
 			{
-				int index = ft_strstr_index_nocomented(lst->info[*i], "*/", 0);
+				/*int index = ft_strstr_index_nocomented(lst->info[*i], "", 0);
 				if (index != -1)
 				{
 
@@ -948,7 +1007,7 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 					lst->inside_comment = 0;
 				}
 				else
-					mark_empty_line(lst, *i, true);
+					mark_empty_line(lst, *i, true);*/
 			}
 			else
 			{
@@ -1014,6 +1073,23 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 	}
 }
 
+void	check_num_lines(lst_dir *lst, int num_lines, int i)
+{
+	if (num_lines > 25)
+	{
+		print_error_var(lst->path, ERROR_NUM_LINES, i + 1, LOW);
+		printf("(");		 
+		green();
+		printf("25 ");		 
+		reset();
+		printf("-> ");		 
+		red();
+		printf("%d", num_lines);		 
+		reset();
+		printf(")\n\n");
+	}
+}
+
 void	check_errors(s_variables *var, lst_dir *lst)
 {
 	int i;
@@ -1021,10 +1097,11 @@ void	check_errors(s_variables *var, lst_dir *lst)
 	bool error;
 	bool empty;
 	int empty_lines;
-	int	num_brackets;
+	int	num_lines;
 
 	i = 0;
 	empty_lines = 0;
+	lst->num_bracket = 0;
 	check_header(var, lst, &i);
 	while (lst->info[i])
 	{
@@ -1038,10 +1115,29 @@ void	check_errors(s_variables *var, lst_dir *lst)
 			error = true;
 		}
 		if (ft_strnstr(lst->info[i], "{", len))
+		{
+			num_lines = i;
 			inside_function(var, lst, &i);
+			num_lines = i - num_lines;
+			check_num_lines(lst,num_lines - 2, i);	
+			lst->num_functions++;
+		}
 		else
 			i++;
 	}
-	//if (!empty_line(lst->info[i]))
+	if (lst->num_functions > 5)
+	{
+		print_error_var(lst->path, ERROR_NUM_FUNCTIONS, i + 1, LOW);
+		printf("(");		 
+		green();
+		printf("5 ");		 
+		reset();
+		printf("-> ");		 
+		red();
+		printf("%d", lst->num_functions);		 
+		reset();
+		printf(")\n\n");
+	}
+
 		//añadir linea nueva
 }

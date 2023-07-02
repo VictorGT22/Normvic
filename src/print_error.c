@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:37:15 by vics              #+#    #+#             */
-/*   Updated: 2023/06/30 19:05:13 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/02 16:45:10 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,14 @@ void	print_error(char *path, char *msg_error, int line, int code_error)
 	printf("[%-12s -> Line: %3d]:", path, line);
 	get_code_color(0);
 	printf("\t%s\n", msg_error);
+}
+
+void	print_error_var(char *path, char *msg_error, int line, int code_error)
+{
+	purple();
+	printf("File:\t");
+	get_code_color(code_error);
+	printf("[%-12s -> Line: %3d]:", path, line);
+	get_code_color(0);
+	printf("\t%s", msg_error);
 }

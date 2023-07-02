@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:00:33 by vics              #+#    #+#             */
-/*   Updated: 2023/06/30 22:13:57 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/02 19:06:37 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ bool	empty_line(char *line)
 			return (false);
 		i++;
 	}
+	printf("%s\n", line);
 	return (true);
 }
 
@@ -78,6 +79,127 @@ int	replace_chr_chr(char *str, char find, char replace)
 	return (n);
 }
 
+char	*check_name_include(lst_dir *lst, int *i, char *str)
+{
+	int 	n;
+	int		x;
+	char	*name;
+
+	x = 0;
+	n = ft_chr_index(lst->info[*i], '"');
+	if (!lst->info[*i][n])
+		n = ft_chr_index(lst->info[*i], '<');
+	name = malloc(sizeof(char) * (ft_strlen(lst->info[*i]) - n) + 2);
+	while (lst->info[*i][n])
+	{
+		name[x++] = lst->info[*i][n];
+		n++;
+	}
+	name[x] = '\0';
+	return (ft_strjoin(str, name));	
+}
+
+void	check_include(s_variables *var, lst_dir *lst, int *i)
+{
+	char *str;
+
+	replace_chr_chr(lst->info[*i], '\t', ' ');
+	str = check_name_include(lst, i, "# include ");
+	if (ft_strcmp(str, lst->info[*i]) != 0)
+	{
+		free(lst->info[*i]);
+		lst->info[*i] = ft_strdup(str);
+		print_error(lst->path, ERROR_INCLUDE_HEADER_FILE, *i + 1, LOW);
+		free(str);
+	}
+}
+
+int check_name(lst_dir *lst, int i, int j, char *type)
+{
+	char *str;
+	char *spaces;
+	char *name;
+
+	str = type;
+	spaces = malloc(sizeof(char) * lst->header_level + 1);
+	ft_bzero(spaces, lst->header_level + 1);
+	ft_memset(spaces, ' ', lst->header_level);
+	str = ft_strjoin_accurate(str, spaces, 1);
+	name = ft_substr(lst->info[i], 0, j);
+	if (ft_strcmp(str, name) != 0)
+	{
+		ft_str_pop_interval(lst->info[i], 0, j - 1);
+		lst->info[i] = new_old_str(ft_strjoin_accurate(lst->info[i], str, 0), lst->info[i]);
+		return (1);
+	}
+	return (0);
+}
+
+void	check_define(s_variables *var, lst_dir *lst, int *i)
+{
+	int	j;
+	char *str;
+
+	if (replace_chr_chr(lst->info[*i], '\t', ' '))
+		print_error(lst->path, ERROR_WRONG_TAB, *i + 1, LOW);
+	j = ft_strstr_index(lst->info[*i], "define") + 6;
+	check_name(lst, *i, j, "#define");
+	int x = j + 1;
+	while (lst->info[*i][x] && lst->info[*i][x] != ' '  && lst->info[*i][x] != '(')
+		x++;
+	str = ft_substr(lst->info[*i], j + 1, x - j - 1);
+	if (!ft_str_isupper(str))
+	{
+		print_error(lst->path, ERROR_NAME_MACRO, *i + 1, LOW);
+		ft_str_toupper(str);
+		ft_str_pop_interval(lst->info[*i], j + 1, x - 1);
+		lst->info[*i] = new_old_str(ft_strjoin_accurate(lst->info[*i], str, j + 1), lst->info[*i]);
+	}
+	check_keywords(var, lst, i);
+	check_operators(var, lst, i);
+}
+
+void	check_endif(s_variables *var, lst_dir *lst, int *i)
+{
+	int j;
+
+	j = ft_strstr_index(lst->info[*i], "endif") + 5;
+	if (lst->header_level == 1 && ft_strcmp("#endif\n", lst->info[*i]) != 0)
+	{
+		free(lst->info[*i]);
+		lst->info[*i] = ft_strdup("#endif");
+		print_error(lst->path, ERROR_ENDIF, *i + 1, LOW);
+		lst->header_level--;
+	}
+	else
+	{
+		lst->header_level--;
+		if (check_name(lst, *i, j, "#endif"))
+			print_error(lst->path, ERROR_ENDIF, *i + 1, LOW);
+	}
+}
+
+void	check_ifdef(s_variables *var, lst_dir *lst, int *i)
+{
+	int j;
+
+	j = ft_strstr_index(lst->info[*i], "ifdef") + 5;
+	if (check_name(lst, *i, j, "#ifdef"))
+		print_error(lst->path, ERROR_ENDIF, *i + 1, LOW);
+	lst->header_level++;
+}
+
+void	check_else(s_variables *var, lst_dir *lst, int *i)
+{
+	int j;
+
+	lst->header_level--;
+	j = ft_strstr_index(lst->info[*i], "else") + 4;
+	if (check_name(lst, *i, j, "#else"))
+		print_error(lst->path, ERROR_ENDIF, *i + 1, LOW);
+	lst->header_level++;
+}
+
 char	*check_name_header(lst_dir *lst, int *i, char *str)
 {
 	int 	n;
@@ -100,121 +222,41 @@ char	*check_name_header(lst_dir *lst, int *i, char *str)
 	return (ft_strjoin(str, name));
 }
 
-void	check_indef(lst_dir *lst, int *i)
+void	check_indef(s_variables *var, lst_dir *lst, int *i)
 {
+	int j;
 	char *str;
 
-	replace_chr_chr(lst->info[*i], '\t', ' ');
-	str = check_name_header(lst, i, "#ifndef ");
-	if (ft_strcmp(str, lst->info[*i]) != 0)
+	if (replace_chr_chr(lst->info[*i], '\t', ' '))
+		print_error(lst->path, ERROR_WRONG_TAB, *i + 1, LOW);
+	if (lst->header_level == 0)
 	{
-		free(lst->info[*i]);
-		lst->info[*i] = ft_strdup(str);
-		print_error(lst->path, ERROR_HEADER_FILE, *i + 1, LOW);
-		free(str);
+		if (replace_chr_chr(lst->info[*i], '\t', ' '))
+			print_error(lst->path, ERROR_WRONG_TAB, *i + 1, LOW);
+		str = check_name_header(lst, i, "#ifndef ");
+		if (ft_strcmp(str, lst->info[*i]) != 0)
+		{
+			lst->info[*i] = new_old_str(str, lst->info[*i]);
+			print_error(lst->path, ERROR_HEADER_FILE, *i + 1, LOW);
+		}
+		*i += 1;
+		if (replace_chr_chr(lst->info[*i], '\t', ' '))
+			print_error(lst->path, ERROR_WRONG_TAB, *i + 1, LOW);
+		str = check_name_header(lst, i, "# define ");
+		if (ft_strcmp(str, lst->info[*i]) != 0)
+		{
+			lst->info[*i] = new_old_str(str, lst->info[*i]);
+			print_error(lst->path, ERROR_HEADER_FILE, *i + 1, LOW);
+		}
 	}
-	*i += 1;
-	replace_chr_chr(lst->info[*i], '\t', ' ');
-	str = check_name_header(lst, i, "# define ");
-	if (ft_strcmp(str, lst->info[*i]) != 0)
+	else
 	{
-		free(lst->info[*i]);
-		lst->info[*i] = ft_strdup(str);
-		print_error(lst->path, ERROR_HEADER_FILE, *i + 1, LOW);
-		free(str);
+		j = ft_strstr_index(lst->info[*i], "ifndef") + 6;
+		if (check_name(lst, *i, j, "#ifndef"))
+			print_error(lst->path, ERROR_ENDIF, *i + 1, LOW);
 	}
-}
-
-char	*check_name_include(lst_dir *lst, int *i, char *str)
-{
-	int 	n;
-	int		x;
-	char	*name;
-
-	x = 0;
-	n = ft_chr_index(lst->info[*i], '"');
-	if (!lst->info[*i][n])
-		n = ft_chr_index(lst->info[*i], '<');
-	name = malloc(sizeof(char) * (ft_strlen(lst->info[*i]) - n) + 2);
-	while (lst->info[*i][n])
-	{
-		name[x++] = lst->info[*i][n];
-		n++;
-	}
-	name[x] = '\0';
-	return (ft_strjoin(str, name));	
-}
-
-void	check_include(lst_dir *lst, int *i)
-{
-	char *str;
-
-	replace_chr_chr(lst->info[*i], '\t', ' ');
-	str = check_name_include(lst, i, "# include ");
-	if (ft_strcmp(str, lst->info[*i]) != 0)
-	{
-		free(lst->info[*i]);
-		lst->info[*i] = ft_strdup(str);
-		print_error(lst->path, ERROR_INCLUDE_HEADER_FILE, *i + 1, LOW);
-		free(str);
-	}
-}
-
-char	*check_name_define(lst_dir *lst, int *i, int j)
-{
-	int x;
-	int n;
-	char *name;
-
-	x = 0;
-	n = ft_chr_index(lst->info[*i], '"');
-	lst->info[*i][n - 1] = ' ';
-	name = malloc(sizeof(char) * (ft_strlen(lst->info[*i]) - j) + 1);
-	while (lst->info[*i][j] && (lst->info[*i][j] == ' ' || lst->info[*i][j] == '\t'))
-		j++;
-	j--;
-	lst->info[*i][j] = ' ';
-	while (lst->info[*i][j])
-	{
-		name[x] = lst->info[*i][j];
-		x++;
-		j++;
-	}
-	name[x] = '\0';	
-	return (ft_strjoin("# define", name));
-}
-
-void	check_define(lst_dir *lst, int *i)
-{
-	int	j;
-	char *str;
-
-	j = ft_strstr_index(lst->info[*i], "define") + 6;
-	while (lst->info[*i][j] && lst->info[*i][j] == ' '
-	&& lst->info[*i][j] == '\t')
-	{
-		if (lst->info[*i][j] == '\t')
-			lst->info[*i][j] = ' ';
-		j++;
-	}
-	str = check_name_define(lst, i, j);
-	if (ft_strcmp(str, lst->info[*i]) != 0)
-	{
-		free(lst->info[*i]);
-		lst->info[*i] = ft_strdup(str);
-		print_error(lst->path, ERROR_INCLUDE_HEADER_FILE, *i, LOW);
-		free(str);
-	}
-}
-
-void	check_endif(lst_dir *lst, int *i)
-{
-	if (ft_strcmp("#endif\n", lst->info[*i]) != 0)
-	{
-		free(lst->info[*i]);
-		lst->info[*i] = ft_strdup("#endif");
-		print_error(lst->path, ERROR_ENDIF, *i, LOW);
-	}
+		
+	lst->header_level++;
 }
 
 int	get_real_hor_pos(char *str)
@@ -312,11 +354,9 @@ void	check_misaligned_prototipes(lst_dir *lst, int max_indent, int start)
 		!empty ? empty_lines = 0 , error = 0 : empty_lines++;
 		if (empty_lines > 1 || lst->info[i] == NULL)
 		{
-			//printf("str: #%s#, linea: %d\n", lst->info[i], i + 1);
 			mark_empty_line(lst, i, error);
 			error = true;
 		}
-		//printf("str: #%s#\n", lst->info[i]);
 		i++;
 	}
 }
@@ -435,20 +475,25 @@ void	read_lines_h(s_variables *var, lst_dir *lst, int *add_i)
 	error = false;
 	max_aligned_proto = 0;
 	max_aligned_var = 0;
+	lst->header_level = 0;
 	while (lst->info[i])
 	{
 		remove_last_spaces(var, lst, i);
 		if (ft_strchr(lst->info[i], '#'))
 		{
-			if (ft_strnstr(lst->info[i], "ifndef", ft_strlen(lst->info[i])))
-				check_indef(lst, &i);
-			else if (ft_strnstr(lst->info[i], "include", ft_strlen(lst->info[i])))
-				check_include(lst, &i);
-			else if (ft_strnstr(lst->info[i], "define", ft_strlen(lst->info[i])))
-				check_define(lst, &i);
-			else if (ft_strnstr(lst->info[i], "endif", ft_strlen(lst->info[i])))
-				check_endif(lst, &i);
 			remove_extra_spaces(var, lst, i);
+			if (ft_strnstr(lst->info[i], "ifndef", ft_strlen(lst->info[i])))
+				check_indef(var, lst, &i);
+			else if (ft_strnstr(lst->info[i], "include", ft_strlen(lst->info[i])))
+				check_include(var, lst, &i);
+			else if (ft_strnstr(lst->info[i], "define", ft_strlen(lst->info[i])))
+				check_define(var, lst, &i);
+			else if (ft_strnstr(lst->info[i], "endif", ft_strlen(lst->info[i])))
+				check_endif(var, lst, &i);
+			else if (ft_strnstr(lst->info[i], "else", ft_strlen(lst->info[i])))
+				check_else(var, lst, &i);
+			else if (ft_strnstr(lst->info[i], "ifdef", ft_strlen(lst->info[i])))
+				check_ifdef(var, lst, &i);
 		}
 		if (ft_strrchr(lst->info[i], ';'))
 		{
