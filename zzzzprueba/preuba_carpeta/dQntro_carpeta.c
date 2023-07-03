@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/07/03 14:35:21 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/03 14:52:04 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,12 +160,7 @@ void print_help(void)
 	purple();
 	printf("║   ");
 	red();
-	printf("▓▓▓");
-	purple();
-	printf("						  ║\n");
-	printf("║   ");
-	red();
-	printf("▓▓▓\t  ");
+	printf("🔴\t  ");
 	reset();
 	printf("ERROR NO FIXABLE");
 	purple();
@@ -176,12 +171,7 @@ void print_help(void)
 	purple();
 	printf("║   ");
 	green();
-	printf("▓▓▓");
-	purple();
-	printf("						  ║\n");
-	printf("║   ");
-	green();
-	printf("▓▓▓\t  ");
+	printf("🟢\t  ");
 	reset();
 	printf("ERROR FIXABLE");
 	purple();
@@ -193,12 +183,7 @@ void print_help(void)
 	purple();
 	printf("║   ");
 	yellow();
-	printf("▓▓▓");
-	purple();
-	printf("						  ║\n");
-	printf("║   ");
-	yellow();
-	printf("▓▓▓\t  ");
+	printf("🟡\t  ");
 	reset();
 	printf("WHY YOU MAKE THIS ERROR? :')");
 	purple();

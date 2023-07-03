@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/03 14:36:08 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/03 14:52:24 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -547,11 +547,11 @@ void	remove_comment(lst_dir *lst, int lower, int *i, char *op)
 
 	long_comment = false;
 	index = ft_strstr_index_nocomented(lst->info[*i], "*/", 0);
-	if (!ft_strcmp(op, "/*") && index -1)
+	if (!ft_strcmp(op, "/*") && index == -1)
 		long_comment = true;
 	if (operator_start(lst, i, lower))
 	{
-		if (!ft_strcmp(op, "//") || index == -1)
+		if (!ft_strcmp(op, "//") || index != -1 && operator_end(lst, i, lower, op))
 			mark_empty_line(lst, *i, true);
 		else if (index != -1)
 			ft_str_pop_interval(lst->info[*i], lower, index + 1);
@@ -561,7 +561,7 @@ void	remove_comment(lst_dir *lst, int lower, int *i, char *op)
 	*i += 1;
 	while (long_comment)
 	{
-		index = ft_strstr_index_nocomented(lst->info[*i], "*/", 0);
+		index = ft_strstr_index_nocomented(lst->info[*i], "", 0);
 		if (index == -1)
 			mark_empty_line(lst, *i, true);
 		else if (index != -1 && lst->info[*i][index + 2] == '\n')
@@ -614,7 +614,7 @@ void	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int l
 		if (!ft_strcmp(var->operators[op], "//") || !ft_strcmp(var->operators[op], "/*"))
 		{
 			print_error(lst->path, ERROR_COMMENT_FUNCTION, *i + 1, 3);
-			//remove_comment(lst, lower, i, var->operators[op]);
+		remove_comment(lst, lower, i, var->operators[op]);
 		}
 		
 	}
