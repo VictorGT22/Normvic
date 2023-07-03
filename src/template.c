@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/07/02 18:54:30 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/03 14:40:47 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,12 +160,7 @@ void print_help(void)
 	purple();
 	printf("║   ");
 	red();
-	printf("▓▓▓");
-	purple();
-	printf("						  ║\n");
-	printf("║   ");
-	red();
-	printf("▓▓▓\t  ");
+	printf("🔴\t  ");
 	reset();
 	printf("ERROR NO FIXABLE");
 	purple();
@@ -176,12 +171,7 @@ void print_help(void)
 	purple();
 	printf("║   ");
 	green();
-	printf("▓▓▓");
-	purple();
-	printf("						  ║\n");
-	printf("║   ");
-	green();
-	printf("▓▓▓\t  ");
+	printf("🟢\t  ");
 	reset();
 	printf("ERROR FIXABLE");
 	purple();
@@ -193,12 +183,7 @@ void print_help(void)
 	purple();
 	printf("║   ");
 	yellow();
-	printf("▓▓▓");
-	purple();
-	printf("						  ║\n");
-	printf("║   ");
-	yellow();
-	printf("▓▓▓\t  ");
+	printf("🟡\t  ");
 	reset();
 	printf("WHY YOU MAKE THIS ERROR? :')");
 	purple();
@@ -273,7 +258,7 @@ void	check_path(lst_dir *lst)
 	while (lst->path[i])
 	{
 		if (ft_isalpha(lst->path[i]) && lst->path[i] != ft_tolower(lst->path[i]))
-			print_error(lst->path, ERROR_FILE_NAME, i + 1, LOW);
+			print_error(lst->path, ERROR_FILE_NAME, -1, LOW);
 
 		i++;
 			
@@ -344,8 +329,8 @@ int	main(int argc, char **argv)
 				while (tmp->info[i])
 				{
 					len = ft_strlen(tmp->info[i]);
-					//if (ft_strcmp(tmp->info[i], "@#~#@\n") != 0)
-					write (fd, tmp->info[i], len);
+					if (ft_strcmp(tmp->info[i], "@#~#@\n") != 0)
+						write (fd, tmp->info[i], len);
 					i++;
 				}
 				close(fd);

@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:43:48 by victgonz          #+#    #+#             */
-/*   Updated: 2023/07/02 17:54:50 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/03 14:26:32 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@
 # define ERROR_NO_SPACE_AFTER_OPERATOR "Need to be a Space after a operator\n"
 # define ERROR_SPACE_BEFORE_STRUCT_OPERATOR "Space before a struct operator\n"
 # define ERROR_SPACE_AFTER_STRUCT_OPERATOR "Space after a struct operator\n"
-# define ERROR_TO_LONG_LINE "Line to long, more than 80 columns\n"
+# define ERROR_TO_LONG_LINE "Line to long, more than 80 columns. "
 # define ERROR_VARIBALES_FOLLOWED "Variable declaration must be at the start of the function\n"
 # define ERROR_INDENTATION "Wrong Indentation\n"
 # define ERROR_COMMENT_FUNCTION "Comment inside a function\n"
@@ -87,6 +87,8 @@
 # define ERROR_FILE_NAME "Files and folders names must be in lowercase\n"
 # define ERROR_SPACE_BEFORE_COMMA "Must be no space before a comma\n"
 # define ERROR_SPACE_AFTER_COMMA "Must be a space after a comma\n"
+# define ERROR_TERNARIAN "Ternarians are forbiden, it sucks but it is what it is\n"
+
 
 //PROTOTIPES
 lst_dir			*new_node(char *filepath);

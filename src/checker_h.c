@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:00:33 by vics              #+#    #+#             */
-/*   Updated: 2023/07/02 19:06:37 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/03 12:08:56 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ bool	empty_line(char *line)
 			return (false);
 		i++;
 	}
-	printf("%s\n", line);
+	return ("linea: %s\n", line);
 	return (true);
 }
 
@@ -391,9 +391,9 @@ int	correct_var(s_variables *var, lst_dir *lst, int *i, int max)
 	while (j >= 0 && lst->info[*i][j] != ' ' && lst->info[*i][j] != '\t')
 		j--;
 	while (lst->info[*i][j] &&
-	(lst->info[*i][j] == '\t' || lst->info[*i][j] == ' '))
+	(lst->info[*i][j] == '\t' || lst->info[*i][j] == ' ')) // esto mejorar
 	{
-		if (lst->info[*i][j] = ' ')
+		if (lst->info[*i][j] == ' ')
 			lst->info[*i][j] = '\t';
 		j--;
 	}
