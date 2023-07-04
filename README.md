@@ -69,7 +69,13 @@ Comando para instalar
 |    🔴     | ERROR_FILE_NAME      | Files and folders names must be in lowercase | (in the future)
 |    🟢     | ERROR_SPACE_BEFORE_COMMA  | Must be no space before a comma |
 |    🟢     | ERROR_SPACE_AFTER_COMMA   | Must be a space after a comma |
-|    🔴     | ERROR_TERNARIAN      | Ternarians are forbiden, it sucks but it is what it is | (in the future)
+|    🟢     | ERROR_TERNARIAN      | Ternarians are forbiden, it sucks but it is what it is (That is amazing)|
+|    🟢     | ERROR_SPACE_AFTER_PARENTHESIS | Space after parenthesis|
+|    🟢     | ERROR_SPACE_BEFORE_PARENTHESIS| Space before parenthesis|
+|    🟢     | ERROR_SPACE_FUNCTION| Space before name function and parenthesis |
+|    🟢     | ERROR_SPACE_AFTER_BRACKETS | Space after square brackets|
+|    🟢     | ERROR_SPACE_BEFORE_BRACKETS | Space before square brackets|
+
 
 ### Recomendations
 
