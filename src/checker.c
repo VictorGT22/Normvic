@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/04 11:58:19 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/04 12:26:02 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -454,8 +454,24 @@ void	correct_ternarian_3(s_variables *var, lst_dir *lst, int *i)
 void	correct_ternarian(s_variables *var, lst_dir *lst, int *i)
 {
 	int index;
+	int num_tabs;
 	int	index_condition;
+	char *tabs;
 
+	num_tabs = count_indentations(lst->info[*i - 1]) - count_indentations(lst->info[*i]);
+	
+	if (ft_strchr_nocomented(lst->info[*i - 1], '{') != -1 || is_keyword(var, lst, *i - 1, var->keywords))
+	{
+		printf("entrA\n");
+		num_tabs++;
+	}
+	if (num_tabs != 0)
+	{
+		tabs = malloc(sizeof(char) * num_tabs + 1);
+		ft_bzero(tabs, num_tabs + 1);
+		ft_memset(tabs, '\t', num_tabs);
+		lst->info[*i] = new_old_str(ft_strjoin_accurate(lst->info[*i], tabs, 0), lst->info[*i]);	
+	}
 	index = ft_strchr_nocomented(lst->info[*i], '=');
 	if (index != -1 && (lst->info[*i][index - 1] != ' ' || lst->info[*i][index + 1] != ' '))
 		index = -1;
@@ -470,6 +486,7 @@ void	correct_ternarian(s_variables *var, lst_dir *lst, int *i)
 	}
 	else
 		correct_ternarian_3(var, lst, i);
+	*i = *i + 1;
 }
 
 bool	is_ternarian(lst_dir *lst, char *str, int *i)
@@ -861,23 +878,6 @@ void	check_keywords(s_variables *var, lst_dir *lst, int *i)
 	}
 }
 
-
-int	is_keywords(s_variables *var, lst_dir *lst, int *i)
-{
-	int x;
-	int index;
-
-	x = 0;
-	while (var->keywords[x])
-	{
-		index = ft_strstr_index_nocomented(lst->info[*i], var->keywords[x], 0);
-		if (index != -1)
-			return (1);
-		x++;
-	}
-	return (0);
-}
-
 void	correct_line_bracket(s_variables *var, lst_dir *lst, int i, int index)
 {
 	char *str;
@@ -978,6 +978,7 @@ void	correct_indentation(s_variables *var, lst_dir *lst, int i, int indentation)
 
 	if (lst->indent > indentation && !empty_line(lst->info[i]))
 	{
+		printf("indent: %d\n", indentation);
 		num_tabs = malloc(sizeof(char) * (lst->indent - indentation) + 2);
 		ft_bzero(num_tabs, (lst->indent - indentation) + 2);
 		memset(num_tabs, '\t', lst->indent - indentation);
@@ -987,6 +988,7 @@ void	correct_indentation(s_variables *var, lst_dir *lst, int i, int indentation)
 	}
 	else if (lst->indent < indentation && !empty_line(lst->info[i]))
 	{
+		printf("indent: %d\n", indentation);
 		ft_str_pop_interval(lst->info[i], 0, (indentation - lst->indent) - 1);
 		print_error(lst, ERROR_INDENTATION, i + 1, MEDIUM);
 	}
@@ -1014,7 +1016,7 @@ void	inside_keyword(s_variables *var, lst_dir *lst, int *i)
 	char comment_open;
 	int  indentation;
 
-	pos_keyword = *i;
+	//pos_keyword = *i;
 	num_brackets = -1;
 	while (lst->info[*i] && num_brackets != 0)
 	{
@@ -1022,8 +1024,8 @@ void	inside_keyword(s_variables *var, lst_dir *lst, int *i)
 		if (num_brackets == -1)
 			num_brackets = 0;
 		indentation = count_indentations(lst->info[*i]);
-		if (pos_keyword < *i)
-			indentation--;
+		//if (pos_keyword < *i)
+		//	indentation--;
 		correct_indentation(var, lst, *i, indentation);
 		while (lst->info[*i][x])
 		{
@@ -1067,7 +1069,7 @@ void	check_indentation(s_variables *var, lst_dir *lst, int i)
 			lst->indent--;
 		}
 		pos = is_keyword(var, lst, i, var->keywords);
-		if (pos != -1)
+		if (pos)
 		{
 			inside_keyword(var, lst, &i);
 			if (ft_strchr_nocomented(lst->info[i], '{') != -1)
@@ -1247,7 +1249,7 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 		}
 		*i += 1;
 	}
-	//check_indentation(var, lst, start);
+	check_indentation(var, lst, start);
 	free_linked_arr(&var->var_bad_decl);
 	free_linked_arr(&var->var_bad_line);
 	if (lst->info[*i])
