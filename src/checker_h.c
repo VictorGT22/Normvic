@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:00:33 by vics              #+#    #+#             */
-/*   Updated: 2023/07/03 15:04:45 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/04 23:10:40 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,9 +316,8 @@ char	*ft_strjoin_accurate(char *str_1, char *str_2, int pos)
 	return (str);
 } 
 
-char	*correct_misaligned(char *line, int max, int num_tabs)
+void	correct_misaligned(lst_dir *lst, int i, int max, int num_tabs)
 {
-	int i;
 	char *result;
 	char *str;
 
@@ -326,9 +325,8 @@ char	*correct_misaligned(char *line, int max, int num_tabs)
 	str = calloc(sizeof(char), num_tabs + 1);
 	ft_bzero(str, num_tabs + 1);
 	ft_memset(str, '\t', num_tabs);
-	result = ft_strjoin_accurate(line, str, ft_last_chr_index(line, '\t'));
-	free(line);
-	return (result);
+	lst->info[i] = new_old_str(ft_strjoin_accurate(lst->info[i], str,
+	ft_last_chr_index(lst->info[i], '\t')), lst->info[i]);
 }
 
 void	check_misaligned_prototipes(lst_dir *lst, int max_indent, int start)
@@ -348,7 +346,7 @@ void	check_misaligned_prototipes(lst_dir *lst, int max_indent, int start)
 		{
 			num_misaligned =  get_real_hor_pos(lst->info[i]);
 			if (max_indent > num_misaligned)
-				lst->info[i] = correct_misaligned(lst->info[i], max_indent, num_misaligned);
+				correct_misaligned(lst, i, max_indent, num_misaligned);
 		}
 		empty = empty_line(lst->info[i]);
 		!empty ? empty_lines = 0 , error = 0 : empty_lines++;
@@ -367,6 +365,7 @@ int	correct_var(s_variables *var, lst_dir *lst, int *i, int max)
 	int n;
 
 	n = 0;
+	remove_last_spaces(var, lst, *i);
 	while (lst->info[*i][n] &&
 	(lst->info[*i][n] == '\t' || lst->info[*i][n] == ' '))
 	{
@@ -376,16 +375,16 @@ int	correct_var(s_variables *var, lst_dir *lst, int *i, int max)
 	}
 	if (n == 0)
 	{
-		char *str = ft_strjoin("\t", lst->info[*i]);
-		free(lst->info[*i]);
-		lst->info[*i] = str;
+		lst->info[*i] = new_old_str(ft_strjoin_accurate(lst->info[*i], "\t", 0), lst->info[*i]);
+		print_error(lst, ERROR_NO_TAB_START_VAR, *i + 1, MEDIUM);
 	}
-	int index = ft_chr_index(lst->info[*i], '=');
-	j = !lst->info[*i][index] ? ft_strlen(lst->info[*i]) - 1 : index - 1;
+	int index = ft_strchr_nocomented(lst->info[*i], '=');
+	j = (index == -1) ? ft_strlen(lst->info[*i]) - 3 : index - 2;
+	if (replace_chr_chr(&lst->info[*i][j], '\t', ' '))
+		print_error(lst, ERROR_WRONG_TAB, *i + 1, LOW);
 	while (j >= 0 && (lst->info[*i][j] == ' ' || lst->info[*i][j] == '\t'))
 	{
-		if (lst->info[*i][j] == '\t')
-			lst->info[*i][j] = ' ';
+		ft_str_pop_pos(lst->info[*i], j);
 		j--;
 	}
 	while (j >= 0 && lst->info[*i][j] != ' ' && lst->info[*i][j] != '\t')
@@ -394,13 +393,19 @@ int	correct_var(s_variables *var, lst_dir *lst, int *i, int max)
 	(lst->info[*i][j] == '\t' || lst->info[*i][j] == ' ')) // esto mejorar
 	{
 		if (lst->info[*i][j] == ' ')
+		{
+			print_error(lst, ERROR_WRONG_SPACE, *i + 1, LOW);
 			lst->info[*i][j] = '\t';
-		j--;
+		}
+		j--; 
 	}
 	while (j >= 0 && lst->info[*i][j] != ' ' && lst->info[*i][j] != '\t')
 		j--;
-	if (j != n - 1)
+	if (j != n - 1 && lst->info[*i][j] != ' ')
+	{
 		lst->info[*i][j] = ' ';
+		print_error(lst, ERROR_WRONG_SPACE, *i + 1, LOW);
+	}
 	remove_extra_spaces_2(var, lst, *i);		
 	return (get_max(max, get_real_hor_pos(lst->info[*i])));
 }
@@ -442,7 +447,7 @@ void	check_strcture(s_variables *var, lst_dir *lst, int *i)
 	{
 		num_misaligned =  get_real_hor_pos(lst->info[start]);
 		if (max > num_misaligned)
-			lst->info[start] = correct_misaligned(lst->info[start], max, num_misaligned);
+			correct_misaligned(lst, start, max, num_misaligned);
 		if (empty_line(lst->info[start]))
 			mark_empty_line(lst, start, true);
 		start += 1;

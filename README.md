@@ -75,6 +75,8 @@ Comando para instalar
 |    🟢     | ERROR_SPACE_FUNCTION| Space before name function and parenthesis |
 |    🟢     | ERROR_SPACE_AFTER_BRACKETS | Space after square brackets|
 |    🟢     | ERROR_SPACE_BEFORE_BRACKETS | Space before square brackets|
+|    🟢     | ERROR_VOID | If a function does not receive anything, it must have the type void|
+|    🟢     | ERROR_NO_TAB_START_VAR | No tab before var, cmon be focus when you code|
 
 
 ### Recomendations

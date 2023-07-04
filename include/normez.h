@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:43:48 by victgonz          #+#    #+#             */
-/*   Updated: 2023/07/04 14:13:32 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/04 23:09:14 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,11 @@
 # define ERROR_SPACE_FUNCTION "Space before name function and parenthesis\n"
 # define ERROR_SPACE_AFTER_BRACKETS "Space after square brackets\n"
 # define ERROR_SPACE_BEFORE_BRACKETS "Space before square brackets\n"
+# define ERROR_VOID "If a function does not receive anything, it must have the type void\n"
+# define ERROR_NO_TAB_START_VAR "No tab before var, cmon be focus when you code\n"
+# define ERROR_MISALIGNED "Variable misaligned\n"
+
+
 
 //PROTOTIPES
 lst_dir			*new_node(char *filepath);
@@ -115,7 +120,7 @@ void			remove_mid_spaces(s_variables *var, lst_dir *lst, int i);
 void			remove_btw_semicolon(s_variables *var, lst_dir *lst, int i);
 int				check_name_prototipe(s_variables *var, lst_dir *lst, int j, int i);
 void			check_prototipe_func(s_variables *var, lst_dir *lst, int i, bool proto);
-char			*correct_misaligned(char *line, int max, int num_tabs);
+void			correct_misaligned(lst_dir *lst, int i, int max, int num_tabs);
 void			mark_empty_line(lst_dir *lst, int i, bool error);
 char			*ft_strjoin_accurate(char *str_1, char *str_2, int pos);
 bool			empty_line(char *line);
@@ -128,6 +133,7 @@ char			**ft_add_chr_arr(char **src_arr, char c, int pos);
 char			**ft_add_str_arr(char **src_arr, char *str, int pos);
 void			print_array(char **arr);
 void			ft_str_pop_interval(char *str, int ini, int end);
+void			ft_str_pop_pos(char *str, int pos);
 void			check_operators(s_variables *var, lst_dir *lst, int *i);
 void			check_keywords(s_variables *var, lst_dir *lst, int *i);
 

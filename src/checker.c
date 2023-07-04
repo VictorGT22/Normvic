@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/04 19:05:36 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/04 23:09:41 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ void	remove_mid_spaces_2(s_variables *var, lst_dir *lst, int i)
 	lst->info[i] = str;
 }
 
-char	*add_void(s_variables *var, char *info, bool empty, bool proto)
+char	*add_void(s_variables *var, lst_dir *lst, int i, bool empty, bool proto)
 {
 	int j;
 	int len;
@@ -205,12 +205,12 @@ char	*add_void(s_variables *var, char *info, bool empty, bool proto)
 	j = 0;
 	if (empty)
 	{
-		len =  ft_strlen(info);
+		len =  ft_strlen(lst->info[i]);
 		str = malloc(sizeof(char) * len + 10);
 		ft_bzero(str, len + 10);
-		while (info[j] && info[j] != '(')
+		while (lst->info[i][j] && lst->info[i][j] != '(')
 		{
-			str[j] = info[j];
+			str[j] = lst->info[i][j];
 			j++;
 		}
 		ft_strlcat(str, "(void)", len + 6);
@@ -218,10 +218,11 @@ char	*add_void(s_variables *var, char *info, bool empty, bool proto)
 			ft_strlcat(str, ";\n", len + 8);
 		else
 			ft_strlcat(str, "\n", len + 7);
-		free(info);
+		free(lst->info[i]);
+		print_error(lst, ERROR_VOID, i + 1, LOW);
 		return (str);
 	}
-	return (info);
+	return (lst->info[i]);
 }
 
 void	check_prototipe_func(s_variables *var, lst_dir *lst, int i, bool proto)
@@ -278,7 +279,8 @@ void	check_prototipe_func(s_variables *var, lst_dir *lst, int i, bool proto)
 			j = check_name_prototipe(var, lst, j, i);
 		j--;
 	}
-	lst->info[i] = add_void(var, lst->info[i], empty, proto);
+	lst->info[i] = add_void(var, lst, i, empty, proto);
+	check_operators(var, lst, &i);
 }
 
 void	check_variables(s_variables *var, lst_dir *lst, int i)
@@ -459,10 +461,7 @@ void	correct_ternarian(s_variables *var, lst_dir *lst, int *i)
 	num_tabs = count_indentations(lst->info[*i - 1]) - count_indentations(lst->info[*i]);
 	
 	if (ft_strchr_nocomented(lst->info[*i - 1], '{') != -1 || is_keyword(var, lst, *i - 1, var->keywords) != 0)
-	{
-		printf("entrA\n");
 		num_tabs++;
-	}
 	if (num_tabs != 0)
 	{
 		tabs = malloc(sizeof(char) * num_tabs + 1);
@@ -515,7 +514,7 @@ bool	is_var(char *str)
 		if (str[len] == ')' || str[len] == '+' || str[len] == '-')
 			return (false);
 		if ((str[len] == ' ' || str[len] == '\t')
-		&& (str[len - 1] != ' ' && str[len - 1] != '\t' && str[len - 1] != '\n'))
+		&& (str[len - 1] != ' ' && str[len - 1] != '\t'))
 			num++;
 		len--;
 	}
@@ -1253,6 +1252,7 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 		{
 			num_var++;
 			max = correct_var(var, lst, i, max);
+			
 			if (!followed_var)
 			{
 				save_var_bad_line(var, lst, i);
@@ -1300,7 +1300,7 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 		{
 			num_misaligned =  get_real_hor_pos(lst->info[*i]);
 			if (max > num_misaligned)
-				lst->info[*i] = correct_misaligned(lst->info[*i], max, num_misaligned);
+				correct_misaligned(lst, *i, max, num_misaligned);
 		}
 		else if (followed_var && !empty_line(lst->info[*i]) && ft_strcmp(lst->info[*i], "@#~#@\n") != 0)
 		{
