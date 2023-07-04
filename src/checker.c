@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/03 14:52:24 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/04 11:55:18 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ unsigned int	check_header(s_variables *var, lst_dir *lst, int *add_i)
 	}
 	if (error)
 	{
-		print_error(lst->path, ERROR_HEADER, line + 1, LOW);
+		print_error(lst, ERROR_HEADER, line + 1, LOW);
 		lst->no_error = false;
 	}
 	*add_i = i;
@@ -57,7 +57,7 @@ void	remove_last_spaces(s_variables *var, lst_dir *lst, int i)
 		if (line == 0)
 		{
 			line = i;
-			print_error(lst->path, ERROR_TRALING_SPACE, line + 1, MEDIUM);
+			print_error(lst, ERROR_TRALING_SPACE, line + 1, MEDIUM);
 		}
 		lst->info[i][j] = '\0';
 		j--;
@@ -79,7 +79,7 @@ void	remove_btw_semicolon(s_variables *var, lst_dir *lst, int i)
 		if (line == 0)
 		{
 			line = i;
-			print_error(lst->path, ERROR_TRALING_SPACE, line + 1, MEDIUM);
+			print_error(lst, ERROR_TRALING_SPACE, line + 1, MEDIUM);
 		}
 		lst->info[i][j] = '\0';
 		j--;
@@ -94,7 +94,7 @@ int	check_name_prototipe(s_variables *var, lst_dir *lst, int j, int i)
 	if (lst->info[i][j] == ' ')
 	{
 		lst->info[i][j] = '\t';
-		print_error(lst->path, ERROR_WRONG_SPACE, i + 1, MEDIUM);
+		print_error(lst, ERROR_WRONG_SPACE, i + 1, MEDIUM);
 	}
 	while (j >= 0 && (lst->info[i][j] == ' ' || lst->info[i][j] == '\t'))
 		j--;
@@ -103,7 +103,7 @@ int	check_name_prototipe(s_variables *var, lst_dir *lst, int j, int i)
 	if (lst->info[i][j] == '\t')
 	{
 		lst->info[i][j] = ' ';
-		print_error(lst->path, ERROR_WRONG_TAB, i + 1, MEDIUM);
+		print_error(lst, ERROR_WRONG_TAB, i + 1, MEDIUM);
 	}
 	return (j);
 }
@@ -243,7 +243,7 @@ void	check_prototipe_func(s_variables *var, lst_dir *lst, int i, bool proto)
 			lst->no_error = false;
 			lst->info[i][j] = ' ';
 			if (!error)
-				print_error(lst->path, ERROR_WRONG_TAB, i + 1, LOW);
+				print_error(lst, ERROR_WRONG_TAB, i + 1, LOW);
 			error = true;
 		}
 		if (lst->info[i][j] != ' ' && lst->info[i][j] != '\t' && lst->info[i][j] != '(' && bracket == 1)
@@ -271,7 +271,7 @@ void	check_prototipe_func(s_variables *var, lst_dir *lst, int i, bool proto)
 			}
 			lst->info[i][j] = '\0';
 			remove_extra_spaces_2(var, lst, i);
-			print_error(lst->path, ERROR_SPACE_NAME_FUNC, i + 1, LOW);
+			print_error(lst, ERROR_SPACE_NAME_FUNC, i + 1, LOW);
 			j--;
 		}
 		else if (bracket == 0 && (lst->info[i][j] == ' ' || lst->info[i][j] == '\t'))
@@ -301,7 +301,7 @@ void	check_variables(s_variables *var, lst_dir *lst, int i)
 		lst->info[i] = new_old_str(ft_strjoin_accurate(lst->info[i], ";\n", ft_strlen(lst->info[i])), lst->info[i]);
 		if (node)
 			lstadd_back_arr(&var->var_bad_decl, node);
-		print_error(lst->path, ERROR_VAR_ASIGNATION, i + 1, MEDIUM);
+		print_error(lst, ERROR_VAR_ASIGNATION, i + 1, MEDIUM);
 	}
 }
 
@@ -334,18 +334,154 @@ int	ft_strchr_nocomented(char *str, char c)
 	return (-1);
 }
 
+void	correct_ternarian_2(s_variables *var, lst_dir *lst, int *i)
+{
+	int index;
+	int	index_condition;
+	char *tabs;
+	char *asignation;
+	char *condition;
+	char *action_1;
+	char *action_2;
+
+
+	int num_tabs = count_indentations(lst->info[*i]);
+
+
+	index = ft_strchr_nocomented(lst->info[*i], '(');
+	asignation = ft_substr(lst->info[*i], 0, index + 1);
+	index_condition = ft_strchr_nocomented(lst->info[*i], '?');
+	condition = ft_substr(lst->info[*i], index + 1, index_condition - (index + 2));
+	index = ft_strchr_nocomented(lst->info[*i], ':');
+	action_1 = ft_substr(lst->info[*i], index_condition + 1, index - index_condition - 1);
+	
+	tabs = malloc(sizeof(char) * num_tabs + 1);
+	ft_bzero(tabs, num_tabs + 1);
+	ft_memset(tabs, '\t', num_tabs);
+	
+	index_condition = ft_strchr_nocomented(lst->info[*i], ';');
+	action_2 = ft_substr(lst->info[*i], index + 1, index_condition - index - 1);
+	
+
+	condition = ft_strtrim(condition, " \t");
+	condition = new_old_str(ft_strjoin_accurate(condition, "if (", 0), condition);
+	condition = new_old_str(ft_strjoin_accurate(condition, ")\n", ft_strlen(condition)), condition);
+	condition = new_old_str(ft_strjoin_accurate(condition, tabs, 0), condition);
+	mark_empty_line(lst, *i, true);
+	lst->info = ft_add_str_arr(lst->info, condition, *i);
+
+	action_1 = ft_strtrim(action_1, " )\t");
+	action_1 = new_old_str(ft_strjoin_accurate(action_1, asignation, 0), action_1);
+	action_1 = new_old_str(ft_strjoin_accurate(action_1, "\t", 0), action_1);
+	action_1 = new_old_str(ft_strjoin_accurate(action_1, ");\n", ft_strlen(action_1)), action_1);
+	lst->info = ft_add_str_arr(lst->info, action_1, *i + 2);
+
+	lst->info = ft_add_str_arr(lst->info, "else\n", *i + 3);
+	lst->info[*i + 3] = new_old_str(ft_strjoin_accurate(lst->info[*i + 3], tabs, 0), lst->info[*i + 3]);
+	
+	action_2 = ft_strtrim(action_2, " )\t");
+	action_2 = new_old_str(ft_strjoin_accurate(action_2, asignation, 0), action_2);
+	action_2 = new_old_str(ft_strjoin_accurate(action_2, "\t", 0), action_2);
+	action_2 = new_old_str(ft_strjoin_accurate(action_2, ");\n", ft_strlen(action_2)), action_2);
+	lst->info = ft_add_str_arr(lst->info, action_2, *i + 4);
+	
+	
+	printf("ASIGNATION: %s\n", asignation);
+	printf("CONDITION: #%s#\n", condition);
+	printf("ACTION 1: %s\n", action_1);
+	printf("ACTION 2: %s\n", action_2);
+	*i = *i + 1;
+}
+
+void	correct_ternarian_3(s_variables *var, lst_dir *lst, int *i)
+{
+	int index;
+	int	index_condition;
+	char *tabs;
+	char *asignation;
+	char *condition;
+	char *action_1;
+	char *action_2;
+
+	asignation = NULL;
+	int num_tabs = count_indentations(lst->info[*i]);
+
+	index = ft_strchr_nocomented(lst->info[*i], '=');
+	if (index != -1)
+	{
+		asignation = ft_substr(lst->info[*i], 0, index + 1);
+		asignation = new_old_str(ft_strjoin_accurate(asignation, " ", index + 1), asignation);
+	}
+
+	index_condition = ft_strchr_nocomented(lst->info[*i], '?');
+	condition = ft_substr(lst->info[*i], index + 1, index_condition - (index + 2));
+	index = ft_strchr_nocomented(lst->info[*i], ':');
+	action_1 = ft_substr(lst->info[*i], index_condition + 1, index - index_condition - 1);
+	
+	tabs = malloc(sizeof(char) * num_tabs + 1);
+	ft_bzero(tabs, num_tabs + 1);
+	ft_memset(tabs, '\t', num_tabs);
+	
+	index_condition = ft_strchr_nocomented(lst->info[*i], ';');
+	action_2 = ft_substr(lst->info[*i], index + 1, index_condition - index - 1);
+	
+	condition = ft_strtrim(condition, " \t");
+	condition = new_old_str(ft_strjoin_accurate(condition, "if (", 0), condition);
+	condition = new_old_str(ft_strjoin_accurate(condition, ")\n", ft_strlen(condition)), condition);
+	condition = new_old_str(ft_strjoin_accurate(condition, tabs, 0), condition);
+	mark_empty_line(lst, *i, true);
+	lst->info = ft_add_str_arr(lst->info, condition, *i);
+
+	action_1 = ft_strtrim(action_1, " \t");
+	if (asignation)
+		action_1 = new_old_str(ft_strjoin_accurate(action_1, asignation, 0), action_1);
+	else
+		action_1 = new_old_str(ft_strjoin_accurate(action_1, tabs, 0), action_1);
+	action_1 = new_old_str(ft_strjoin_accurate(action_1, "\t", 0), action_1);
+	action_1 = new_old_str(ft_strjoin_accurate(action_1, ";\n", ft_strlen(action_1)), action_1);
+	lst->info = ft_add_str_arr(lst->info, action_1, *i + 2);
+
+	lst->info = ft_add_str_arr(lst->info, "else\n", *i + 3);
+	lst->info[*i + 3] = new_old_str(ft_strjoin_accurate(lst->info[*i + 3], tabs, 0), lst->info[*i + 3]);
+	
+	action_2 = ft_strtrim(action_2, " \t");
+	if (asignation)
+		action_2 = new_old_str(ft_strjoin_accurate(action_2, asignation, 0), action_2);
+	else
+		action_2 = new_old_str(ft_strjoin_accurate(action_2, tabs, 0), action_2);
+	action_2 = new_old_str(ft_strjoin_accurate(action_2, "\t", 0), action_2);
+	action_2 = new_old_str(ft_strjoin_accurate(action_2, ";\n", ft_strlen(action_2)), action_2);
+	lst->info = ft_add_str_arr(lst->info, action_2, *i + 4);
+	
+	*i = *i + 1;	
+}
+
+void	correct_ternarian(s_variables *var, lst_dir *lst, int *i)
+{
+	int index;
+	int	index_condition;
+
+	index = ft_strchr_nocomented(lst->info[*i], '=');
+	if (index != -1 && (lst->info[*i][index - 1] != ' ' || lst->info[*i][index + 1] != ' '))
+		index = -1;
+	if (index == -1)
+	{
+		index = ft_strchr_nocomented(lst->info[*i], '(');
+		index_condition = ft_strchr_nocomented(lst->info[*i], '?');
+		if (index == -1 || index > index_condition || empty_until_pos(lst->info[*i], index - 1))
+			correct_ternarian_3(var, lst, i);
+		else
+			correct_ternarian_2(var, lst, i);
+	}
+	else
+		correct_ternarian_3(var, lst, i);
+}
+
 bool	is_ternarian(lst_dir *lst, char *str, int *i)
 {
-	//printf("line: %s\n", str);
-	//printf("; %d\n", ft_strchr_nocomented(str, ';'));
-	//printf(": %d\n", ft_strchr_nocomented(str, ':'));
-	//printf("? %d\n", ft_strchr_nocomented(str, '?'));
 	if (ft_strchr_nocomented(str, ';') != -1 && ft_strchr_nocomented(str, ':') != -1
 	&& ft_strchr_nocomented(str, '?') != -1)
-	{
-		print_error(lst->path, ERROR_TERNARIAN, *i, 4);
 		return (true);
-	}
 	return (false);
 }
 
@@ -593,27 +729,27 @@ void	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int l
 		{
 			space++;
 			ft_str_pop_pos(lst->info[*i], lower - 1);
-			print_error(lst->path, ERROR_SPACE_BEFORE_INCREMENTAL, *i + 1, MEDIUM);
+			print_error(lst, ERROR_SPACE_BEFORE_INCREMENTAL, *i + 1, MEDIUM);
 		}
 		if (lst->info[*i][lower + len - space] == ' ' || lst->info[*i][lower + len - space] == '\t')
 		{
 			ft_str_pop_pos(lst->info[*i], lower + len - space);
-			print_error(lst->path, ERROR_SPACE_AFTER_INCREMENTAL, *i + 1, MEDIUM);
+			print_error(lst, ERROR_SPACE_AFTER_INCREMENTAL, *i + 1, MEDIUM);
 		}
 	}
 	else if (!ft_strcmp(var->operators[op], "->") || !ft_strcmp(var->operators[op], "."))
 	{
 		if (lst->info[*i][lower - 1] == ' ' || lst->info[*i][lower - 1] == '\t')
-			print_error(lst->path, ERROR_SPACE_BEFORE_STRUCT_OPERATOR, *i + 1, MEDIUM);
+			print_error(lst, ERROR_SPACE_BEFORE_STRUCT_OPERATOR, *i + 1, MEDIUM);
 		if (lst->info[*i][lower + len - space] == ' ' || lst->info[*i][lower + len] == '\t')
-			print_error(lst->path, ERROR_SPACE_AFTER_STRUCT_OPERATOR, *i + 1, MEDIUM);
+			print_error(lst, ERROR_SPACE_AFTER_STRUCT_OPERATOR, *i + 1, MEDIUM);
 	}
 	else if (!ft_strcmp(var->operators[op], "//") || !ft_strcmp(var->operators[op], "/*")
 	|| !ft_strcmp(var->operators[op], "*/"))
 	{
 		if (!ft_strcmp(var->operators[op], "//") || !ft_strcmp(var->operators[op], "/*"))
 		{
-			print_error(lst->path, ERROR_COMMENT_FUNCTION, *i + 1, 3);
+			print_error(lst, ERROR_COMMENT_FUNCTION, *i + 1, 3);
 		remove_comment(lst, lower, i, var->operators[op]);
 		}
 		
@@ -623,7 +759,7 @@ void	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int l
 		if (lst->info[*i][lower - 1] == ' ' || lst->info[*i][lower - 1] == '\t')
 		{
 			ft_str_pop_pos(lst->info[*i], lower - 1);
-			print_error(lst->path, ERROR_SPACE_BEFORE_COMMA, *i, MEDIUM);
+			print_error(lst, ERROR_SPACE_BEFORE_COMMA, *i, MEDIUM);
 		}
 		if (lst->info[*i][lower + 1] != ' ')
 		{
@@ -631,20 +767,20 @@ void	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int l
 				lst->info[*i][lower + 1] = ' ';
 			else
 				lst->info[*i] = new_old_str(ft_strjoin_accurate(lst->info[*i], " ", lower + 1), lst->info[*i]);
-			print_error(lst->path, ERROR_SPACE_AFTER_COMMA, *i, MEDIUM);
+			print_error(lst, ERROR_SPACE_AFTER_COMMA, *i, MEDIUM);
 		}	
 	}
 	else
 	{
 		if (lst->info[*i][lower - 1] != ' ' && lst->info[*i][lower - 2] != '=')
 		{
-			print_error(lst->path, ERROR_NO_SPACE_BEFORE_OPERATOR, *i + 1, MEDIUM);
+			print_error(lst, ERROR_NO_SPACE_BEFORE_OPERATOR, *i + 1, MEDIUM);
 			space++;
 			lst->info[*i] = new_old_str(ft_strjoin_accurate(lst->info[*i], " ", lower), lst->info[*i]);
 		}
 		if (lst->info[*i][lower + len + space] != ' ' && lst->info[*i][lower - 2] != '=')
 		{
-			print_error(lst->path, ERROR_NO_SPACE_AFTER_OPERATOR, *i + 1, MEDIUM);
+			print_error(lst, ERROR_NO_SPACE_AFTER_OPERATOR, *i + 1, MEDIUM);
 			lst->info[*i] = new_old_str(ft_strjoin_accurate(lst->info[*i], " ", lower + len + space), lst->info[*i]);
 		}
 	}
@@ -682,7 +818,7 @@ void	check_operators(s_variables *var, lst_dir *lst, int *i)
 		if (op != -1)
 		{
 			if (operator_end(lst, i, lower, var->operators[op]))
-				print_error(lst->path, ERROR_OPPERATOR_END, *i + 1, LOW);
+				print_error(lst, ERROR_OPPERATOR_END, *i + 1, LOW);
 			else if (op != -1 && (!operator_start(lst, i, lower) || !ft_strcmp(var->operators[op], "//")
 			|| !ft_strcmp(var->operators[op], "/*")))
 				check_spaces_operator(var, lst, i, op, lower);
@@ -701,18 +837,15 @@ int	is_keyword(s_variables *var, lst_dir *lst, int i, char **keywords)
 	{
 		index = ft_strstr_index_nocomented(lst->info[i], keywords[x], 0);
 		if (index != -1)
-			return (index);
+			return (1);
 		x++;
 	}
-	return (-1);
+	return (0);
 }
 
 void	check_keywords(s_variables *var, lst_dir *lst, int *i)
 {
 	int x;
-	char *tabs_str;
-	int	len;
-	int bracket;
 	int index;
 
 	x = 0;
@@ -724,13 +857,30 @@ void	check_keywords(s_variables *var, lst_dir *lst, int *i)
 			index = index + ft_strlen(var->keywords[x]);
 			if (lst->info[*i][index] != ' ' && !ft_isalpha(lst->info[*i][index]) && lst->info[*i][index] != '\n')
 			{
-				print_error(lst->path, ERROR_NO_SPACE_KEYWORD, *i + 1, LOW);
+				print_error(lst, ERROR_NO_SPACE_KEYWORD, *i + 1, LOW);
 				lst->info[*i] =  new_old_str(
 				ft_strjoin_accurate(lst->info[*i], " ", index), lst->info[*i]);
 			}
 		}
 		x++;
 	}
+}
+
+
+int	is_keywords(s_variables *var, lst_dir *lst, int *i)
+{
+	int x;
+	int index;
+
+	x = 0;
+	while (var->keywords[x])
+	{
+		index = ft_strstr_index_nocomented(lst->info[*i], var->keywords[x], 0);
+		if (index != -1)
+			return (1);
+		x++;
+	}
+	return (0);
 }
 
 void	correct_line_bracket(s_variables *var, lst_dir *lst, int i, int index)
@@ -781,13 +931,13 @@ bool	check_brackets(s_variables *var, lst_dir *lst, int i)
 		if (!empty_until_pos(lst->info[i], index - 1))
 		{
 			correct_line_bracket(var, lst, i, index);
-			print_error(lst->path, ERROR_BRACKET_KEYWORD, i + 1, MEDIUM);
+			print_error(lst, ERROR_BRACKET_KEYWORD, i + 1, MEDIUM);
 			error = true;
 		}
 		else if (!empty_line(&lst->info[i][count_indentations(lst->info[i]) + 1]))
 		{
 			correct_line_bracket(var, lst, i, index + 1);
-			print_error(lst->path, ERROR_BRACKET_NOEMPTY, i + 1, MEDIUM);
+			print_error(lst, ERROR_BRACKET_NOEMPTY, i + 1, MEDIUM);
 			error = true;
 		}
 		lst->num_bracket++;
@@ -798,7 +948,7 @@ bool	check_brackets(s_variables *var, lst_dir *lst, int i)
 		if (!empty_line(&lst->info[i][index + 1]))
 		{
 			correct_line_bracket(var, lst, i, index + 1);
-			print_error(lst->path, ERROR_CLOSE_BRACKET_NOEMPTY, i + 1, MEDIUM);
+			print_error(lst, ERROR_CLOSE_BRACKET_NOEMPTY, i + 1, MEDIUM);
 			error = true;
 		}
 		lst->num_bracket--;
@@ -838,12 +988,12 @@ void	correct_indentation(s_variables *var, lst_dir *lst, int i, int indentation)
 		memset(num_tabs, '\t', lst->indent - indentation);
 		lst->info[i] = new_old_str(ft_strjoin_accurate(lst->info[i], num_tabs, 0), lst->info[i]);
 		free(num_tabs);
-		print_error(lst->path, ERROR_INDENTATION, i + 1, MEDIUM);
+		print_error(lst, ERROR_INDENTATION, i + 1, MEDIUM);
 	}
 	else if (lst->indent < indentation && !empty_line(lst->info[i]))
 	{
 		ft_str_pop_interval(lst->info[i], 0, (indentation - lst->indent) - 1);
-		print_error(lst->path, ERROR_INDENTATION, i + 1, MEDIUM);
+		print_error(lst, ERROR_INDENTATION, i + 1, MEDIUM);
 	}
 }
 
@@ -978,7 +1128,7 @@ void	check_columns(lst_dir *lst, int *i)
 	num_columns = get_real_hor_pos(lst->info[*i]);
 	if (num_columns > 80) // linea muy larga
 	{
-		print_error_var(lst->path, ERROR_TO_LONG_LINE, *i + 1, MEDIUM);
+		print_error_var(lst, ERROR_TO_LONG_LINE, *i + 1, MEDIUM);
 		printf("(");		 
 		green();
 		printf("80 ");		 
@@ -1022,7 +1172,7 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 	remove_mid_spaces(var, lst, *i - 1);
 	*i = start;
 	if (empty_line(lst->info[start]))
-		print_error(lst->path, ERROR_WRONG_EMPTY_LINE, start + 1, MEDIUM);
+		print_error(lst, ERROR_WRONG_EMPTY_LINE, start + 1, MEDIUM);
 	while (lst->info[*i] && lst->num_bracket != 0)
 	{
 		check_brackets(var, lst, *i);
@@ -1030,14 +1180,14 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 		check_columns(lst, i);
 		remove_last_spaces(var, lst, *i);
 		remove_mid_spaces_2(var, lst, *i);
-		if (is_var(lst->info[*i]) && !is_ternarian(lst, lst->info[*i], i))
+		if (is_var(lst->info[*i]))
 		{
 			num_var++;
 			max = correct_var(var, lst, i, max);
 			if (!followed_var)
 			{
 				save_var_bad_line(var, lst, i);
-				print_error(lst->path, ERROR_VARIBALES_FOLLOWED, *i + 1, MEDIUM);
+				print_error(lst, ERROR_VARIBALES_FOLLOWED, *i + 1, MEDIUM);
 			}
 			else
 				check_variables(var, lst, *i);
@@ -1063,7 +1213,7 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 		*i += 1;
 	}
 	if (num_var > 5)
-		print_error(lst->path, ERROR_MANY_VAR, start + 1, MEDIUM);
+		print_error(lst, ERROR_MANY_VAR, start + 1, MEDIUM);
 	lst->num_bracket = 1;
 	temp = var->var_bad_line;
 	while (temp) // ADD BAD DECLARATION LINE VARIABLES (ASIGNATION AND DECLARATION)
@@ -1086,24 +1236,30 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 		else if (followed_var && !empty_line(lst->info[*i]) && ft_strcmp(lst->info[*i], "@#~#@\n") != 0)
 		{
 			lst->info = ft_add_str_arr(lst->info, "\n", *i);
-			print_error(lst->path, ERROR_NO_EMPTY_LINE_VAR, *i - 1, MEDIUM);
+			print_error(lst, ERROR_NO_EMPTY_LINE_VAR, *i - 1, MEDIUM);
 			followed_var = false;
 		}
 		else if (!followed_var && empty_line(lst->info[*i]))
 			mark_empty_line(lst, *i, false);
 		else
 			followed_var = false;
-		is_ternarian(lst, lst->info[*i], i);
+		
+		if (ft_strchr_nocomented(lst->info[*i], ';') != -1 && ft_strchr_nocomented(lst->info[*i], ':') != -1
+			&& ft_strchr_nocomented(lst->info[*i], '?') != -1)
+		{
+			print_error(lst, ERROR_TERNARIAN, *i, LOW);		
+			correct_ternarian(var, lst, i);
+		}
 		*i += 1;
 	}
-	check_indentation(var, lst, start);
+	//check_indentation(var, lst, start);
 	free_linked_arr(&var->var_bad_decl);
 	free_linked_arr(&var->var_bad_line);
 	if (lst->info[*i])
 	{
 		if (!empty_line(lst->info[*i]))
 		{
-			print_error(lst->path, ERROR_ENTER_FUNCTIONS, *i + 1, MEDIUM);
+			print_error(lst, ERROR_ENTER_FUNCTIONS, *i + 1, MEDIUM);
 			lst->info = ft_add_str_arr(lst->info, "\n", *i);
 		}
 	}
@@ -1111,7 +1267,7 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 	{
 		if (ft_strchr_nocomented(lst->info[*i - 1], '\n') == -1)
 		{
-			print_error(lst->path, ERROR_ENTER_END_FILE, *i + 1, MEDIUM);
+			print_error(lst, ERROR_ENTER_END_FILE, *i + 1, MEDIUM);
 			lst->info = ft_add_str_arr(lst->info, "\n", *i);
 		}
 	}
@@ -1121,7 +1277,7 @@ void	check_num_lines(lst_dir *lst, int num_lines, int i)
 {
 	if (num_lines > 25)
 	{
-		print_error_var(lst->path, ERROR_NUM_LINES, i + 1, LOW);
+		print_error_var(lst, ERROR_NUM_LINES, i + 1, LOW);
 		printf("(");		 
 		green();
 		printf("25 ");		 
@@ -1179,7 +1335,7 @@ void	check_errors(s_variables *var, lst_dir *lst)
 	}
 	if (lst->num_functions > 5)
 	{
-		print_error_var(lst->path, ERROR_NUM_FUNCTIONS, i + 1, LOW);
+		print_error_var(lst, ERROR_NUM_FUNCTIONS, i + 1, LOW);
 		printf("(");		 
 		green();
 		printf("5 ");		 

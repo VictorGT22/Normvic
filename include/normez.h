@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:43:48 by victgonz          #+#    #+#             */
-/*   Updated: 2023/07/03 14:26:32 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/04 10:37:09 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,12 +126,19 @@ void			ft_str_pop_interval(char *str, int ini, int end);
 void			check_operators(s_variables *var, lst_dir *lst, int *i);
 void			check_keywords(s_variables *var, lst_dir *lst, int *i);
 
+
+int	is_keyword(s_variables *var, lst_dir *lst, int i, char **keywords);
+
+
+int	empty_until_pos(char *str, int pos);
+
+
 //CHECKER _H
 void			check_errors_h(s_variables *var, lst_dir *lst);
 
 //PRINT ERROR
-void			print_error(char *path, char *msg_error, int line, int code_error);
-void			print_error_var(char *path, char *msg_error, int line, int code_error);
+void			print_error(lst_dir *lst, char *msg_error, int line, int code_error);
+void			print_error_var(lst_dir *lst, char *msg_error, int line, int code_error);
 
 //COLORS
 void			red(void);

@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/07/03 14:40:47 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/03 19:08:09 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,8 +258,7 @@ void	check_path(lst_dir *lst)
 	while (lst->path[i])
 	{
 		if (ft_isalpha(lst->path[i]) && lst->path[i] != ft_tolower(lst->path[i]))
-			print_error(lst->path, ERROR_FILE_NAME, -1, LOW);
-
+			print_error(lst, ERROR_FILE_NAME, -1, LOW);
 		i++;
 			
 	}
@@ -313,6 +312,7 @@ int	main(int argc, char **argv)
 		while (tmp)
 		{
 			int i = 0;
+			tmp->no_error = true;
 			if (get_postfix(tmp->path, ".h") && (var->flags->only_h || var->flags->all))
 			{
 				check_path(tmp);
@@ -322,6 +322,14 @@ int	main(int argc, char **argv)
 			{
 				check_path(tmp);
 				check_errors(var, tmp);
+					
+				if (tmp->no_error)
+				{
+					purple();
+					printf("File:\t");
+					green();
+					printf("[%s] -> OK 😊\n", tmp->path);
+				}
 			}
 			if (var->flags->replace)
 			{

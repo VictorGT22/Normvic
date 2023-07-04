@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:00:33 by vics              #+#    #+#             */
-/*   Updated: 2023/07/03 12:08:56 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/03 15:04:45 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ bool	empty_line(char *line)
 void	mark_empty_line(lst_dir *lst, int i, bool error)
 {
 	if (!error)
-		print_error(lst->path, ERROR_CONSECUTIVE_NEWLINES, i + 1, MEDIUM);
+		print_error(lst, ERROR_CONSECUTIVE_NEWLINES, i + 1, MEDIUM);
 	if (lst->info[i])
 		free(lst->info[i]);
 	lst->info[i] = ft_strdup("@#~#@\n");
@@ -109,7 +109,7 @@ void	check_include(s_variables *var, lst_dir *lst, int *i)
 	{
 		free(lst->info[*i]);
 		lst->info[*i] = ft_strdup(str);
-		print_error(lst->path, ERROR_INCLUDE_HEADER_FILE, *i + 1, LOW);
+		print_error(lst, ERROR_INCLUDE_HEADER_FILE, *i + 1, LOW);
 		free(str);
 	}
 }
@@ -141,7 +141,7 @@ void	check_define(s_variables *var, lst_dir *lst, int *i)
 	char *str;
 
 	if (replace_chr_chr(lst->info[*i], '\t', ' '))
-		print_error(lst->path, ERROR_WRONG_TAB, *i + 1, LOW);
+		print_error(lst, ERROR_WRONG_TAB, *i + 1, LOW);
 	j = ft_strstr_index(lst->info[*i], "define") + 6;
 	check_name(lst, *i, j, "#define");
 	int x = j + 1;
@@ -150,7 +150,7 @@ void	check_define(s_variables *var, lst_dir *lst, int *i)
 	str = ft_substr(lst->info[*i], j + 1, x - j - 1);
 	if (!ft_str_isupper(str))
 	{
-		print_error(lst->path, ERROR_NAME_MACRO, *i + 1, LOW);
+		print_error(lst, ERROR_NAME_MACRO, *i + 1, LOW);
 		ft_str_toupper(str);
 		ft_str_pop_interval(lst->info[*i], j + 1, x - 1);
 		lst->info[*i] = new_old_str(ft_strjoin_accurate(lst->info[*i], str, j + 1), lst->info[*i]);
@@ -168,14 +168,14 @@ void	check_endif(s_variables *var, lst_dir *lst, int *i)
 	{
 		free(lst->info[*i]);
 		lst->info[*i] = ft_strdup("#endif");
-		print_error(lst->path, ERROR_ENDIF, *i + 1, LOW);
+		print_error(lst, ERROR_ENDIF, *i + 1, LOW);
 		lst->header_level--;
 	}
 	else
 	{
 		lst->header_level--;
 		if (check_name(lst, *i, j, "#endif"))
-			print_error(lst->path, ERROR_ENDIF, *i + 1, LOW);
+			print_error(lst, ERROR_ENDIF, *i + 1, LOW);
 	}
 }
 
@@ -185,7 +185,7 @@ void	check_ifdef(s_variables *var, lst_dir *lst, int *i)
 
 	j = ft_strstr_index(lst->info[*i], "ifdef") + 5;
 	if (check_name(lst, *i, j, "#ifdef"))
-		print_error(lst->path, ERROR_ENDIF, *i + 1, LOW);
+		print_error(lst, ERROR_ENDIF, *i + 1, LOW);
 	lst->header_level++;
 }
 
@@ -196,7 +196,7 @@ void	check_else(s_variables *var, lst_dir *lst, int *i)
 	lst->header_level--;
 	j = ft_strstr_index(lst->info[*i], "else") + 4;
 	if (check_name(lst, *i, j, "#else"))
-		print_error(lst->path, ERROR_ENDIF, *i + 1, LOW);
+		print_error(lst, ERROR_ENDIF, *i + 1, LOW);
 	lst->header_level++;
 }
 
@@ -228,32 +228,32 @@ void	check_indef(s_variables *var, lst_dir *lst, int *i)
 	char *str;
 
 	if (replace_chr_chr(lst->info[*i], '\t', ' '))
-		print_error(lst->path, ERROR_WRONG_TAB, *i + 1, LOW);
+		print_error(lst, ERROR_WRONG_TAB, *i + 1, LOW);
 	if (lst->header_level == 0)
 	{
 		if (replace_chr_chr(lst->info[*i], '\t', ' '))
-			print_error(lst->path, ERROR_WRONG_TAB, *i + 1, LOW);
+			print_error(lst, ERROR_WRONG_TAB, *i + 1, LOW);
 		str = check_name_header(lst, i, "#ifndef ");
 		if (ft_strcmp(str, lst->info[*i]) != 0)
 		{
 			lst->info[*i] = new_old_str(str, lst->info[*i]);
-			print_error(lst->path, ERROR_HEADER_FILE, *i + 1, LOW);
+			print_error(lst, ERROR_HEADER_FILE, *i + 1, LOW);
 		}
 		*i += 1;
 		if (replace_chr_chr(lst->info[*i], '\t', ' '))
-			print_error(lst->path, ERROR_WRONG_TAB, *i + 1, LOW);
+			print_error(lst, ERROR_WRONG_TAB, *i + 1, LOW);
 		str = check_name_header(lst, i, "# define ");
 		if (ft_strcmp(str, lst->info[*i]) != 0)
 		{
 			lst->info[*i] = new_old_str(str, lst->info[*i]);
-			print_error(lst->path, ERROR_HEADER_FILE, *i + 1, LOW);
+			print_error(lst, ERROR_HEADER_FILE, *i + 1, LOW);
 		}
 	}
 	else
 	{
 		j = ft_strstr_index(lst->info[*i], "ifndef") + 6;
 		if (check_name(lst, *i, j, "#ifndef"))
-			print_error(lst->path, ERROR_ENDIF, *i + 1, LOW);
+			print_error(lst, ERROR_ENDIF, *i + 1, LOW);
 	}
 		
 	lst->header_level++;
@@ -419,13 +419,13 @@ void	check_strcture(s_variables *var, lst_dir *lst, int *i)
 	remove_extra_spaces(var, lst, *i);
 	remove_extra_spaces(var, lst, *i - 1);
 	if (replace_chr_chr(lst->info[*i - 1], '\t', ' ')) // cabecera struct
-		print_error(lst->path, ERROR_WRONG_SPACE, *i, 1);
+		print_error(lst, ERROR_WRONG_SPACE, *i, 1);
 	node2 = new_node_arr(ft_strtrim(lst->info[*i - 1], "\n; {"));
 	lstadd_back_arr(&var->var_type, node2);
 	if (!empty_line(lst->info[*i - 2]))
 	{
 		remove_last_spaces(var, lst, *i);
-		print_error(lst->path, ERROR_NO_EMPTY_LINE, *i - 1, LOW);
+		print_error(lst, ERROR_NO_EMPTY_LINE, *i - 1, LOW);
 		new = ft_strjoin(lst->info[*i - 2], "\n");
 		free(lst->info[*i - 2]);
 		lst->info[*i - 2] = ft_strdup(new);
@@ -451,9 +451,9 @@ void	check_strcture(s_variables *var, lst_dir *lst, int *i)
 	{
 		remove_last_spaces(var, lst, *i);
 		if (!ft_strstr(lst->info[*i], "\tt_"))
-			print_error(lst->path, ERROR_STRUCT_NAME, *i + 1, LOW);
+			print_error(lst, ERROR_STRUCT_NAME, *i + 1, LOW);
 		if (replace_chr_chr(lst->info[*i], ' ', '\t'))
-			print_error(lst->path, ERROR_WRONG_TAB, *i + 1, LOW);
+			print_error(lst, ERROR_WRONG_TAB, *i + 1, LOW);
 		j = ft_strlen(lst->info[*i]) - 2;
 		while (j >= 0 && lst->info[*i][j] != ' ' && lst->info[*i][j] != '\t')
 			j--;

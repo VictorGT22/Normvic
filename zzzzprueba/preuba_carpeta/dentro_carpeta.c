@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dQntro_carpeta.c                                   :+:      :+:    :+:   */
+/*   dentro_carpeta.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/07/03 15:09:09 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/04 11:54:43 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 void	print_linked(lst_dir *lst)
 {
+	int		i;
 	lst_dir	*temp;
 
 	temp = lst;
 	while (temp)
 	{
 		printf("path: %s\n", temp->path);
-		temp = temp->next;
+		printf(prueba > 3 ? "Action 1" : "Action 2");
 	}
 }

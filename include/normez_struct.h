@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 11:43:01 by vics              #+#    #+#             */
-/*   Updated: 2023/07/02 00:49:10 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/03 15:07:19 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct lst_dir
 	int				num_functions;
 	int				num_bracket;
 	int				indent;
-	int				no_error;
+	bool			no_error;
 	int				inside_comment;
 	int				header_level;
 	struct lst_dir	*next;
