@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/07/04 11:54:43 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/04 11:57:51 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ void	print_linked(lst_dir *lst)
 	while (temp)
 	{
 		printf("path: %s\n", temp->path);
-		printf(prueba > 3 ? "Action 1" : "Action 2");
+		int x = (prueba > 3) ? 4 : 5;
 	}
 }
