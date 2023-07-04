@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/04 18:21:29 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/04 19:05:36 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -347,7 +347,7 @@ void	correct_ternarian_2(s_variables *var, lst_dir *lst, int *i)
 
 	int num_tabs = count_indentations(lst->info[*i]);
 
-
+	printf("entra\n");
 	index = ft_strchr_nocomented(lst->info[*i], '(');
 	asignation = ft_substr(lst->info[*i], 0, index + 1);
 	index_condition = ft_strchr_nocomented(lst->info[*i], '?');
@@ -385,7 +385,7 @@ void	correct_ternarian_2(s_variables *var, lst_dir *lst, int *i)
 	action_2 = new_old_str(ft_strjoin_accurate(action_2, ");\n", ft_strlen(action_2)), action_2);
 	lst->info = ft_add_str_arr(lst->info, action_2, *i + 4);
 
-	*i = *i + 1;
+	//*i = *i + 1;
 }
 
 void	correct_ternarian_3(s_variables *var, lst_dir *lst, int *i)
@@ -447,8 +447,6 @@ void	correct_ternarian_3(s_variables *var, lst_dir *lst, int *i)
 	action_2 = new_old_str(ft_strjoin_accurate(action_2, "\t", 0), action_2);
 	action_2 = new_old_str(ft_strjoin_accurate(action_2, ";\n", ft_strlen(action_2)), action_2);
 	lst->info = ft_add_str_arr(lst->info, action_2, *i + 4);
-	
-	*i = *i + 1;	
 }
 
 void	correct_ternarian(s_variables *var, lst_dir *lst, int *i)
@@ -486,7 +484,7 @@ void	correct_ternarian(s_variables *var, lst_dir *lst, int *i)
 	}
 	else
 		correct_ternarian_3(var, lst, i);
-	*i = *i + 1;
+	*i = *i + 4;
 }
 
 bool	is_ternarian(lst_dir *lst, char *str, int *i)
@@ -1052,6 +1050,7 @@ void	correct_indentation(s_variables *var, lst_dir *lst, int i, int indentation)
 
 	if (lst->indent > indentation && !empty_line(lst->info[i]))
 	{
+		printf("indent: %d , %d\n", lst->indent, indentation);
 		num_tabs = malloc(sizeof(char) * (lst->indent - indentation) + 2);
 		ft_bzero(num_tabs, (lst->indent - indentation) + 2);
 		memset(num_tabs, '\t', lst->indent - indentation);
@@ -1061,6 +1060,7 @@ void	correct_indentation(s_variables *var, lst_dir *lst, int i, int indentation)
 	}
 	else if (lst->indent < indentation && !empty_line(lst->info[i]))
 	{
+		printf("indent: %d , %d\n", lst->indent, indentation);
 		ft_str_pop_interval(lst->info[i], 0, (indentation - lst->indent) - 1);
 		print_error(lst, ERROR_INDENTATION, i + 1, MEDIUM);
 	}
@@ -1096,8 +1096,8 @@ void	inside_keyword(s_variables *var, lst_dir *lst, int *i)
 		if (num_brackets == -1)
 			num_brackets = 0;
 		indentation = count_indentations(lst->info[*i]);
-		if (pos_keyword < *i)
-			indentation--;
+		//if (pos_keyword < *i)
+		//	indentation--;
 		correct_indentation(var, lst, *i, indentation);
 		while (lst->info[*i][x])
 		{
@@ -1321,7 +1321,7 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 		}
 		*i += 1;
 	}
-	check_indentation(var, lst, start);
+	//check_indentation(var, lst, start);
 	free_linked_arr(&var->var_bad_decl);
 	free_linked_arr(&var->var_bad_line);
 	if (lst->info[*i])
