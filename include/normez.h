@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:43:48 by victgonz          #+#    #+#             */
-/*   Updated: 2023/07/04 10:37:09 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/04 14:13:32 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define TYPE_VAR "short,int,long,char,void,unsigned"
 # define KEY_WORDS "do,else,for,if,switch,while"
 # define KEY_WORDS_INDENT "case,default,do,else,for,if,switch,while"
-# define OPPERATORS_BOTH_SPACE "==,||,++,--,&&,//,/*,*/,+=,*=,-=,%=,/=,!=,->,<=,>=,<,>,=,/,+,-,%,."
+# define OPPERATORS_BOTH_SPACE "==,||,++,--,&&,//,/*,*/,+=,*=,-=,%=,/=,!=,->,<=,>=,<,>,=,/,+,-,%,.,(,),;,[,]"
 # define OPPERATORS_NO_SPACE "++,--"
 
 //MACROS ERROR COLOR
@@ -88,7 +88,12 @@
 # define ERROR_SPACE_BEFORE_COMMA "Must be no space before a comma\n"
 # define ERROR_SPACE_AFTER_COMMA "Must be a space after a comma\n"
 # define ERROR_TERNARIAN "Ternarians are forbiden, it sucks but it is what it is\n"
-
+# define ERROR_SPACE_AFTER_PARENTHESIS "Space after parenthesis\n"
+# define ERROR_SPACE_BEFORE_PARENTHESIS "Space before parenthesis\n"
+# define ERROR_SPACE_BEFORE_SEMICOLON "Space before semicolon\n"
+# define ERROR_SPACE_FUNCTION "Space before name function and parenthesis\n"
+# define ERROR_SPACE_AFTER_BRACKETS "Space after square brackets\n"
+# define ERROR_SPACE_BEFORE_BRACKETS "Space before square brackets\n"
 
 //PROTOTIPES
 lst_dir			*new_node(char *filepath);
@@ -128,7 +133,7 @@ void			check_keywords(s_variables *var, lst_dir *lst, int *i);
 
 
 int	is_keyword(s_variables *var, lst_dir *lst, int i, char **keywords);
-
+int	type_keyword(s_variables *var, lst_dir *lst, int i, char **keywords);
 
 int	empty_until_pos(char *str, int pos);
 

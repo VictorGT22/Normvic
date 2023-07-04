@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/04 12:26:02 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/04 18:21:29 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -460,7 +460,7 @@ void	correct_ternarian(s_variables *var, lst_dir *lst, int *i)
 
 	num_tabs = count_indentations(lst->info[*i - 1]) - count_indentations(lst->info[*i]);
 	
-	if (ft_strchr_nocomented(lst->info[*i - 1], '{') != -1 || is_keyword(var, lst, *i - 1, var->keywords))
+	if (ft_strchr_nocomented(lst->info[*i - 1], '{') != -1 || is_keyword(var, lst, *i - 1, var->keywords) != 0)
 	{
 		printf("entrA\n");
 		num_tabs++;
@@ -726,7 +726,7 @@ void	remove_comment(lst_dir *lst, int lower, int *i, char *op)
 	}
 }
 
-void	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int lower)
+int	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int lower)
 {
 	int x;
 	int space;
@@ -739,22 +739,31 @@ void	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int l
 	{
 		if (lst->info[*i][lower - 1] == ' ' || lst->info[*i][lower - 1] == '\t')
 		{
-			space++;
 			ft_str_pop_pos(lst->info[*i], lower - 1);
 			print_error(lst, ERROR_SPACE_BEFORE_INCREMENTAL, *i + 1, MEDIUM);
+			space++;
 		}
 		if (lst->info[*i][lower + len - space] == ' ' || lst->info[*i][lower + len - space] == '\t')
 		{
 			ft_str_pop_pos(lst->info[*i], lower + len - space);
 			print_error(lst, ERROR_SPACE_AFTER_INCREMENTAL, *i + 1, MEDIUM);
+			space++;
 		}
 	}
 	else if (!ft_strcmp(var->operators[op], "->") || !ft_strcmp(var->operators[op], "."))
 	{
 		if (lst->info[*i][lower - 1] == ' ' || lst->info[*i][lower - 1] == '\t')
+		{
+			ft_str_pop_pos(lst->info[*i], lower - 1);
 			print_error(lst, ERROR_SPACE_BEFORE_STRUCT_OPERATOR, *i + 1, MEDIUM);
+			space++;
+		}
 		if (lst->info[*i][lower + len - space] == ' ' || lst->info[*i][lower + len] == '\t')
+		{
+			ft_str_pop_pos(lst->info[*i], lower + len - space);
 			print_error(lst, ERROR_SPACE_AFTER_STRUCT_OPERATOR, *i + 1, MEDIUM);
+			space++;
+		}
 	}
 	else if (!ft_strcmp(var->operators[op], "//") || !ft_strcmp(var->operators[op], "/*")
 	|| !ft_strcmp(var->operators[op], "*/"))
@@ -762,9 +771,48 @@ void	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int l
 		if (!ft_strcmp(var->operators[op], "//") || !ft_strcmp(var->operators[op], "/*"))
 		{
 			print_error(lst, ERROR_COMMENT_FUNCTION, *i + 1, 3);
-		remove_comment(lst, lower, i, var->operators[op]);
+			remove_comment(lst, lower, i, var->operators[op]);
+			space++;
 		}
+	}
+	else if (!ft_strcmp(var->operators[op], "(") || !ft_strcmp(var->operators[op], ")") || !ft_strcmp(var->operators[op], ";"))
+	{
+		int pos_keyword = is_keyword(var, lst, *i, var->keywords);
+		int len = pos_keyword != 0 ? ft_strlen(var->keywords[type_keyword(var, lst, *i, var->keywords)]) : 0;
 		
+		if (!ft_strcmp(var->operators[op], "(") && (lst->info[*i][lower - 1] == ' ' || lst->info[*i][lower - 1] == '\t') && (pos_keyword == 0 || (pos_keyword + 1 + len) != lower))
+		{
+			ft_str_pop_pos(lst->info[*i], lower - 1);
+			print_error(lst, ERROR_SPACE_FUNCTION, *i + 1, LOW);
+			space++;
+		}
+		if (!ft_strcmp(var->operators[op], "(") && (lst->info[*i][lower + 1] == ' ' || lst->info[*i][lower + 1] == '\t'))
+		{
+			ft_str_pop_pos(lst->info[*i], lower + 1);
+			print_error(lst, ERROR_SPACE_AFTER_PARENTHESIS, *i + 1, LOW);
+			space++;
+		}
+		if ((!ft_strcmp(var->operators[op], ")") || !ft_strcmp(var->operators[op], ";")) && (lst->info[*i][lower - 1] == ' ' || lst->info[*i][lower - 1] == '\t'))
+		{
+			ft_str_pop_pos(lst->info[*i], lower - 1);
+			!ft_strcmp(var->operators[op], ")") ? print_error(lst, ERROR_SPACE_BEFORE_PARENTHESIS, *i + 1, LOW) : print_error(lst, ERROR_SPACE_BEFORE_SEMICOLON, *i + 1, LOW);
+			space++;
+		}
+	}
+	else if (!ft_strcmp(var->operators[op], "[") || !ft_strcmp(var->operators[op], "]"))
+	{
+		if ((!ft_strcmp(var->operators[op], "[") || !ft_strcmp(var->operators[op], "]")) && (lst->info[*i][lower - 1] == ' ' || lst->info[*i][lower - 1] == '\t'))
+		{
+			ft_str_pop_pos(lst->info[*i], lower - 1);
+			print_error(lst, ERROR_SPACE_BEFORE_BRACKETS, *i + 1, LOW);
+			space++;
+		}
+		if (!ft_strcmp(var->operators[op], "[") && (lst->info[*i][lower + 1 - space] == ' ' || lst->info[*i][lower + 1 - space] == '\t'))
+		{
+			ft_str_pop_pos(lst->info[*i], lower + 1 - space);
+			print_error(lst, ERROR_SPACE_AFTER_BRACKETS, *i + 1, LOW);
+			space++;
+		}
 	}
 	else if (!ft_strcmp(var->operators[op], ","))
 	{
@@ -772,14 +820,16 @@ void	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int l
 		{
 			ft_str_pop_pos(lst->info[*i], lower - 1);
 			print_error(lst, ERROR_SPACE_BEFORE_COMMA, *i, MEDIUM);
+			space++;
 		}
-		if (lst->info[*i][lower + 1] != ' ')
+		if (lst->info[*i][lower + 1 - space] != ' ')
 		{
-			if (lst->info[*i][lower + 1] == '\t')
-				lst->info[*i][lower + 1] = ' ';
+			if (lst->info[*i][lower + 1 - space] == '\t')
+				lst->info[*i][lower + 1 - space] = ' ';
 			else
-				lst->info[*i] = new_old_str(ft_strjoin_accurate(lst->info[*i], " ", lower + 1), lst->info[*i]);
+				lst->info[*i] = new_old_str(ft_strjoin_accurate(lst->info[*i], " ", lower + 1 - space), lst->info[*i]);
 			print_error(lst, ERROR_SPACE_AFTER_COMMA, *i, MEDIUM);
+			space--;
 		}	
 	}
 	else
@@ -794,8 +844,10 @@ void	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int l
 		{
 			print_error(lst, ERROR_NO_SPACE_AFTER_OPERATOR, *i + 1, MEDIUM);
 			lst->info[*i] = new_old_str(ft_strjoin_accurate(lst->info[*i], " ", lower + len + space), lst->info[*i]);
+			space--;
 		}
 	}
+	return (space);
 }
 
 void	check_operators(s_variables *var, lst_dir *lst, int *i)
@@ -803,11 +855,13 @@ void	check_operators(s_variables *var, lst_dir *lst, int *i)
 	int x;
 	int lower;
 	int prev;
+	int prev_len;
 	int index;
 	int op;
 
-	prev = -2;
+	prev = 0;
 	lower = 0;
+	prev_len = 0;
 	while (lower != -1)
 	{
 		x = 0;
@@ -815,11 +869,11 @@ void	check_operators(s_variables *var, lst_dir *lst, int *i)
 		op = -1;
 		while (var->operators[x])
 		{
-			index = ft_strstr_index_nocomented(lst->info[*i], var->operators[x], prev + 2);
+			index = ft_strstr_index_nocomented(lst->info[*i], var->operators[x], prev + prev_len);
 			if (index != -1 && (lower > index || lower == -1))
 			{
-				if ((prev < index && prev + ft_strlen(var->operators[x]) < index)
-				|| prev == -2)
+				if ((prev < index && (prev + prev_len) < index)
+				|| prev == 0)
 				{
 					lower = index;
 					op = x;
@@ -829,12 +883,16 @@ void	check_operators(s_variables *var, lst_dir *lst, int *i)
 		}
 		if (op != -1)
 		{
-			if (operator_end(lst, i, lower, var->operators[op]))
+			if (operator_end(lst, i, lower, var->operators[op])
+				&& (ft_strcmp(var->operators[op], "(") != 0 && ft_strcmp(var->operators[op], ")") != 0)
+				&& ft_strcmp(var->operators[op], ";") != 0)
 				print_error(lst, ERROR_OPPERATOR_END, *i + 1, LOW);
 			else if (op != -1 && (!operator_start(lst, i, lower) || !ft_strcmp(var->operators[op], "//")
 			|| !ft_strcmp(var->operators[op], "/*")))
-				check_spaces_operator(var, lst, i, op, lower);
+				lower -= check_spaces_operator(var, lst, i, op, lower);
 		}
+		if (op != -1)
+			prev_len = ft_strlen(var->operators[op]) - 1;
 		prev = lower;
 	}
 }
@@ -849,7 +907,23 @@ int	is_keyword(s_variables *var, lst_dir *lst, int i, char **keywords)
 	{
 		index = ft_strstr_index_nocomented(lst->info[i], keywords[x], 0);
 		if (index != -1)
-			return (1);
+			return (index);
+		x++;
+	}
+	return (0);
+}
+
+int	type_keyword(s_variables *var, lst_dir *lst, int i, char **keywords)
+{
+	int x;
+	int index;
+	
+	x = 0;
+	while (keywords[x])
+	{
+		index = ft_strstr_index_nocomented(lst->info[i], keywords[x], 0);
+		if (index != -1)
+			return (x);
 		x++;
 	}
 	return (0);
@@ -978,7 +1052,6 @@ void	correct_indentation(s_variables *var, lst_dir *lst, int i, int indentation)
 
 	if (lst->indent > indentation && !empty_line(lst->info[i]))
 	{
-		printf("indent: %d\n", indentation);
 		num_tabs = malloc(sizeof(char) * (lst->indent - indentation) + 2);
 		ft_bzero(num_tabs, (lst->indent - indentation) + 2);
 		memset(num_tabs, '\t', lst->indent - indentation);
@@ -988,7 +1061,6 @@ void	correct_indentation(s_variables *var, lst_dir *lst, int i, int indentation)
 	}
 	else if (lst->indent < indentation && !empty_line(lst->info[i]))
 	{
-		printf("indent: %d\n", indentation);
 		ft_str_pop_interval(lst->info[i], 0, (indentation - lst->indent) - 1);
 		print_error(lst, ERROR_INDENTATION, i + 1, MEDIUM);
 	}
@@ -1016,7 +1088,7 @@ void	inside_keyword(s_variables *var, lst_dir *lst, int *i)
 	char comment_open;
 	int  indentation;
 
-	//pos_keyword = *i;
+	pos_keyword = *i;
 	num_brackets = -1;
 	while (lst->info[*i] && num_brackets != 0)
 	{
@@ -1024,8 +1096,8 @@ void	inside_keyword(s_variables *var, lst_dir *lst, int *i)
 		if (num_brackets == -1)
 			num_brackets = 0;
 		indentation = count_indentations(lst->info[*i]);
-		//if (pos_keyword < *i)
-		//	indentation--;
+		if (pos_keyword < *i)
+			indentation--;
 		correct_indentation(var, lst, *i, indentation);
 		while (lst->info[*i][x])
 		{
@@ -1069,7 +1141,7 @@ void	check_indentation(s_variables *var, lst_dir *lst, int i)
 			lst->indent--;
 		}
 		pos = is_keyword(var, lst, i, var->keywords);
-		if (pos)
+		if (pos != 0)
 		{
 			inside_keyword(var, lst, &i);
 			if (ft_strchr_nocomented(lst->info[i], '{') != -1)

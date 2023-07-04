@@ -5,22 +5,25 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/07/04 12:28:05 by vics             ###   ########.fr       */
+/*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
+/*   Updated: 2023/07/04 18:21:32 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "normez.h"
 
-void	print_linked(lst_dir *lst)
+unsigned int	check_header(s_variables *var , lst_dir *lst, int *add_i)
 {
 	int		i;
-	lst_dir	*temp;
+	int		len;
+	int		line;
+	bool	error;
 
-	temp = lst;
-	while (temp
-		&& prueba > 3)
+	error = false;
+	i = *add_i;
+	while (lst->info[i] && i < 11 && ft_strlen(prueb, x))
 	{
-		printf("prueba\n");
+		prueba;
 	}
+	*add_i = i;
 }
