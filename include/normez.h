@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:43:48 by victgonz          #+#    #+#             */
-/*   Updated: 2023/07/04 23:09:14 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/04 23:31:50 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@
 # define ERROR_VOID "If a function does not receive anything, it must have the type void\n"
 # define ERROR_NO_TAB_START_VAR "No tab before var, cmon be focus when you code\n"
 # define ERROR_MISALIGNED "Variable misaligned\n"
+# define ERROR_MULTIPLE_SPACES "Unecesary multiple space elements followed\n"
 
 
 
@@ -115,8 +116,8 @@ unsigned int	check_header(s_variables *var, lst_dir *lst, int *add_i);
 void			check_errors(s_variables *var, lst_dir *lst);
 void			remove_extra_spaces(s_variables *var, lst_dir *lst, int i);
 void			remove_last_spaces(s_variables *var, lst_dir *lst, int i);
+bool			remove_mid_spaces(s_variables *var, lst_dir *lst, int i);
 void			remove_extra_spaces_2(s_variables *var, lst_dir *lst, int i);
-void			remove_mid_spaces(s_variables *var, lst_dir *lst, int i);
 void			remove_btw_semicolon(s_variables *var, lst_dir *lst, int i);
 int				check_name_prototipe(s_variables *var, lst_dir *lst, int j, int i);
 void			check_prototipe_func(s_variables *var, lst_dir *lst, int i, bool proto);

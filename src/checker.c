@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/04 23:09:41 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/04 23:32:38 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,14 +152,16 @@ void	remove_extra_spaces_2(s_variables *var, lst_dir *lst, int i)
 	lst->info[i] = str;
 }
 
-void	remove_mid_spaces(s_variables *var, lst_dir *lst, int i)
+bool	remove_mid_spaces(s_variables *var, lst_dir *lst, int i)
 {
 	int j;
 	int	x;
+	bool error;
 	char *str;
 	
 	j = 0;
 	x = 0;
+	error = false;
 	str = malloc(sizeof(char) * ft_strlen(lst->info[i]) + 1);
 	ft_bzero(str, ft_strlen(lst->info[i]) + 1);
 	while (lst->info[i][j])
@@ -167,10 +169,13 @@ void	remove_mid_spaces(s_variables *var, lst_dir *lst, int i)
 		if ((lst->info[i][j] != ' ' && lst->info[i][j] != '\t')
 		|| (lst->info[i][j + 1] != ' ' && lst->info[i][j + 1] != '\t'))
 			str[x++] = lst->info[i][j];
+		else
+			error = true;
 		j++;
 	}
 	free(lst->info[i]);
 	lst->info[i] = str;
+	return (error);
 }
 
 void	remove_mid_spaces_2(s_variables *var, lst_dir *lst, int i)
@@ -1237,7 +1242,8 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 	start = *i + 1 + check_brackets(var, lst, *i);
 	followed_var = is_var(lst->info[start]);
 	check_prototipe_func(var, lst, *i - 1, false);
-	remove_mid_spaces(var, lst, *i - 1);
+	if (remove_mid_spaces(var, lst, *i - 1))
+		print_error(lst, ERROR_MULTIPLE_SPACES, *i + 1, MEDIUM);
 	*i = start;
 	if (empty_line(lst->info[start]))
 		print_error(lst, ERROR_WRONG_EMPTY_LINE, start + 1, MEDIUM);

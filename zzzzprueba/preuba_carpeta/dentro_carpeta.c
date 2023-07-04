@@ -6,13 +6,13 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/04 23:10:47 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/04 23:32:49 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "normez.h"
 
-unsigned int	check_header(void)
+unsigned int	cHeck_header(void)
 {
 	unsigned int	ix;
 	int				ix;
