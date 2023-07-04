@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/04 11:55:18 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/04 11:57:11 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -384,12 +384,7 @@ void	correct_ternarian_2(s_variables *var, lst_dir *lst, int *i)
 	action_2 = new_old_str(ft_strjoin_accurate(action_2, "\t", 0), action_2);
 	action_2 = new_old_str(ft_strjoin_accurate(action_2, ");\n", ft_strlen(action_2)), action_2);
 	lst->info = ft_add_str_arr(lst->info, action_2, *i + 4);
-	
-	
-	printf("ASIGNATION: %s\n", asignation);
-	printf("CONDITION: #%s#\n", condition);
-	printf("ACTION 1: %s\n", action_1);
-	printf("ACTION 2: %s\n", action_2);
+
 	*i = *i + 1;
 }
 
@@ -1252,7 +1247,7 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 		}
 		*i += 1;
 	}
-	//check_indentation(var, lst, start);
+	check_indentation(var, lst, start);
 	free_linked_arr(&var->var_bad_decl);
 	free_linked_arr(&var->var_bad_line);
 	if (lst->info[*i])
