@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/07/03 19:08:09 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/05 22:02:37 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,7 @@ void print_help(void)
 	line_help("r", "Replace the errors");
 	line_help("C", "Check only .c files");
 	line_help("H", "Check only .h files");
+	line_help("R", "Rate the app");
 	printf("╚═════════════════════════════════════════════════╝\n");
 }
 
@@ -202,7 +203,8 @@ void	check_flags(s_variables *var, char **arr)
 	var->flags->replace = false;
 	var->flags->only_c = false;
 	var->flags->only_h = false;
-	var->flags->help = false;
+	var->flags->rate = false;
+	
 	
 	if (ft_is_inarr(arr, "h"))
 		var->flags->help = true;
@@ -218,6 +220,8 @@ void	check_flags(s_variables *var, char **arr)
 		var->flags->all = false;
 		var->flags->only_h = true;
 	}
+	if (ft_is_inarr(arr, "R"))
+		var->flags->rate = true;
 }
 
 void save_flags(s_variables *var, char **argv)
@@ -258,7 +262,7 @@ void	check_path(lst_dir *lst)
 	while (lst->path[i])
 	{
 		if (ft_isalpha(lst->path[i]) && lst->path[i] != ft_tolower(lst->path[i]))
-			print_error(lst, ERROR_FILE_NAME, -1, LOW);
+			print_error(lst, ERROR_FILE_NAME, -1, NOSOLVABLE);
 		i++;
 			
 	}
@@ -279,6 +283,8 @@ int	main(int argc, char **argv)
 	{
 		print_help();
 	}
+	else if (var->flags->rate)
+			grade_the_app(var);
 	else
 	{
 		var->lst_dir = NULL;
@@ -307,12 +313,15 @@ int	main(int argc, char **argv)
 		t_lst_arr *node2;
 		save_data_files(var);
 		tmp = var->lst_files;
-		bool replace = true;
+		if (var->flags->replace)
+			confirmacion_replace(var);
 		int len;
 		while (tmp)
 		{
 			int i = 0;
-			tmp->no_error = true;
+			tmp->no_error = 0;
+			tmp->err_solved = 0;
+			tmp->err_nosolved = 0;
 			if (get_postfix(tmp->path, ".h") && (var->flags->only_h || var->flags->all))
 			{
 				check_path(tmp);
@@ -323,12 +332,27 @@ int	main(int argc, char **argv)
 				check_path(tmp);
 				check_errors(var, tmp);
 					
-				if (tmp->no_error)
+				if (!tmp->no_error)
 				{
 					purple();
 					printf("File:\t");
 					green();
 					printf("[%s] -> OK 😊\n", tmp->path);
+				}
+				else
+				{
+					purple();
+					printf("NUM ERRORS:\t");
+					green();
+					printf("[%d]\n", tmp->no_error);
+					purple();
+					printf("SOLVED:\t\t");
+					green();
+					printf("[%d]\n", tmp->err_solved);
+					purple();
+					printf("NO SOLVED:\t");
+					green();
+					printf("[%d]\n", tmp->err_nosolved);
 				}
 			}
 			if (var->flags->replace)

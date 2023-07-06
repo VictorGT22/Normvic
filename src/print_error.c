@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:37:15 by vics              #+#    #+#             */
-/*   Updated: 2023/07/03 15:07:09 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/05 19:21:27 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,11 @@ void	get_code_color(int code)
 
 void	print_error(lst_dir *lst, char *msg_error, int line, int code_error)
 {
-	lst->no_error = false;
+	lst->no_error++;
+	if (code_error == SOLVABLE)
+		lst->err_solved++;
+	else if (code_error == NOSOLVABLE)
+		lst->err_nosolved++;
 	purple();
 	printf("File:\t");
 	get_code_color(code_error);
@@ -74,7 +78,11 @@ void	print_error(lst_dir *lst, char *msg_error, int line, int code_error)
 
 void	print_error_var(lst_dir *lst, char *msg_error, int line, int code_error)
 {
-	lst->no_error = false;
+	lst->no_error++;
+	if (code_error == SOLVABLE)
+		lst->err_solved++;
+	else if (code_error == NOSOLVABLE)
+		lst->err_nosolved++;
 	purple();
 	printf("File:\t");
 	get_code_color(code_error);

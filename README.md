@@ -44,7 +44,7 @@ Comando para instalar
 |    🟢     | ERROR_SEMICOLON      | Space/Tab before semicolon at the endo of the line |
 |    🟢     | ERROR_ENDIF      | Error at the ENDIF  |
 |    🟢     | ERROR_VAR_ASIGNATION | Variable inicialitzation and asignation in the same line |
-|    🟢     | ERROR_MANY_VAR   | To many variables inside a function |
+|    🔴     | ERROR_MANY_VAR   | To many variables inside a function |
 |    🟢     | ERROR_NO_SPACE_KEYWORD | Needs to be a space after a keyword |
 |    🟢     | ERROR_SPACE_BEFORE_INCREMENTAL      | Space before a incremental operator |
 |    🟢     | ERROR_SPACE_AFTER_INCREMENTAL      | Space after a incremental operator |

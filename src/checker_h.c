@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:00:33 by vics              #+#    #+#             */
-/*   Updated: 2023/07/04 23:10:40 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/06 14:20:03 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,13 @@ bool	empty_line(char *line)
 			return (false);
 		i++;
 	}
-	return ("linea: %s\n", line);
 	return (true);
 }
 
 void	mark_empty_line(lst_dir *lst, int i, bool error)
 {
 	if (!error)
-		print_error(lst, ERROR_CONSECUTIVE_NEWLINES, i + 1, MEDIUM);
+		print_error(lst, ERROR_CONSECUTIVE_NEWLINES, i + 1, SOLVABLE);
 	if (lst->info[i])
 		free(lst->info[i]);
 	lst->info[i] = ft_strdup("@#~#@\n");
@@ -109,7 +108,7 @@ void	check_include(s_variables *var, lst_dir *lst, int *i)
 	{
 		free(lst->info[*i]);
 		lst->info[*i] = ft_strdup(str);
-		print_error(lst, ERROR_INCLUDE_HEADER_FILE, *i + 1, LOW);
+		print_error(lst, ERROR_INCLUDE_HEADER_FILE, *i + 1, SOLVABLE);
 		free(str);
 	}
 }
@@ -141,7 +140,7 @@ void	check_define(s_variables *var, lst_dir *lst, int *i)
 	char *str;
 
 	if (replace_chr_chr(lst->info[*i], '\t', ' '))
-		print_error(lst, ERROR_WRONG_TAB, *i + 1, LOW);
+		print_error(lst, ERROR_WRONG_TAB, *i + 1, SOLVABLE);
 	j = ft_strstr_index(lst->info[*i], "define") + 6;
 	check_name(lst, *i, j, "#define");
 	int x = j + 1;
@@ -150,7 +149,7 @@ void	check_define(s_variables *var, lst_dir *lst, int *i)
 	str = ft_substr(lst->info[*i], j + 1, x - j - 1);
 	if (!ft_str_isupper(str))
 	{
-		print_error(lst, ERROR_NAME_MACRO, *i + 1, LOW);
+		print_error(lst, ERROR_NAME_MACRO, *i + 1, SOLVABLE);
 		ft_str_toupper(str);
 		ft_str_pop_interval(lst->info[*i], j + 1, x - 1);
 		lst->info[*i] = new_old_str(ft_strjoin_accurate(lst->info[*i], str, j + 1), lst->info[*i]);
@@ -168,14 +167,14 @@ void	check_endif(s_variables *var, lst_dir *lst, int *i)
 	{
 		free(lst->info[*i]);
 		lst->info[*i] = ft_strdup("#endif");
-		print_error(lst, ERROR_ENDIF, *i + 1, LOW);
+		print_error(lst, ERROR_ENDIF, *i + 1, SOLVABLE);
 		lst->header_level--;
 	}
 	else
 	{
 		lst->header_level--;
 		if (check_name(lst, *i, j, "#endif"))
-			print_error(lst, ERROR_ENDIF, *i + 1, LOW);
+			print_error(lst, ERROR_ENDIF, *i + 1, SOLVABLE);
 	}
 }
 
@@ -185,7 +184,7 @@ void	check_ifdef(s_variables *var, lst_dir *lst, int *i)
 
 	j = ft_strstr_index(lst->info[*i], "ifdef") + 5;
 	if (check_name(lst, *i, j, "#ifdef"))
-		print_error(lst, ERROR_ENDIF, *i + 1, LOW);
+		print_error(lst, ERROR_ENDIF, *i + 1, SOLVABLE);
 	lst->header_level++;
 }
 
@@ -196,7 +195,7 @@ void	check_else(s_variables *var, lst_dir *lst, int *i)
 	lst->header_level--;
 	j = ft_strstr_index(lst->info[*i], "else") + 4;
 	if (check_name(lst, *i, j, "#else"))
-		print_error(lst, ERROR_ENDIF, *i + 1, LOW);
+		print_error(lst, ERROR_ENDIF, *i + 1, SOLVABLE);
 	lst->header_level++;
 }
 
@@ -228,32 +227,32 @@ void	check_indef(s_variables *var, lst_dir *lst, int *i)
 	char *str;
 
 	if (replace_chr_chr(lst->info[*i], '\t', ' '))
-		print_error(lst, ERROR_WRONG_TAB, *i + 1, LOW);
+		print_error(lst, ERROR_WRONG_TAB, *i + 1, SOLVABLE);
 	if (lst->header_level == 0)
 	{
 		if (replace_chr_chr(lst->info[*i], '\t', ' '))
-			print_error(lst, ERROR_WRONG_TAB, *i + 1, LOW);
+			print_error(lst, ERROR_WRONG_TAB, *i + 1, SOLVABLE);
 		str = check_name_header(lst, i, "#ifndef ");
 		if (ft_strcmp(str, lst->info[*i]) != 0)
 		{
 			lst->info[*i] = new_old_str(str, lst->info[*i]);
-			print_error(lst, ERROR_HEADER_FILE, *i + 1, LOW);
+			print_error(lst, ERROR_HEADER_FILE, *i + 1, SOLVABLE);
 		}
 		*i += 1;
 		if (replace_chr_chr(lst->info[*i], '\t', ' '))
-			print_error(lst, ERROR_WRONG_TAB, *i + 1, LOW);
+			print_error(lst, ERROR_WRONG_TAB, *i + 1, SOLVABLE);
 		str = check_name_header(lst, i, "# define ");
 		if (ft_strcmp(str, lst->info[*i]) != 0)
 		{
 			lst->info[*i] = new_old_str(str, lst->info[*i]);
-			print_error(lst, ERROR_HEADER_FILE, *i + 1, LOW);
+			print_error(lst, ERROR_HEADER_FILE, *i + 1, SOLVABLE);
 		}
 	}
 	else
 	{
 		j = ft_strstr_index(lst->info[*i], "ifndef") + 6;
 		if (check_name(lst, *i, j, "#ifndef"))
-			print_error(lst, ERROR_ENDIF, *i + 1, LOW);
+			print_error(lst, ERROR_ENDIF, *i + 1, SOLVABLE);
 	}
 		
 	lst->header_level++;
@@ -376,12 +375,12 @@ int	correct_var(s_variables *var, lst_dir *lst, int *i, int max)
 	if (n == 0)
 	{
 		lst->info[*i] = new_old_str(ft_strjoin_accurate(lst->info[*i], "\t", 0), lst->info[*i]);
-		print_error(lst, ERROR_NO_TAB_START_VAR, *i + 1, MEDIUM);
+		print_error(lst, ERROR_NO_TAB_START_VAR, *i + 1, SOLVABLE);
 	}
 	int index = ft_strchr_nocomented(lst->info[*i], '=');
 	j = (index == -1) ? ft_strlen(lst->info[*i]) - 3 : index - 2;
 	if (replace_chr_chr(&lst->info[*i][j], '\t', ' '))
-		print_error(lst, ERROR_WRONG_TAB, *i + 1, LOW);
+		print_error(lst, ERROR_WRONG_TAB, *i + 1, SOLVABLE);
 	while (j >= 0 && (lst->info[*i][j] == ' ' || lst->info[*i][j] == '\t'))
 	{
 		ft_str_pop_pos(lst->info[*i], j);
@@ -394,7 +393,7 @@ int	correct_var(s_variables *var, lst_dir *lst, int *i, int max)
 	{
 		if (lst->info[*i][j] == ' ')
 		{
-			print_error(lst, ERROR_WRONG_SPACE, *i + 1, LOW);
+			print_error(lst, ERROR_WRONG_SPACE, *i + 1, SOLVABLE);
 			lst->info[*i][j] = '\t';
 		}
 		j--; 
@@ -404,7 +403,7 @@ int	correct_var(s_variables *var, lst_dir *lst, int *i, int max)
 	if (j != n - 1 && lst->info[*i][j] != ' ')
 	{
 		lst->info[*i][j] = ' ';
-		print_error(lst, ERROR_WRONG_SPACE, *i + 1, LOW);
+		print_error(lst, ERROR_WRONG_SPACE, *i + 1, SOLVABLE);
 	}
 	remove_extra_spaces_2(var, lst, *i);		
 	return (get_max(max, get_real_hor_pos(lst->info[*i])));
@@ -430,11 +429,12 @@ void	check_strcture(s_variables *var, lst_dir *lst, int *i)
 	if (!empty_line(lst->info[*i - 2]))
 	{
 		remove_last_spaces(var, lst, *i);
-		print_error(lst, ERROR_NO_EMPTY_LINE, *i - 1, LOW);
+		print_error(lst, ERROR_NO_EMPTY_LINE, *i - 1, SOLVABLE);
 		new = ft_strjoin(lst->info[*i - 2], "\n");
 		free(lst->info[*i - 2]);
 		lst->info[*i - 2] = ft_strdup(new);
 	}
+	max = 0;
 	*i += 1;
 	while (!ft_strrchr(lst->info[*i], '}'))///var inside struct
 	{
@@ -456,9 +456,9 @@ void	check_strcture(s_variables *var, lst_dir *lst, int *i)
 	{
 		remove_last_spaces(var, lst, *i);
 		if (!ft_strstr(lst->info[*i], "\tt_"))
-			print_error(lst, ERROR_STRUCT_NAME, *i + 1, LOW);
+			print_error(lst, ERROR_STRUCT_NAME, *i + 1, NOSOLVABLE);
 		if (replace_chr_chr(lst->info[*i], ' ', '\t'))
-			print_error(lst, ERROR_WRONG_TAB, *i + 1, LOW);
+			print_error(lst, ERROR_WRONG_TAB, *i + 1, SOLVABLE);
 		j = ft_strlen(lst->info[*i]) - 2;
 		while (j >= 0 && lst->info[*i][j] != ' ' && lst->info[*i][j] != '\t')
 			j--;

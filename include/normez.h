@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:43:48 by victgonz          #+#    #+#             */
-/*   Updated: 2023/07/04 23:31:50 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/06 12:37:18 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,15 @@
 //MACROS
 # define TAB_SIZE 4
 # define TYPE_VAR "short,int,long,char,void,unsigned"
-# define KEY_WORDS "do,else,for,if,switch,while"
+# define KEY_WORDS "else if,do,else,for,if,switch,while"
 # define KEY_WORDS_INDENT "case,default,do,else,for,if,switch,while"
-# define OPPERATORS_BOTH_SPACE "==,||,++,--,&&,//,/*,*/,+=,*=,-=,%=,/=,!=,->,<=,>=,<,>,=,/,+,-,%,.,(,),;,[,]"
+# define OPPERATORS_BOTH_SPACE "==,||,++,--,&&,//,/*,*/,+=,*=,-=,%=,/=,!=,->,<=,>=,<,>,=,/,%,.,(,),;,[,]"
 # define OPPERATORS_NO_SPACE "++,--"
 
 //MACROS ERROR COLOR
-# define LOW 1
-# define MEDIUM 2
-# define HIGH 3
+# define SOLVABLE 3
+# define WTF 2
+# define NOSOLVABLE 1
 # define COMMENT 4
 
 //MACROS ERRORS
@@ -151,6 +151,10 @@ void			check_errors_h(s_variables *var, lst_dir *lst);
 //PRINT ERROR
 void			print_error(lst_dir *lst, char *msg_error, int line, int code_error);
 void			print_error_var(lst_dir *lst, char *msg_error, int line, int code_error);
+
+
+void	confirmacion_replace(s_variables *var);
+void	grade_the_app(s_variables *var);
 
 //COLORS
 void			red(void);

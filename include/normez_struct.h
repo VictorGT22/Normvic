@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 11:43:01 by vics              #+#    #+#             */
-/*   Updated: 2023/07/03 15:07:19 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/05 21:35:59 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ typedef struct lst_dir
 	int				num_functions;
 	int				num_bracket;
 	int				indent;
-	bool			no_error;
+	int				no_error;
+	int				err_solved;
+	int				err_nosolved;
 	int				inside_comment;
 	int				header_level;
 	struct lst_dir	*next;
@@ -46,6 +48,7 @@ typedef struct flags
 	bool	only_c;
 	bool	only_h;
 	bool	help;
+	bool	rate;
 }	t_flags;
 
 typedef struct s_variables

@@ -5,133 +5,64 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/12 23:43:48 by victgonz          #+#    #+#             */
-/*   Updated: 2023/07/02 17:07:11 by vics             ###   ########.fr       */
+/*   Created: 2023/04/28 11:43:01 by vics              #+#    #+#             */
+/*   Updated: 2023/07/06 14:21:49 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PRUEBA_H
 # define PRUEBA_H
 
-# include "libft.h"
-# include "ft_printf.h"
-# include "normez_struct.h"
-# include <stdio.h>
-# include <unistd.h>
-# include <stdarg.h>
-# include <string.h>
-# include <ctype.h>
-# include <stdlib.h>
-# include <string.h>
-# include <dirent.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <time.h>
-# include <pwd.h>
-# include <grp.h>
-# include <string.h>
 # include <stdbool.h>
 
-//MACROS
-# define TAB_SIZE 4
-# define TYPE_VAR "short,int,long,char,void,unsigned"
-# define KEY_WORDS "do,else,for,if,switch,while"
-# define KEY_WORDS_INDENT "case,default,do,else,for,if,switch,while"
-# define OPPERATORS_BOTH_SPACE "==,||,++,--,&&,//,/*,*/,+=,*=,-=,%=,/=,!=,->,<=,>=,<,>,=,/,+,-,%,."
-# define OPPERATORS_NO_SPACE "++,--"
+typedef struct lst_dir
+{
+	char			*path;
+	char			**info;
+	int				num_functions;
+	int				num_bracket;
+	int				indent;
+	int				no_error;
+	int				err_solved;
+	int				err_nosolved;
+	int				inside_comment;
+	int				header_level;
+	struct lst_dir	*next;
+	struct lst_dir	*prev;
+}	lst_dir;
 
-//MACROS ERROR COLOR
-# define LOW 1
-# define MEDIUM 2
-# define HIGH 3
-# define COMMENT 4
+typedef struct lst_array
+{
+	char				*str;
+	struct lst_array	*next;
+	struct lst_array	*prev;
+}	t_lst_arr;
 
-//MACROS ERRORS
-# define ERROR_MSG "Error\n"
-# define ERROR_HEADER "Header corrupted, try to verify\n"
-# define ERROR_TRALING_SPACE "Traling spaces at the end of the line\n"
-# define ERROR_WRONG_TAB "There is a Tab, where needs to be a Space\n"
-# define ERROR_WRONG_SPACE "There is a Space, where needs to be a Tab\n"
-# define ERROR_SPACE_NAME_FUNC "Space between function name and brakets\n"
-# define ERROR_CONSECUTIVE_NEWLINES "Two o more consecutive new lines\n"
-# define ERROR_HEADER_FILE "Corrupted initialization header file\n"
-# define ERROR_INCLUDE_HEADER_FILE "Error Include in header file\n"
-# define ERROR_NO_EMPTY_LINE "Error no empty line\n"
-# define ERROR_WRONG_EMPTY_LINE "Error wrong empty line\n"
-# define ERROR_STRUCT_NAME "Struct abreviation needs to start with 't_'\n"
-# define ERROR_SEMICOLON "Space/Tab before semicolon at the endo of the line\n"
-# define ERROR_ENDIF "Error at the ENDIF\n"
-# define ERROR_VAR_ASIGNATION "Variable inicialitzation and asignation in the same line\n"
-# define ERROR_MANY_VAR "To many variables inside a function\n"
-# define ERROR_NO_SPACE_KEYWORD "Needs to be a space after a keyword\n"
-# define ERROR_SPACE_BEFORE_INCREMENTAL "Space before a incremental operator\n"
-# define ERROR_SPACE_AFTER_INCREMENTAL "Space after a incremental operator\n"
-# define ERROR_NO_SPACE_BEFORE_OPERATOR "Need to be a Space before a operator\n"
-# define ERROR_NO_SPACE_AFTER_OPERATOR "Need to be a Space after a operator\n"
-# define ERROR_SPACE_BEFORE_STRUCT_OPERATOR "Space before a struct operator\n"
-# define ERROR_SPACE_AFTER_STRUCT_OPERATOR "Space after a struct operator\n"
-# define ERROR_TO_LONG_LINE "Line to long, more than 80 columns\n"
-# define ERROR_VARIBALES_FOLLOWED "Variable declaration must be at the start of the function\n"
-# define ERROR_INDENTATION "Wrong Indentation\n"
-# define ERROR_COMMENT_FUNCTION "Comment inside a function\n"
-# define ERROR_NO_EMPTY_LINE_VAR "Error no empty line between Variables and your code\n"
-# define ERROR_OPPERATOR_END "Operator at the end of the line\n"
-# define ERROR_BRACKET_KEYWORD "Curly bracket in the same line than a keyword or prototipe function\n"
-# define ERROR_BRACKET_NOEMPTY "Curly bracket must be alone in the line\n"
-# define ERROR_CLOSE_BRACKET_NOEMPTY "No empty line after a close curly bracket\n"
-# define ERROR_ENTER_FUNCTIONS "Need to be a empty line between functions\n"
-# define ERROR_ENTER_END_FILE "Need to be a empty line at the end of the file\n"
-# define ERROR_NAME_MACRO "Macros needs to be named with all letters uppercase\n"
-# define ERROR_NUM_FUNCTIONS "Too many functions inside a file "
-# define ERROR_NUM_LINES "Too many lines in a function "
+typedef struct flags
+{
+	bool	all;
+	bool	brackets;
+	bool	comments;
+	bool	indents;
+	bool	replace;
+	bool	only_c;
+	bool	only_h;
+	bool	help;
+	bool	rate;
+}	t_flags;
 
-//PROTOTIPES
-lst_dir			*new_node(char *filepath);
-void			lstadd_back(lst_dir **lst, lst_dir *new);
-lst_dir			*lstlast(lst_dir *lst);
-t_lst_arr		*new_node_arr(char *line);
-void			lstadd_back_arr(t_lst_arr **lst, t_lst_arr *new);
-t_lst_arr		*lstlast_arr(t_lst_arr *lst);
-int				get_real_hor_pos(char *str);
-int				correct_var(s_variables *var, lst_dir *lst, int *i, int max);
+typedef struct s_variables
+{
+	lst_dir		*lst_dir;
+	lst_dir		*lst_files;
+	t_lst_arr	*var_type;
+	t_lst_arr	*var_bad_decl;
+	t_lst_arr	*var_bad_line;
+	t_flags		*flags;
+	char		**keywords_indent;
+	char		**keywords;
+	char		**operators;
+	char		**operators_nospace;
+}	s_variables;
 
-//CHECKER
-unsigned int	check_header(s_variables *var, lst_dir *lst, int *add_i);
-void			check_errors(s_variables *var, lst_dir *lst);
-void			remove_extra_spaces(s_variables *var, lst_dir *lst, int i);
-void			remove_last_spaces(s_variables *var, lst_dir *lst, int i);
-void			remove_extra_spaces_2(s_variables *var, lst_dir *lst, int i);
-void			remove_mid_spaces(s_variables *var, lst_dir *lst, int i);
-void			remove_btw_semicolon(s_variables *var, lst_dir *lst, int i);
-int				check_name_prototipe(s_variables *var, lst_dir *lst, int j, int i);
-void			check_prototipe_func(s_variables *var, lst_dir *lst, int i, bool proto);
-char			*correct_misaligned(char *line, int max, int num_tabs);
-void			mark_empty_line(lst_dir *lst, int i, bool error);
-char			*ft_strjoin_accurate(char *str_1, char *str_2, int pos);
-bool			empty_line(char *line);
-int				ft_strchr_nocomented(char *str, char c);
-char			*new_old_str(char *new, char *old);
-
-//FUNCIONES UTILES
-int				count_indentations(char *str);
-char			**ft_add_chr_arr(char **src_arr, char c, int pos);
-void			print_array(char **arr);
-void			ft_str_pop_interval(char *str, int ini, int end);
-void			check_operators(s_variables *var, lst_dir *lst, int *i);
-void			check_keywords(s_variables *var, lst_dir *lst, int *i);
-
-//CHECKER _H
-void			check_errors_h(s_variables *var, lst_dir *lst);
-
-//PRINT ERROR
-void			print_error(char *path, char *msg_error, int line, int code_error);
-void			print_error_var(char *path, char *msg_error, int line, int code_error);
-
-//COLORS
-void			red(void);
-void			green(void);
-void			yellow(void);
-void			blue(void);
-void			purple(void);
-void			reset(void);
 #endif
