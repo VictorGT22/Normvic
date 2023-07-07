@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:00:33 by vics              #+#    #+#             */
-/*   Updated: 2023/07/07 17:42:50 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/07 18:49:42 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,6 @@ void	check_define(s_variables *var, lst_dir *lst, int *i)
 
 	if (replace_chr_chr(lst->info[*i], '\t', ' '))
 		print_error(lst, ERROR_WRONG_TAB, *i + 1, SOLVABLE);
-
 	j = ft_strstr_index_nocomented(lst->info[*i], "define", 0) + 6;
 	if (check_name(lst, *i, j, "#define"))
 		print_error(lst, ERROR_SPACE_HASH, *i + 1, SOLVABLE);
@@ -500,25 +499,25 @@ void	read_lines_h(s_variables *var, lst_dir *lst, int *add_i)
 	while (lst->info[i])
 	{
 		remove_last_spaces(var, lst, i);
-		if (ft_strchr(lst->info[i], '#'))
+		if (ft_strchr_nocomented(lst->info[i], '#') != -1)
 		{
 			remove_extra_spaces(var, lst, i);
-			if (ft_strnstr(lst->info[i], "ifndef", ft_strlen(lst->info[i])))
+			if (ft_strstr_index_nocomented(lst->info[i], "ifndef", 0) != -1)
 				check_indef(var, lst, &i);
-			else if (ft_strnstr(lst->info[i], "include", ft_strlen(lst->info[i])))
+			else if (ft_strstr_index_nocomented(lst->info[i], "include", 0) != -1)
 				check_include(var, lst, &i);
-			else if (ft_strnstr(lst->info[i], "define", ft_strlen(lst->info[i])))
+			else if (ft_strstr_index_nocomented(lst->info[i], "define", 0) != -1)
 				check_define(var, lst, &i);
-			else if (ft_strnstr(lst->info[i], "endif", ft_strlen(lst->info[i])))
+			else if (ft_strstr_index_nocomented(lst->info[i], "endif", 0) != -1)
 				check_endif(var, lst, &i);
-			else if (ft_strnstr(lst->info[i], "else", ft_strlen(lst->info[i])))
+			else if (ft_strstr_index_nocomented(lst->info[i], "else", 0) != -1)
 				check_else(var, lst, &i);
-			else if (ft_strnstr(lst->info[i], "ifdef", ft_strlen(lst->info[i])))
+			else if (ft_strstr_index_nocomented(lst->info[i], "ifdef", 0) != -1)
 				check_ifdef(var, lst, &i);
 		}
-		if (ft_strrchr(lst->info[i], ';'))
+		if (ft_strchr_nocomented(lst->info[i], ';') != -1)
 		{
-			if (ft_strrchr(lst->info[i], ')'))
+			if (ft_strchr_nocomented(lst->info[i], ')') != -1)
 			{
 				remove_btw_semicolon(var, lst, i);
 				remove_extra_spaces(var, lst, i);
@@ -528,7 +527,7 @@ void	read_lines_h(s_variables *var, lst_dir *lst, int *add_i)
 				max_aligned_proto = get_max(max_aligned_proto, get_real_hor_pos(lst->info[i]));
 			}
 		}
-		else if (ft_strrchr(lst->info[i], '{'))
+		else if (ft_strchr_nocomented(lst->info[i], '{') != -1)
 			check_strcture(var, lst, &i);
 		i++;
 	}
