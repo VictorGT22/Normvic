@@ -5,10 +5,6 @@ cd "$HOME" || exit
 # download github
 git clone --recursive https://github.com/VictorGT22/Normvic.git
 
-cp -r normvic "$HOME"
-
-cd "$HOME" || exit
-
 cd "$HOME"/normvic || exit
 
 
@@ -23,7 +19,7 @@ cd "$HOME"/normvic || exit
 # 
 # echo "try to add alias in file: $RC_FILE"
 # 
-set up the alias
+##set up the alias
 # if ! grep "normvic=" "$RC_FILE" &> /dev/null; then
 	# echo "normvic alias not present"
 	# printf "\nalias normvic=%s/normvic/tester.sh\n" "$HOME" >> "$RC_FILE"
