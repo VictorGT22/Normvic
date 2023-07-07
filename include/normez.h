@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:43:48 by victgonz          #+#    #+#             */
-/*   Updated: 2023/07/06 20:51:32 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/07 14:33:22 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 # define KEY_WORDS "else if,do,else,for,if,switch,while"
 # define KEY_WORDS_INDENT "case,default,do,else,for,if,switch,while"
 # define OPPERATORS_BOTH_SPACE "==,||,++,--,&&,//,/*,*/,+=,*=,-=,%=,/=,!=,->,<=,>=,<,>,=,/,%,.,(,),;,[,]"
-# define OPPERATORS_DIVIDE "&&,||"
+# define OPPERATORS_DIVIDE "&&,||,!=,==,<=,>="
 
 //MACROS ERROR COLOR
 # define SOLVABLE 3
@@ -97,6 +97,7 @@
 # define ERROR_VOID "If a function does not receive anything, it must have the type void\n"
 # define ERROR_NO_TAB_START_VAR "No tab before var, cmon be focus when you code\n"
 # define ERROR_MISALIGNED "Variable misaligned\n"
+# define ERROR_MISALIGNED_PROTO "Prototype misaligned\n"
 # define ERROR_MULTIPLE_SPACES "Unecesary multiple space elements followed\n"
 
 

@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/07 10:30:40 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/07 14:51:42 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -814,7 +814,7 @@ int	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int lo
 	{
 		int pos_keyword = is_keyword(var, lst, *i, var->keywords);
 		int len = pos_keyword != 0 ? ft_strlen(var->keywords[type_keyword(var, lst, *i, var->keywords)]) : 0;
-		
+
 		if (!ft_strcmp(var->operators[op], "(") && (lst->info[*i][lower - 1] == ' '	|| lst->info[*i][lower - 1] == '\t') && (pos_keyword == 0 || (pos_keyword + 1 + len) != lower) && ft_isalnum(lst->info[*i][lower - 2]))
 		{
 			ft_str_pop_pos(lst->info[*i], lower - 1);
@@ -904,8 +904,9 @@ void	check_operators(s_variables *var, lst_dir *lst, int *i)
 		op = -1;
 		while (var->operators[x])
 		{
+			//printf("entra ?\n");
 			index = ft_strstr_index_nocomented(lst->info[*i], var->operators[x], prev + prev_len);
-			if (index != -1 && (lower > index && lower == -1))
+			if (index != -1 && (lower > index || lower == -1))
 			{
 				if ((prev + prev_len <= index)
 				|| prev == 0)
@@ -941,7 +942,7 @@ int	is_keyword(s_variables *var, lst_dir *lst, int i, char **keywords)
 	while (keywords[x])
 	{
 		index = ft_strstr_index_nocomented(lst->info[i], keywords[x], 0);
-		if (index != -1)
+		if (index != -1 && operator_start(lst, &i, index))
 			return (index);
 		x++;
 	}
@@ -973,7 +974,7 @@ void	check_keywords(s_variables *var, lst_dir *lst, int *i)
 	while (var->keywords[x])
 	{
 		index = ft_strstr_index_nocomented(lst->info[*i], var->keywords[x], 0);
-		if (index != -1)
+		if (index != -1 && operator_start(lst, i, index))
 		{
 			index = index + ft_strlen(var->keywords[x]);
 			if (lst->info[*i][index] != ' ' && !ft_isalpha(lst->info[*i][index]) && lst->info[*i][index] != '\n')
@@ -985,6 +986,7 @@ void	check_keywords(s_variables *var, lst_dir *lst, int *i)
 		}
 		x++;
 	}
+	
 }
 
 void	correct_line_bracket(s_variables *var, lst_dir *lst, int i, int index)
@@ -1000,6 +1002,7 @@ void	correct_line_bracket(s_variables *var, lst_dir *lst, int i, int index)
 	lst->info[i][index] = '\n';
 	lst->info[i][index + 1] = '\0';
 	lst->info = ft_add_str_arr(lst->info, str, i + 1);
+	lst->line_compensation++;
 	tabs_str = malloc(sizeof(char) * num_tabs + 1);
 	ft_bzero(tabs_str, num_tabs + 1);
 	ft_memset(tabs_str, '\t', num_tabs);
@@ -1225,6 +1228,7 @@ void	print_array(char **arr)
 	}	
 }
 
+
 int 	get_operator_divide(s_variables *var, lst_dir *lst, int *i)
 {
 	int x;
@@ -1238,22 +1242,50 @@ int 	get_operator_divide(s_variables *var, lst_dir *lst, int *i)
 	while (lower != -1)
 	{
 		x = 0;
-		op = -1;
 		lower = -1;
 		while (var->op_divide[x])
 		{
-			index = ft_strstr_index_nocomented(lst->info[*i], var->op_divide[x], prev + prev_len);
+			index = ft_strstr_index_nocomented(lst->info[*i], var->op_divide[x], prev + 1);
 			if (index != -1 && index <= 80 && (prev < index || prev == 0))
 			{
+				prev = index;
 				lower = index;
 				op = x;
+				
 			}
 			x++;
 		}
-		prev = lower;
 	}
-	return (lower);
-	
+	return (prev);	
+}
+
+void	correct_line_long(s_variables *var, lst_dir *lst, int *i)
+{
+	int index;
+	int tabs;
+	char *str;
+	char *str_tabs;
+
+	tabs = count_indentations(lst->info[*i]);
+	index = get_operator_divide(var, lst, i);
+	if (index != 0)
+	{
+		if (is_keyword(var, lst, *i, var->keywords))
+		{
+			printf("lina con keyword: %s\n", lst->info[*i]);
+		}	//tabs++;
+		str_tabs = malloc(sizeof(char) * tabs + 1);
+		bzero(str_tabs, tabs + 1);
+		ft_memset(str_tabs, '\t', tabs);
+		str = ft_substr(lst->info[*i], index, ft_strlen(lst->info[*i]));
+		str = ft_strjoin(str_tabs, str);
+		lst->info = ft_add_str_arr(lst->info, str, *i + 1);
+		lst->line_compensation++;
+		ft_str_pop_interval(lst->info[*i], index - 1, ft_strlen(lst->info[*i]) - 2);
+		printf("linea: %s\n", lst->info[*i]);
+		printf("%s\n", str);
+		*i += 1;
+	}
 }
 
 void	check_columns(s_variables *var, lst_dir *lst, int *i)
@@ -1280,7 +1312,7 @@ void	check_columns(s_variables *var, lst_dir *lst, int *i)
 			reset();
 		}
 		printf("\n\n");
-		//correct_size_line(var, lst, i);
+		correct_line_long(var, lst, i);
 	}
 }
 
@@ -1300,6 +1332,7 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 	num_var = 0;
 	lst->num_bracket = 0;
 	lst->inside_comment = 0;
+	lst->line_compensation = 0;
 	start = *i + 1 + check_brackets(var, lst, *i);
 	followed_var = is_var(lst->info[start]);
 	check_prototipe_func(var, lst, *i - 1, false);
@@ -1336,6 +1369,7 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 				while (temp) // ADD BAD DECLARATION VARIABLES (ASIGNATION AND DECLARATION)
 				{
 					lst->info = ft_add_str_arr(lst->info, temp->str, *i);
+					lst->line_compensation++;
 					temp = temp->next;
 				}
 			}
@@ -1355,6 +1389,7 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 	while (temp) // ADD BAD DECLARATION LINE VARIABLES (ASIGNATION AND DECLARATION)
 	{
 		lst->info = ft_add_str_arr(lst->info, temp->str, start);
+		lst->line_compensation++;
 		temp = temp->next;
 	}
 	lst->indent = 0;
@@ -1372,6 +1407,7 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 		else if (followed_var && !empty_line(lst->info[*i]) && ft_strcmp(lst->info[*i], "@#~#@\n") != 0)
 		{
 			lst->info = ft_add_str_arr(lst->info, "\n", *i);
+			lst->line_compensation++;
 			print_error(lst, ERROR_NO_EMPTY_LINE_VAR, *i - 1, SOLVABLE);
 			followed_var = false;
 		}
@@ -1398,15 +1434,16 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 		{
 			print_error(lst, ERROR_ENTER_FUNCTIONS, *i + 1, SOLVABLE);
 			lst->info = ft_add_str_arr(lst->info, "\n", *i);
+			lst->line_compensation++;
 		}
 	}
 }
 
-void	check_num_lines(lst_dir *lst, int num_lines, int i)
+void	check_num_lines(lst_dir *lst, int num_lines, int line, int i)
 {
 	if (num_lines > 25)
 	{
-		print_error_var(lst, ERROR_NUM_LINES, i + 1, NOSOLVABLE);
+		print_error_var(lst, ERROR_NUM_LINES, line + 1, NOSOLVABLE);
 		printf("(");		 
 		green();
 		printf("25 ");		 
@@ -1456,7 +1493,7 @@ void	check_errors(s_variables *var, lst_dir *lst)
 			num_lines = i;
 			inside_function(var, lst, &i);
 			num_lines = i - num_lines;
-			check_num_lines(lst,num_lines - 2, i);	
+			check_num_lines(lst, num_lines - 2, i - num_lines, i);	
 			lst->num_functions++;
 		}
 		else

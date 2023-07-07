@@ -2,6 +2,10 @@
 
 The NORMVIC is a tool to check that the source code respects the school’s norm AND CORRECTS ERRORS IT SELF.
 
+![Can not load the gif](./bin/media/videos/Howworks.mp4)
+
+
+
 ## INSTALL
 
 Comando para instalar
@@ -16,6 +20,7 @@ Comando para instalar
 | -C        | Evaluate only .c   |
 | -H        | Evaluate only .h   |
 | -r        | Correct the errors |
+| -R        | Rate the app       |
 
 ### Type error
 
@@ -77,6 +82,9 @@ Comando para instalar
 |    🟢     | ERROR_SPACE_BEFORE_BRACKETS | Space before square brackets|
 |    🟢     | ERROR_VOID | If a function does not receive anything, it must have the type void|
 |    🟢     | ERROR_NO_TAB_START_VAR | No tab before var, cmon be focus when you code|
+|    🟢     | ERROR_MISALIGNED | Variable misaligned|
+|    🟢     | ERROR_MISALIGNED_PROTO | Prototype misaligned|
+|    🟢     | ERROR_MULTIPLE_SPACES | Unecesary multiple space elements followed|
 
 
 ### Recomendations

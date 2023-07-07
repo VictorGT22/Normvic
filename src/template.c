@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/07/06 20:53:34 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/07 14:43:37 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,8 +307,8 @@ int	main(int argc, char **argv)
 		var->keywords = ft_split(KEY_WORDS, ',');
 		var->operators = ft_split(OPPERATORS_BOTH_SPACE, ',');
 		var->operators = ft_add_chr_arr(var->operators, ',', 0);
-
 		var->op_divide = ft_split(OPPERATORS_DIVIDE, ',');
+
 		int i = 0;
 		t_lst_arr *node2;
 		save_data_files(var);

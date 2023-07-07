@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 11:43:01 by vics              #+#    #+#             */
-/*   Updated: 2023/07/06 20:53:46 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/07 13:30:53 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct lst_dir
 	int				err_nosolved;
 	int				inside_comment;
 	int				header_level;
+	int				line_compensation;
 	struct lst_dir	*next;
 	struct lst_dir	*prev;
 }	lst_dir;
