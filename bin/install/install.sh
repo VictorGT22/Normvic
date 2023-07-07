@@ -3,7 +3,7 @@
 cd "$HOME" || exit
 
 # download github
-git clone --recursive https://github.com/VictorGT22/Normvic.git normvic
+git clone --recursive https://github.com/VictorGT22/Normvic.git
 
 cp -r normvic "$HOME"
 
