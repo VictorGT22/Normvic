@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:43:48 by victgonz          #+#    #+#             */
-/*   Updated: 2023/07/07 18:48:25 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/07 22:15:44 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@
 # define ERROR_INDENTATION "Wrong Indentation\n"
 # define ERROR_COMMENT_FUNCTION "Comment inside a function\n"
 # define ERROR_NO_EMPTY_LINE_VAR "Error no empty line between Variables and your code\n"
-# define ERROR_OPPERATOR_END "Operator at the end of the line\n"
+#define ERROR_OPPERATOR_END "Operator at the end of the line\n"
 # define ERROR_BRACKET_KEYWORD "Curly bracket in the same line than a keyword or prototipe function\n"
 # define ERROR_BRACKET_NOEMPTY "Curly bracket must be alone in the line\n"
 # define ERROR_CLOSE_BRACKET_NOEMPTY "No empty line after a close curly bracket\n"

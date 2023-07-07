@@ -9,7 +9,7 @@ cd "$HOME"/Normvic || exit
 
 
 alias_name="normvic"
-alias_command="pwd"
+alias_command="$HOME/Normvic/normez \$1"
 
 ##Verifica si el archivo .bashrc existe y no contiene ya el alias
 
