@@ -8,7 +8,7 @@ cd temp_____ || exit
 rm -rf normvic
 
 # download github
-git clone --recursive https://github.com/VictorGT22/NORMVIC.git
+git clone --recursive https://github.com/VictorGT22/Normvic.git
 
 cp -r normvic "$HOME"
 
@@ -36,5 +36,4 @@ if ! grep "normvic=" "$RC_FILE" &> /dev/null; then
 fi
 
 exec "$SHELL"
-
 
