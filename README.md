@@ -2,8 +2,12 @@
 
 The NORMVIC is a tool to check that the source code respects the school’s norm AND CORRECTS ERRORS IT SELF.
 
-![Can not load the gif](./bin/media/videos/howworks.webm)
+![Can not load the gif](/bin/media/videos/howworks.webm)
 
+<!-- <video controls> -->
+  <!-- <source src=  type="tipo_de_video"> -->
+  <!-- Tu navegador no admite la reproducción de videos. -->
+<!-- </video> -->
 
 
 ## INSTALL
