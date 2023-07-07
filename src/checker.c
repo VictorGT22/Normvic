@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/06 21:40:05 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/07 10:30:40 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1280,7 +1280,7 @@ void	check_columns(s_variables *var, lst_dir *lst, int *i)
 			reset();
 		}
 		printf("\n\n");
-		correct_size_line(var, lst, i);
+		//correct_size_line(var, lst, i);
 	}
 }
 
