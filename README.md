@@ -2,7 +2,7 @@
 
 The NORMVIC is a tool to check that the source code respects the school’s norm AND CORRECTS ERRORS IT SELF.
 
-<img style="float: center;" src="./bin/media/videos/howworks.webm">
+<img style="float: center;" src="./bin/media/videos/howworks.gif">
 
 ## INSTALL
 
