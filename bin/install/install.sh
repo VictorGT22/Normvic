@@ -21,7 +21,7 @@ if [[ -f "$HOME/.bashrc" ]]; then
         echo "Alias already exists in the .bashrc file"
     fi
 
-else if [[ -f "$HOME/.zshrc" ]]; then
+elif [[ -f "$HOME/.zshrc" ]]; then
     if ! grep -qF "alias $alias_name=" "$HOME/.zshrc"; then
         echo "alias $alias_name=\"$alias_command\"" >> "$HOME/.zshrc"
         echo "Alias added to the .zshrc file"
@@ -31,4 +31,3 @@ else if [[ -f "$HOME/.zshrc" ]]; then
 fi
 
 exec "$SHELL"
-
