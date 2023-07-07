@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_str_is_upper.c                                  :+:      :+:    :+:   */
+/*   ft_str_isupper.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 22:36:38 by vics              #+#    #+#             */
-/*   Updated: 2023/07/01 22:45:41 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/07 17:00:01 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_str_isupper(char *str)
+int	ft_str_isupper(char *str) //acabo de modificar esta funcion
 {
 	int x;
 
 	x = 0;
 	while (str[x])
 	{
-		if (str[x] != '_' && (str[x] < 'A' || str[x] > 'Z'))
+		if (ft_isalpha(str[x]) && (str[x] < 'A' || str[x] > 'Z'))
 			return (0);
 		x++;
 	}

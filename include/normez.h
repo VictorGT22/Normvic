@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:43:48 by victgonz          #+#    #+#             */
-/*   Updated: 2023/07/07 14:33:22 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/07 17:34:39 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@
 # define ERROR_CONSECUTIVE_NEWLINES "Two o more consecutive new lines\n"
 # define ERROR_HEADER_FILE "Corrupted initialization header file\n"
 # define ERROR_INCLUDE_HEADER_FILE "Error Include in header file\n"
+# define ERROR_INDEF_NAME "Error name ifndef must be in uppercase\n"
+# define ERROR_INDEF "Error ifndef\n"
+# define ERROR_SPACE_HASH "You forgot a space after #"
 # define ERROR_NO_EMPTY_LINE "Error no empty line\n"
 # define ERROR_WRONG_EMPTY_LINE "Error wrong empty line\n"
 # define ERROR_STRUCT_NAME "Struct abreviation needs to start with 't_'\n"
@@ -144,6 +147,9 @@ int	is_keyword(s_variables *var, lst_dir *lst, int i, char **keywords);
 int	type_keyword(s_variables *var, lst_dir *lst, int i, char **keywords);
 
 int	empty_until_pos(char *str, int pos);
+
+
+int	ft_strstr_index_nocomented(const char *haystack, const char *needle, int ini);
 
 
 //CHECKER _H

@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:00:33 by vics              #+#    #+#             */
-/*   Updated: 2023/07/06 14:20:03 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/07 17:42:50 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	check_include(s_variables *var, lst_dir *lst, int *i)
 	{
 		free(lst->info[*i]);
 		lst->info[*i] = ft_strdup(str);
-		print_error(lst, ERROR_INCLUDE_HEADER_FILE, *i + 1, SOLVABLE);
+		print_error(lst, ERROR_SPACE_HASH, *i + 1, SOLVABLE);
 		free(str);
 	}
 }
@@ -137,13 +137,17 @@ int check_name(lst_dir *lst, int i, int j, char *type)
 void	check_define(s_variables *var, lst_dir *lst, int *i)
 {
 	int	j;
+	int x;
 	char *str;
 
 	if (replace_chr_chr(lst->info[*i], '\t', ' '))
 		print_error(lst, ERROR_WRONG_TAB, *i + 1, SOLVABLE);
-	j = ft_strstr_index(lst->info[*i], "define") + 6;
-	check_name(lst, *i, j, "#define");
-	int x = j + 1;
+
+	j = ft_strstr_index_nocomented(lst->info[*i], "define", 0) + 6;
+	if (check_name(lst, *i, j, "#define"))
+		print_error(lst, ERROR_SPACE_HASH, *i + 1, SOLVABLE);
+	j = ft_strstr_index_nocomented(lst->info[*i], "define", 0) + 6;
+	x = j + 1;
 	while (lst->info[*i][x] && lst->info[*i][x] != ' '  && lst->info[*i][x] != '(')
 		x++;
 	str = ft_substr(lst->info[*i], j + 1, x - j - 1);
@@ -252,7 +256,19 @@ void	check_indef(s_variables *var, lst_dir *lst, int *i)
 	{
 		j = ft_strstr_index(lst->info[*i], "ifndef") + 6;
 		if (check_name(lst, *i, j, "#ifndef"))
-			print_error(lst, ERROR_ENDIF, *i + 1, SOLVABLE);
+			print_error(lst, ERROR_INDEF, *i + 1, SOLVABLE);
+		int x = j + 1;												//mejorar esto, es bastante estandar
+		while (lst->info[*i][x] && lst->info[*i][x] != ' '  && lst->info[*i][x] != '(')
+			x++;
+		str = ft_substr(lst->info[*i], j + 1, x - j - 1);
+		printf("str: #%s#\n", str);
+		if (!ft_str_isupper(str))
+		{
+			print_error(lst, ERROR_INDEF_NAME, *i + 1, SOLVABLE);
+			ft_str_toupper(str);
+			ft_str_pop_interval(lst->info[*i], j + 1, x - 1);
+			lst->info[*i] = new_old_str(ft_strjoin_accurate(lst->info[*i], str, j + 1), lst->info[*i]);
+		}
 	}
 		
 	lst->header_level++;
