@@ -6,14 +6,17 @@ The NORMVIC is a tool to check that the source code respects the school’s norm
   <img style="float: right;" src="./bin/media/videos/howworks_h.gif" width="400" height="400">
 </div>
 
-## INSTALL
+### INSTALL
 
 ```
 bash -c "$(curl -fsSL https://raw.github.com/VictorGT22/Normvic/master/bin/install/install.sh)"
 ```
-## UPDATE
 
+### UPDATE
 
+```
+bash -c "$(curl -fsSL https://raw.github.com/VictorGT22/Normvic/master/bin/install/update.sh)"
+```
 
 ## HOW WORKS
 ### Flags
