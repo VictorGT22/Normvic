@@ -2,8 +2,8 @@
 
 The NORMVIC is a tool to check that the source code respects the school’s norm AND CORRECTS ERRORS IT SELF.
 <div>
-  <img style="float: left;" src="./bin/media/videos/howworks.gif" width="300">
-  <img style="float: right;" src="./bin/media/videos/howworks_h.gif" width="300">
+  <img style="float: left;" src="./bin/media/videos/howworks.gif" width="500">
+  <img style="float: right;" src="./bin/media/videos/howworks_h.gif" width="500">
 </div>
 ## INSTALL
 
