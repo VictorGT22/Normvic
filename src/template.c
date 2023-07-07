@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/07/07 14:43:37 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/07 23:29:54 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,11 +143,12 @@ void line_help(char *letter, char *message)
 	purple();
 	printf("║   ");
 	blue();
-	printf("-%s:\t\t", letter);
+	printf("%-4s:\t", letter);
 	reset();
 	printf("%-25s", message);
 	purple();
-	printf("	  ║\n");
+	printf("%12s", "║");
+	printf("\n");
 	printf("║						  ║\n");
 }
 
@@ -189,11 +190,11 @@ void print_help(void)
 	purple();
 	printf("		  ║\n");
 	printf("║						  ║\n");
-
 	line_help("r", "Replace the errors");
 	line_help("C", "Check only .c files");
 	line_help("H", "Check only .h files");
 	line_help("R", "Rate the app");
+	line_help("u/U", "Update latest version");
 	printf("╚═════════════════════════════════════════════════╝\n");
 }
 
@@ -204,6 +205,7 @@ void	check_flags(s_variables *var, char **arr)
 	var->flags->only_c = false;
 	var->flags->only_h = false;
 	var->flags->rate = false;
+	var->flags->update = false;
 	
 	
 	if (ft_is_inarr(arr, "h"))
@@ -222,6 +224,8 @@ void	check_flags(s_variables *var, char **arr)
 	}
 	if (ft_is_inarr(arr, "R"))
 		var->flags->rate = true;
+	if (ft_is_inarr(arr, "u") || ft_is_inarr(arr, "U"))
+		var->flags->update = true;
 }
 
 void save_flags(s_variables *var, char **argv)
@@ -264,8 +268,19 @@ void	check_path(lst_dir *lst)
 		if (ft_isalpha(lst->path[i]) && lst->path[i] != ft_tolower(lst->path[i]))
 			print_error(lst, ERROR_FILE_NAME, -1, NOSOLVABLE);
 		i++;
-			
 	}
+}
+
+void	update_normvic(void)
+{
+	int res;
+
+	res = system(PATH_UPDATE);
+    if (res == -1) {
+        printf("Can not execute update.sh\n");
+    } else {
+        printf("Archivo update.sh ejecutado exitosamente\n");
+    }
 }
 
 int	main(int argc, char **argv)
@@ -277,12 +292,11 @@ int	main(int argc, char **argv)
 	var = malloc(sizeof(s_variables) * 1);
 	var->flags = malloc(sizeof(t_flags) * 1);
 
-	/// checkear flags
 	save_flags(var, argv);
-	if (var->flags->help)
-	{
+	if (var->flags->update)
+		update_normvic();
+	else if (var->flags->help)
 		print_help();
-	}
 	else if (var->flags->rate)
 			grade_the_app(var);
 	else

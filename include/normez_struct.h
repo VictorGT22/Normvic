@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 11:43:01 by vics              #+#    #+#             */
-/*   Updated: 2023/07/07 13:30:53 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/07 23:15:48 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct flags
 	bool	only_c;
 	bool	only_h;
 	bool	help;
+	bool	update;
 	bool	rate;
 }	t_flags;
 

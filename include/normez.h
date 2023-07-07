@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:43:48 by victgonz          #+#    #+#             */
-/*   Updated: 2023/07/07 17:34:39 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/07 23:12:49 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@
 # include <grp.h>
 # include <string.h>
 # include <stdbool.h>
+
+
+# define PATH_UPDATE "bin/install/update.sh"
 
 //MACROS
 # define TAB_SIZE 4
