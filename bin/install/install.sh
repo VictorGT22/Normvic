@@ -9,7 +9,7 @@ cd "$HOME"/Normvic || exit
 
 
 alias_name="normvic"
-alias_command="ls -l"
+alias_command="pwd"
 
 Verifica si el archivo .bashrc existe y no contiene ya el alias
 if [ -f "$HOME/.bashrc" ]; then
