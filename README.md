@@ -8,7 +8,12 @@ The NORMVIC is a tool to check that the source code respects the school’s norm
 
 ## INSTALL
 
-Comando para instalar
+```
+bash -c "$(curl -fsSL https://raw.github.com/VictorGT22/Normvic/master/bin/install/install.sh)"
+```
+## UPDATE
+
+
 
 ## HOW WORKS
 ### Flags

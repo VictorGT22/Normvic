@@ -7,7 +7,6 @@ git clone --recursive https://github.com/VictorGT22/Normvic.git
 
 cd "$HOME"/Normvic || exit
 
-
 alias_name="normvic"
 alias_command="$HOME/Normvic/normez \$1"
 
