@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:43:48 by victgonz          #+#    #+#             */
-/*   Updated: 2023/07/06 12:37:18 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/06 20:51:32 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 # define KEY_WORDS "else if,do,else,for,if,switch,while"
 # define KEY_WORDS_INDENT "case,default,do,else,for,if,switch,while"
 # define OPPERATORS_BOTH_SPACE "==,||,++,--,&&,//,/*,*/,+=,*=,-=,%=,/=,!=,->,<=,>=,<,>,=,/,%,.,(,),;,[,]"
-# define OPPERATORS_NO_SPACE "++,--"
+# define OPPERATORS_DIVIDE "&&,||"
 
 //MACROS ERROR COLOR
 # define SOLVABLE 3
@@ -162,6 +162,7 @@ void			green(void);
 void			yellow(void);
 void			blue(void);
 void			purple(void);
+void			cyan(void);
 void			reset(void);
 #endif
 

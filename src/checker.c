@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/06 15:12:18 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/06 21:40:05 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -905,7 +905,7 @@ void	check_operators(s_variables *var, lst_dir *lst, int *i)
 		while (var->operators[x])
 		{
 			index = ft_strstr_index_nocomented(lst->info[*i], var->operators[x], prev + prev_len);
-			if (index != -1 && (lower > index || lower == -1))
+			if (index != -1 && (lower > index && lower == -1))
 			{
 				if ((prev + prev_len <= index)
 				|| prev == 0)
@@ -1087,7 +1087,6 @@ void	correct_indentation(s_variables *var, lst_dir *lst, int i, int indentation)
 
 	if (lst->indent > indentation && !empty_line(lst->info[i]))
 	{
-		printf("indent: %d , %d\n", lst->indent, indentation);
 		num_tabs = malloc(sizeof(char) * (lst->indent - indentation) + 2);
 		ft_bzero(num_tabs, (lst->indent - indentation) + 2);
 		memset(num_tabs, '\t', lst->indent - indentation);
@@ -1097,7 +1096,6 @@ void	correct_indentation(s_variables *var, lst_dir *lst, int i, int indentation)
 	}
 	else if (lst->indent < indentation && !empty_line(lst->info[i]))
 	{
-		printf("indent: %d , %d\n", lst->indent, indentation);
 		ft_str_pop_interval(lst->info[i], 0, (indentation - lst->indent) - 1);
 		print_error(lst, ERROR_INDENTATION, i + 1, SOLVABLE);
 	}
@@ -1227,7 +1225,38 @@ void	print_array(char **arr)
 	}	
 }
 
-void	check_columns(lst_dir *lst, int *i)
+int 	get_operator_divide(s_variables *var, lst_dir *lst, int *i)
+{
+	int x;
+	int op;
+	int prev;
+	int lower;
+	int index;
+
+	lower = 0;
+	prev = 0;
+	while (lower != -1)
+	{
+		x = 0;
+		op = -1;
+		lower = -1;
+		while (var->op_divide[x])
+		{
+			index = ft_strstr_index_nocomented(lst->info[*i], var->op_divide[x], prev + prev_len);
+			if (index != -1 && index <= 80 && (prev < index || prev == 0))
+			{
+				lower = index;
+				op = x;
+			}
+			x++;
+		}
+		prev = lower;
+	}
+	return (lower);
+	
+}
+
+void	check_columns(s_variables *var, lst_dir *lst, int *i)
 {
 	int	num_columns;
 
@@ -1251,9 +1280,9 @@ void	check_columns(lst_dir *lst, int *i)
 			reset();
 		}
 		printf("\n\n");
+		correct_size_line(var, lst, i);
 	}
 }
-
 
 void	inside_function(s_variables *var, lst_dir *lst, int *i)
 {
@@ -1282,7 +1311,7 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 	while (lst->info[*i] && lst->num_bracket != 0)
 	{
 		check_brackets(var, lst, *i);
-		check_columns(lst, i);
+		check_columns(var, lst, i);
 		if (!lst->info[*i + 1] && !ft_strchr(lst->info[*i], '\n'))
 			print_error(lst, ERROR_ENTER_END_FILE, *i + 1, SOLVABLE);
 		remove_last_spaces(var, lst, *i);

@@ -6,11 +6,16 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:37:15 by vics              #+#    #+#             */
-/*   Updated: 2023/07/05 19:21:27 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/06 20:30:36 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "normez.h"
+
+void	gray(void)
+{
+	printf("\033[1;30m");
+}
 
 void	red(void)
 {
@@ -35,6 +40,16 @@ void	blue(void)
 void	purple(void)
 {
 	printf("\033[1;35m");
+}
+
+void	cyan(void)
+{
+	printf("\033[1;36m");
+}
+
+void	blanco(void)
+{
+	printf("\033[1;37m");
 }
 
 void	reset()

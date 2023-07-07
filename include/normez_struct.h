@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 11:43:01 by vics              #+#    #+#             */
-/*   Updated: 2023/07/05 21:35:59 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/06 20:53:46 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_variables
 	char		**keywords_indent;
 	char		**keywords;
 	char		**operators;
-	char		**operators_nospace;
+	char		**op_divide;
 }	s_variables;
 
 #endif
