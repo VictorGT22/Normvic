@@ -5,25 +5,22 @@ cd "$HOME" || exit
 # download github
 git clone --recursive https://github.com/VictorGT22/Normvic.git
 
-#cd "$HOME"/normvic || exit
+cd "$HOME"/normvic || exit
 
 
-# RC_FILE="$HOME/.zshrc"
-# 
-# if [ "$(uname)" != "Darwin" ]; then
-	# RC_FILE="$HOME/.bashrc"
-	# if [[ -f "$HOME/.zshrc" ]]; then
-		# RC_FILE="$HOME/.zshrc"
-	# fi
-# fi
-# 
-# echo "try to add alias in file: $RC_FILE"
-# 
-##set up the alias
-# if ! grep "normvic=" "$RC_FILE" &> /dev/null; then
-	# echo "normvic alias not present"
-	# printf "\nalias normvic=%s/normvic/tester.sh\n" "$HOME" >> "$RC_FILE"
-# fi
+alias_name="normvic"
+alias_command="ls -l"
+
+# Verifica si el archivo .bashrc existe y no contiene ya el alias
+if [ -f "$HOME/.bashrc" ] && ! grep -qF "alias $alias_name=" "$HOME/.bashrc"; then
+    echo "alias $alias_name=\"$alias_command\"" >> "$HOME/.bashrc"
+    echo "Alias agregado al archivo .bashrc"
+fi
+
+# Verifica si el archivo .zshrc existe y no contiene ya el alias
+if [ -f "$HOME/.zshrc" ] && ! grep -qF "alias $alias_name=" "$HOME/.zshrc"; then
+    echo "alias $alias_name=\"$alias_command\"" >> "$HOME/.zshrc"
+    echo "Alias agregado al archivo .zshrc"
 
 exec "$SHELL"
 
