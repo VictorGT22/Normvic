@@ -5,7 +5,7 @@ cd "$HOME" || exit
 # download github
 git clone --recursive https://github.com/VictorGT22/Normvic.git
 
-cd "$HOME"/normvic || exit
+cd "$HOME"/Normvic || exit
 
 
 # alias_name="normvic"
