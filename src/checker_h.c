@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:00:33 by vics              #+#    #+#             */
-/*   Updated: 2023/07/07 18:49:42 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/08 02:27:38 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,7 +260,6 @@ void	check_indef(s_variables *var, lst_dir *lst, int *i)
 		while (lst->info[*i][x] && lst->info[*i][x] != ' '  && lst->info[*i][x] != '(')
 			x++;
 		str = ft_substr(lst->info[*i], j + 1, x - j - 1);
-		printf("str: #%s#\n", str);
 		if (!ft_str_isupper(str))
 		{
 			print_error(lst, ERROR_INDEF_NAME, *i + 1, SOLVABLE);

@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/07/07 23:29:54 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/08 02:25:46 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,6 +283,32 @@ void	update_normvic(void)
     }
 }
 
+void	print_num_errors(lst_dir *lst)
+{
+	if (!lst->no_error)
+	{
+		purple();
+		printf("File:\t");
+		green();
+		printf("[%s] -> OK 😊\n", lst->path);
+	}
+	else
+	{
+		purple();
+		printf("NUM ERRORS:\t");
+		green();
+		printf("[%d]\n", lst->no_error);
+		purple();
+		printf("SOLVED:\t\t");
+		green();
+		printf("[%d]\n", lst->err_solved);
+		purple();
+		printf("NO SOLVED:\t");
+		green();
+		printf("[%d]\n", lst->err_nosolved);
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	lst_dir *tmp;
@@ -345,30 +371,9 @@ int	main(int argc, char **argv)
 			{
 				check_path(tmp);
 				check_errors(var, tmp);
-					
-				if (!tmp->no_error)
-				{
-					purple();
-					printf("File:\t");
-					green();
-					printf("[%s] -> OK 😊\n", tmp->path);
-				}
-				else
-				{
-					purple();
-					printf("NUM ERRORS:\t");
-					green();
-					printf("[%d]\n", tmp->no_error);
-					purple();
-					printf("SOLVED:\t\t");
-					green();
-					printf("[%d]\n", tmp->err_solved);
-					purple();
-					printf("NO SOLVED:\t");
-					green();
-					printf("[%d]\n", tmp->err_nosolved);
-				}
 			}
+			print_num_errors(tmp);
+
 			if (var->flags->replace)
 			{
 				int fd = open(tmp->path, O_WRONLY | O_TRUNC);

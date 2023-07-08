@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/07 14:51:42 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/08 02:53:12 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ unsigned int	check_header(s_variables *var, lst_dir *lst, int *add_i)
 
 	error = false;
 	i = *add_i;
-	while (lst->info[i] && i < 11)
+	line = 0;
+	while (lst->info[i] && i < 11
+		&& ft_strstr_index_nocomented(lst->info[i], "/*", 0) != -1
+		&& ft_strstr_index_nocomented(lst->info[i], "*/", 0) != -1)
 	{
 		len = ft_strlen(lst->info[i]);
 		if ((!ft_strnstr(lst->info[i], "/*", len)
@@ -32,7 +35,7 @@ unsigned int	check_header(s_variables *var, lst_dir *lst, int *add_i)
 		}
 		i++;
 	}
-	if (error)
+	if (error || i != 11)
 	{
 		print_error(lst, ERROR_HEADER, line + 1, SOLVABLE);
 		lst->no_error = false;
@@ -1483,7 +1486,7 @@ void	check_errors(s_variables *var, lst_dir *lst)
 		remove_last_spaces(var, lst, i);
 		empty = empty_line(lst->info[i]);
 		!empty ? empty_lines = 0 , error = 0 : empty_lines++;
-		if (empty_lines > 1 || lst->info[i] == NULL)
+		if (empty_lines > 1 || lst->info[i + 1] == NULL)
 		{
 			mark_empty_line(lst, i, error);
 			error = true;
