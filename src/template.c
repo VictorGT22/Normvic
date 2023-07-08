@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/07/08 02:25:46 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/08 03:07:22 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,7 +305,7 @@ void	print_num_errors(lst_dir *lst)
 		purple();
 		printf("NO SOLVED:\t");
 		green();
-		printf("[%d]\n", lst->err_nosolved);
+		printf("[%d]\n\n\n", lst->err_nosolved);
 	}
 }
 
@@ -366,13 +366,15 @@ int	main(int argc, char **argv)
 			{
 				check_path(tmp);
 				check_errors_h(var, tmp);
+				print_num_errors(tmp);
 			}
 			else if (get_postfix(tmp->path, ".c") && (var->flags->only_c || var->flags->all))
 			{
 				check_path(tmp);
 				check_errors(var, tmp);
+				print_num_errors(tmp);
 			}
-			print_num_errors(tmp);
+			
 
 			if (var->flags->replace)
 			{

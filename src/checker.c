@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/08 02:53:12 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/08 03:04:50 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1273,10 +1273,10 @@ void	correct_line_long(s_variables *var, lst_dir *lst, int *i)
 	index = get_operator_divide(var, lst, i);
 	if (index != 0)
 	{
-		if (is_keyword(var, lst, *i, var->keywords))
-		{
-			printf("lina con keyword: %s\n", lst->info[*i]);
-		}	//tabs++;
+		//if (is_keyword(var, lst, *i, var->keywords))
+		//{
+		//	printf("lina con keyword: %s\n", lst->info[*i]);
+		//}	//tabs++;
 		str_tabs = malloc(sizeof(char) * tabs + 1);
 		bzero(str_tabs, tabs + 1);
 		ft_memset(str_tabs, '\t', tabs);
@@ -1285,8 +1285,7 @@ void	correct_line_long(s_variables *var, lst_dir *lst, int *i)
 		lst->info = ft_add_str_arr(lst->info, str, *i + 1);
 		lst->line_compensation++;
 		ft_str_pop_interval(lst->info[*i], index - 1, ft_strlen(lst->info[*i]) - 2);
-		printf("linea: %s\n", lst->info[*i]);
-		printf("%s\n", str);
+		//printf("%s\n", str);
 		*i += 1;
 	}
 }
