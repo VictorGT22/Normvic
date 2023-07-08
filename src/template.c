@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/07/08 03:31:42 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/08 21:09:03 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,6 +309,48 @@ void	print_num_errors(lst_dir *lst)
 	}
 }
 
+void	save_header(s_variables *var)
+{
+	var->header = malloc(sizeof(char *) * 12);
+	var->header[0] = "/* ************************************************************************** */\n";
+	var->header[1] = "/*                                                                            */\n";
+	var->header[2] = "/*                                                        :::      ::::::::   */\n";
+	var->header[3] = "/*                                                      :+:      :+:    :+:   */\n";
+	var->header[4] = "/*                                                    +:+ +:+         +:+     */\n";
+	var->header[5] = "/*   By:                                            +#+  +:+       +#+        */\n";
+	var->header[6] = "/*                                                +#+#+#+#+#+   +#+           */\n";
+	var->header[7] = "/*   Created:                                          #+#    #+#             */\n";
+	var->header[8] = "/*   Updated:                                         ###   ########.fr       */\n";
+	var->header[9] = "/*                                                                            */\n";
+	var->header[10] = "/* ************************************************************************** */\n";
+	var->header[11] = NULL;
+}
+
+void	save_user_data(s_variables *var)
+{
+	int fd;
+	int start;
+	char *str;
+
+	fd = open("../settings/config_user", O_RDONLY);
+	if (fd != -1)
+	{
+		printf("entra\n");
+		str = get_next_line(fd);
+		start = ft_strchr_nocomented(str, ':');
+		var->user = ft_substr(str, start, ft_strlen(str) - start);
+		var->user = new_old_str(ft_strtrim(var->user, " \t\n:"), var->user);
+		free(str);
+		str = get_next_line(fd);
+		start = ft_strchr_nocomented(str, ':');
+		var->user_email = ft_substr(str, start, ft_strlen(str) - start);
+		var->user_email = new_old_str(ft_strtrim(var->user_email, " \t\n:"), var->user_email);
+		free(str);
+		printf("%s\n %s\n", var->user, var->user_email);
+	}
+	close(fd);
+}
+
 int	main(int argc, char **argv)
 {
 	lst_dir *tmp;
@@ -349,7 +391,8 @@ int	main(int argc, char **argv)
 		var->operators = ft_split(OPPERATORS_BOTH_SPACE, ',');
 		var->operators = ft_add_chr_arr(var->operators, ',', 0);
 		var->op_divide = ft_split(OPPERATORS_DIVIDE, ',');
-
+		save_header(var);
+		save_user_data(var);
 		int i = 0;
 		t_lst_arr *node2;
 		save_data_files(var);

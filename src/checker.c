@@ -6,11 +6,63 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/08 20:24:41 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/08 21:14:05 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "normez.h"
+
+void	correct_header_2(s_variables *var, lst_dir *lst, int *i)
+{
+	char *str;
+	time_t tiempo_actual;
+    struct tm *info_tiempo;
+    char buffer[80];
+
+	time(&tiempo_actual);
+    info_tiempo = localtime(&tiempo_actual);
+	strftime(buffer, sizeof(buffer), "%Y/%m/%d %H:%M:%S", info_tiempo);
+	str = buffer;
+	str = ft_strjoin(str, " by ");
+	str = new_old_str(ft_strjoin(str, var->user), str);
+	ft_str_pop_interval(lst->info[7], 15, ft_strlen(str) + 14);
+	lst->info[7] = new_old_str(ft_strjoin_accurate(lst->info[7], str, 14), lst->info[7]);
+	ft_str_pop_interval(lst->info[8], 15, ft_strlen(str) + 14);
+	lst->info[8] = new_old_str(ft_strjoin_accurate(lst->info[8], str, 14), lst->info[8]);
+	free(str);
+
+	printf("str: %s\n", var->user);
+}
+
+void	correct_header(s_variables *var, lst_dir *lst, int *i)
+{
+	int x;
+	char *str;
+
+	x = 0;
+	while (lst->info[x] && x < *i)
+	{
+		mark_empty_line(lst, x, true);
+		x++;
+	}
+	x = 0;
+	while (lst->info[x] && x <= 10)
+	{
+		lst->info = ft_add_str_arr(lst->info, var->header[x], x);
+		x++;
+	}
+	str = ft_substr(lst->path, ft_strrchr_index(lst->path, '/') + 1, ft_strlen(lst->path) - ft_strrchr_index(lst->path, '/'));
+	ft_str_pop_interval(lst->info[3], 2, ft_strlen(str) + 1);
+	lst->info[3] = new_old_str(ft_strjoin_accurate(lst->info[3], str, 5), lst->info[3]);
+	free(str);
+	str = ft_strdup(var->user);
+	str = new_old_str(ft_strjoin(str, " <>"), str);
+	str = new_old_str(ft_strjoin_accurate(str, var->user_email, ft_strlen(str) - 1), str);
+	ft_str_pop_interval(lst->info[5], 9, ft_strlen(str) + 8);
+	lst->info[5] = new_old_str(ft_strjoin_accurate(lst->info[5], str, 9), lst->info[5]);
+	free(str);
+	correct_header_2(var, lst, i);
+}
 
 unsigned int	check_header(s_variables *var, lst_dir *lst, int *add_i)
 {
@@ -38,6 +90,7 @@ unsigned int	check_header(s_variables *var, lst_dir *lst, int *add_i)
 	if (error || i != 11)
 	{
 		print_error(lst, ERROR_HEADER, line + 1, SOLVABLE);
+		correct_header(var, lst, &i);
 		lst->no_error = false;
 	}
 	*add_i = i;

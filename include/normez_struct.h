@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   normez_struct.h                                    :+:      :+:    :+:   */
+/*                                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
+/*   By:                                            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/28 11:43:01 by vics              #+#    #+#             */
-/*   Updated: 2023/07/07 23:15:48 by vics             ###   ########.fr       */
+/*   Created:                                          #+#    #+#             */
+/*   Updated:                                         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@ typedef struct s_variables
 	char		**keywords;
 	char		**operators;
 	char		**op_divide;
+	char		*user;
+	char		*user_email;
+	char 		**header;
 }	s_variables;
 
 #endif

@@ -3,15 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   dentro_carpeta.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: victgonz <victorgonzalez@42bcn.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/08 19:54:59 by vics              #+#    #+#             */
-/*   Updated: 2023/07/08 20:21:21 by vics             ###   ########.fr       */
+/*   Created: 2023/07/08 23:29:01 by victgonz          #+#    #+#             */
+/*   Updated: 2023/07/08 23:29:01 by victgonz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*void	get_type_var(s_variables *var)
-{
+/*
 	int i;
 	int len;
 	lst_dir *tmp;
@@ -31,9 +29,9 @@
 }
 */
 
-lst_dir			*new_node (char *filepath);
+lst_dir	*new_node(char*filepath);
 
-void	ft_striteri(char *str, void(*f)(unsigned int, char*) )
+void	ft_striteri(char *str, void(*f)(unsigned int, char*))
 {
 	unsigned int	i;
 
