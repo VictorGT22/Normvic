@@ -29,6 +29,7 @@ bash -c "$(curl -fsSL https://raw.github.com/VictorGT22/Normvic/master/bin/insta
 | -H        | Evaluate only .h   |
 | -r        | Correct the errors |
 | -R        | Rate the app       |
+| -u/U      | Update to latest version |
 
 ### Type error
 
