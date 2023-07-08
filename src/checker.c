@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/08 03:40:08 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/08 20:24:41 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,7 +247,7 @@ void	check_prototipe_func(s_variables *var, lst_dir *lst, int i, bool proto)
 	bracket = 0;
 	error = false;
 	empty = true;
-	j = ft_strlen(lst->info[i]);
+	j = ft_strrchr_index(lst->info[i], ')');     //ft_strlen(lst->info[i]);
 	while (j >= 0)
 	{
 		if (lst->info[i][j] == '\t' && bracket > 0)
@@ -733,6 +733,8 @@ int	remove_comment(lst_dir *lst, int lower, int *i, char *op)
 	int index;
 
 	long_comment = false;
+	while (lower - 1 >= 0 && (lst->info[*i][lower - 1] == ' ' ||  lst->info[*i][lower - 1] == '\t'))
+		lower--;
 	index = ft_strstr_index_nocomented(lst->info[*i], "*/", 0);
 	if (!ft_strcmp(op, "/*") && index == -1)
 		long_comment = true;
@@ -832,7 +834,6 @@ int	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int lo
 		}
 		else if (((!operator_start(lst, i, lower) && !ft_strcmp(var->operators[op], ")")) || (!ft_strcmp(var->operators[op], ";") && pos_keyword == 0)) && (lst->info[*i][lower - 1] == ' ' || lst->info[*i][lower - 1] == '\t'))
 		{
-			printf("pos: %d\n", pos_keyword);
 			ft_str_pop_pos(lst->info[*i], lower - 1);
 			!ft_strcmp(var->operators[op], ")") ? print_error(lst, ERROR_SPACE_BEFORE_PARENTHESIS, *i + 1, SOLVABLE) : print_error(lst, ERROR_SPACE_BEFORE_SEMICOLON, *i + 1, SOLVABLE);
 			space++;
@@ -925,7 +926,7 @@ void	check_operators(s_variables *var, lst_dir *lst, int *i)
 		{
 			if (operator_end(lst, i, lower, var->operators[op])
 				&& (ft_strcmp(var->operators[op], "(") != 0 && ft_strcmp(var->operators[op], ")") != 0)
-				&& ft_strcmp(var->operators[op], ";") != 0)
+				&& ft_strcmp(var->operators[op], ";") != 0 && ft_strcmp(var->operators[op], "]") != 0)
 				print_error(lst, ERROR_OPPERATOR_END, *i + 1, SOLVABLE);
 			else //&& (!operator_start(lst, i, lower) || !ft_strcmp(var->operators[op], "//") || !ft_strcmp(var->operators[op], "/*")))
 				lower -= check_spaces_operator(var, lst, i, op, lower);
@@ -1491,6 +1492,13 @@ void	check_errors(s_variables *var, lst_dir *lst)
 			mark_empty_line(lst, i, error);
 			error = true;
 		}
+		if (ft_strstr_index_nocomented(lst->info[i], "/*", 0) != -1)
+		{
+			while (lst->info[i] && ft_strstr_index_nocomented(lst->info[i], "*/", 0) == -1)
+				i++;
+		}
+		if (ft_strstr_index_nocomented(lst->info[i], ";", 0) != -1)
+			check_prototipe_func(var, lst, i, true);
 		if (ft_strnstr(lst->info[i], "{", len))
 		{
 			num_lines = i;
