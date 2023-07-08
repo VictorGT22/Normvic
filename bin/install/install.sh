@@ -29,4 +29,6 @@ elif [[ -f "$HOME/.zshrc" ]]; then
     fi
 fi
 
+nano "$HOME/Normvic/settings/config_user"
+
 exec "$SHELL"
