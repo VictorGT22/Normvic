@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/08 03:04:50 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/08 03:40:08 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -830,8 +830,9 @@ int	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int lo
 			print_error(lst, ERROR_SPACE_AFTER_PARENTHESIS, *i + 1, SOLVABLE);
 			space++;
 		}
-		else if ((!operator_start(lst, i, lower) && !ft_strcmp(var->operators[op], ")") || !ft_strcmp(var->operators[op], ";")) && (lst->info[*i][lower - 1] == ' ' || lst->info[*i][lower - 1] == '\t'))
+		else if (((!operator_start(lst, i, lower) && !ft_strcmp(var->operators[op], ")")) || (!ft_strcmp(var->operators[op], ";") && pos_keyword == 0)) && (lst->info[*i][lower - 1] == ' ' || lst->info[*i][lower - 1] == '\t'))
 		{
+			printf("pos: %d\n", pos_keyword);
 			ft_str_pop_pos(lst->info[*i], lower - 1);
 			!ft_strcmp(var->operators[op], ")") ? print_error(lst, ERROR_SPACE_BEFORE_PARENTHESIS, *i + 1, SOLVABLE) : print_error(lst, ERROR_SPACE_BEFORE_SEMICOLON, *i + 1, SOLVABLE);
 			space++;
@@ -1181,7 +1182,7 @@ void	check_indentation(s_variables *var, lst_dir *lst, int i)
 			lst->num_bracket--;
 			lst->indent--;
 		}
-		pos = is_keyword(var, lst, i, var->keywords);
+		pos = is_keyword(var, lst, i, var->keywords_indent);
 		if (pos != 0)
 		{
 			inside_keyword(var, lst, &i);

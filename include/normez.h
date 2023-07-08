@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:43:48 by victgonz          #+#    #+#             */
-/*   Updated: 2023/07/07 23:12:49 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/08 03:30:15 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 //MACROS
 # define TAB_SIZE 4
 # define TYPE_VAR "short,int,long,char,void,unsigned"
-# define KEY_WORDS "else if,do,else,for,if,switch,while"
+# define KEY_WORDS "return,break,else if,do,else,for,if,switch,while"
 # define KEY_WORDS_INDENT "case,default,do,else,for,if,switch,while"
 # define OPPERATORS_BOTH_SPACE "==,||,++,--,&&,//,/*,*/,+=,*=,-=,%=,/=,!=,->,<=,>=,<,>,=,/,%,.,(,),;,[,]"
 # define OPPERATORS_DIVIDE "&&,||,!=,==,<=,>="

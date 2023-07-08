@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:37:15 by vics              #+#    #+#             */
-/*   Updated: 2023/07/07 13:47:52 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/08 03:47:45 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,17 +62,17 @@ void	get_code_color(int code)
 	switch (code)
 	{
 		case 0:
-		reset();
-		break;	
+			reset();
+			break;	
 		case 1:
-		red();
-		break;
+			red();
+			break;
 		case 2:
-		yellow();
-		break;
+			yellow();
+			break;
 		case 3:
-		green();
-		break;
+			green();
+			break;
 	}
 }
 

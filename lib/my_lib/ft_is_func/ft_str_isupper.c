@@ -6,13 +6,13 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 22:36:38 by vics              #+#    #+#             */
-/*   Updated: 2023/07/07 17:00:01 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/08 03:41:13 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_str_isupper(char *str) //acabo de modificar esta funcion
+int	ft_str_isupper(char *str)
 {
 	int x;
 

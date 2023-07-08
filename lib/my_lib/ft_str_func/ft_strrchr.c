@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 10:35:24 by victgonz          #+#    #+#             */
-/*   Updated: 2023/06/19 11:50:11 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/08 03:44:36 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ char	*ft_strrchr(const char *str, char c)
 		return ((char *)str);
 	return (ptr);
 }
+
 int	ft_strrchr_index(const char *str, char c)
 {
 	int		i;

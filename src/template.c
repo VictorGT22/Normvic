@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/07/08 03:07:22 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/08 03:31:42 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -345,6 +345,7 @@ int	main(int argc, char **argv)
 		print_header_program();
 		/*LINKEDS Y ARR*/
 		var->keywords = ft_split(KEY_WORDS, ',');
+		var->keywords_indent = ft_split(KEY_WORDS_INDENT, ',');
 		var->operators = ft_split(OPPERATORS_BOTH_SPACE, ',');
 		var->operators = ft_add_chr_arr(var->operators, ',', 0);
 		var->op_divide = ft_split(OPPERATORS_DIVIDE, ',');

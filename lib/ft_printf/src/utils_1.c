@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victgonz <victgonz@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 19:05:42 by victgonz          #+#    #+#             */
-/*   Updated: 2023/02/12 23:24:23 by victgonz         ###   ########.fr       */
+/*   Updated: 2023/07/08 03:43:04 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	flag_sign(long long int nbr, t_list *info)
 {
 	if (ft_is_inarr(info->flag, "+") && nbr >= 0)
 	{
-		write (1, "+", 1);
+		write(1, "+", 1);
 		return (1);
 	}
 	return (0);

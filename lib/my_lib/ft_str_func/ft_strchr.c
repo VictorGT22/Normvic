@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 10:34:30 by victgonz          #+#    #+#             */
-/*   Updated: 2023/04/29 01:01:19 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/08 03:44:26 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_chr_index(char *str, char c)
 		i++;
 	}
 	return (i);// he cambiado esto cuidado
-		}
+}
 
  int	ft_last_chr_index(char *str, char c)
 {
