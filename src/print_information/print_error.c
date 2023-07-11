@@ -5,57 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/27 11:37:15 by vics              #+#    #+#             */
-/*   Updated: 2023/07/08 03:47:45 by vics             ###   ########.fr       */
+/*   Created: 2023/07/11 12:56:06 by vics              #+#    #+#             */
+/*   Updated: 2023/07/11 13:41:16 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "normez.h"
-
-void	gray(void)
-{
-	printf("\033[1;30m");
-}
-
-void	red(void)
-{
-	printf("\033[1;31m");
-}
-
-void	green(void)
-{
-	printf("\033[1;32m");
-}
-
-void	yellow(void)
-{
-	printf("\033[1;33m");
-}
-
-void	blue(void)
-{
-	printf("\033[1;34m");
-}
-
-void	purple(void)
-{
-	printf("\033[1;35m");
-}
-
-void	cyan(void)
-{
-	printf("\033[1;36m");
-}
-
-void	blanco(void)
-{
-	printf("\033[1;37m");
-}
-
-void	reset()
-{
-	printf("\033[0m");
-}
 
 void	get_code_color(int code)
 {

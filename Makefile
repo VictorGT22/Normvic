@@ -6,7 +6,7 @@
 #    By: vics <vics@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 15:37:53 by victgonz          #+#    #+#              #
-#    Updated: 2023/06/22 21:37:30 by vics             ###   ########.fr        #
+#    Updated: 2023/07/11 13:48:59 by vics             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,10 +22,11 @@ SRC_DIR = src/
 
 OBJ_DIR = obj/
 
-SRC_FILES	=	template		\
-				init_linked		\
-				print_error		\
-				checker_h		\
+SRC_FILES	=	print_information/print_error		\
+				print_information/print_info		\
+				template							\
+				init_linked							\
+				checker_h							\
 				checker
 
 SOURCES = 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))

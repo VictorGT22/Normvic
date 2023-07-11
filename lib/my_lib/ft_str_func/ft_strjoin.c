@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 10:41:55 by victgonz          #+#    #+#             */
-/*   Updated: 2023/04/26 21:49:29 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/11 15:57:36 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,3 +47,24 @@ char	*ft_strjoin(char *s1, char *s2)
 		return (ext_join(s1, s2));
 	return (NULL);
 }
+
+char	*ft_strjoin_accurate(char *str_1, char *str_2, int pos)
+{
+	int	i;
+	int	j;
+	int	x;
+	char *str;
+
+	i = 0;
+	x = 0;
+	j = 0;
+	str = malloc(sizeof(char) * ft_strlen(str_1) + ft_strlen(str_2) + 1);
+	while (str_1[i] && i < pos)
+		str[x++] = str_1[i++];
+	while (str_2[j])
+		str[x++] = str_2[j++];
+	while (str_1[i])
+		str[x++] = str_1[i++];
+	str[x] = '\0';
+	return (str);
+} 

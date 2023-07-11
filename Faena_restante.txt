@@ -1,10 +1,1 @@
-*.c
-	INDENTIFICAR VARIABLES
-	INDENTACION VARIABLES
-	NO ASIGNACION Y CRACION EN LA MISMA LINEA
-	LINEA NUEVA DESPUES DE LA CREACION DE VARIABLES
-	NO MAS DE 5
-	
-
 cd /home/vics/Documents/normez_rest && make && cd /home/vics/Documents/normez_rest/zzzzprueba
-espacio entre ; y la frase

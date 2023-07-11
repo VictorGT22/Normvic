@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 10:21:08 by victgonz          #+#    #+#             */
-/*   Updated: 2023/07/01 22:53:14 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/11 17:26:59 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 # include <wchar.h>
 # include <stdlib.h>
 # include <stdint.h>
+# include <stdio.h>
+# include <stdbool.h>
+# include <string.h>
 
 int				ft_isalpha(char c);
 int				ft_strlen(const char *str);
@@ -84,6 +87,26 @@ void			ft_str_toupper(char *str);
 int				ft_str_islower(char *str);
 int				ft_isupper(char c);
 int				ft_islower(char c);
+int				ft_empty_until_pos(char *str, int pos);
+int				ft_strstr_index_nocommented(const char *haystack, const char *needle, int ini);
+char			**ft_add_chr_arr(char **src_arr, char c, int pos);
+char			**ft_add_str_arr(char **src_arr, char *str, int pos);
+void			print_array(char **arr, char end_char);
+void			ft_strpop_interval(char *str, int ini, int end);
+void			ft_strpop_pos(char *str, int pos);
+char			*ft_strjoin_accurate(char *str_1, char *str_2, int pos);
+bool			ft_empty_line(char *line);
+bool			ft_replace_chrchr(char *str, char find, char replace);
+
+void			gray(void);
+void			red(void);
+void			green(void);
+void			yellow(void);
+void			blue(void);
+void			purple(void);
+void			cyan(void);
+void			white(void);
+void			reset(void);
 
 //t_list		*ft_lstnew(void *content);
 //void			ft_lstadd_front(t_list **lst, t_list *new);

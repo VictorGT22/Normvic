@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dentro_carpeta.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  <victgonz>                                +#+  +:+       +#+        */
+/*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 17:50:56 by                   #+#    #+#             */
-/*   Updated: 2023/07/09 17:50:56 by                  ###   ########.fr       */
+/*   Updated: 2023/07/11 14:45:48 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ unsigned int	check_header(s_variables *var, lst_dir *lst, int *add_i)
 	line = 0;
 	error = false;
 	while (lst->info[i] && i < 11
-		&& ft_strstr_index_nocomented(lst->info[i], "/*", 0) != -1
-		&& ft_strstr_index_nocomented(lst->info[i], "*/", 0) != -1)
+		&& ft_strstr_index_nocommented(lst->info[i], "/*", 0) != -1
+		&& ft_strstr_index_nocommented(lst->info[i], "*/", 0) != -1)
 	{
 		len = ft_strlen(lst->info[i]);
 		if ((!ft_strnstr(lst->info[i], "/*", len)

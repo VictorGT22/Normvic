@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:43:48 by victgonz          #+#    #+#             */
-/*   Updated: 2023/07/08 03:30:15 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/11 17:18:42 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,29 +132,18 @@ int				check_name_prototipe(s_variables *var, lst_dir *lst, int j, int i);
 void			check_prototipe_func(s_variables *var, lst_dir *lst, int i, bool proto);
 void			correct_misaligned(lst_dir *lst, int i, int max, int num_tabs);
 void			mark_empty_line(lst_dir *lst, int i, bool error);
-char			*ft_strjoin_accurate(char *str_1, char *str_2, int pos);
-bool			empty_line(char *line);
+bool			ft_empty_line(char *line);
 int				ft_strchr_nocomented(char *str, char c);
 char			*new_old_str(char *new, char *old);
 
 //FUNCIONES UTILES
 int				count_indentations(char *str);
-char			**ft_add_chr_arr(char **src_arr, char c, int pos);
-char			**ft_add_str_arr(char **src_arr, char *str, int pos);
-void			print_array(char **arr);
-void			ft_str_pop_interval(char *str, int ini, int end);
-void			ft_str_pop_pos(char *str, int pos);
+
 void			check_operators(s_variables *var, lst_dir *lst, int *i);
 void			check_keywords(s_variables *var, lst_dir *lst, int *i);
 
-
 int	is_keyword(s_variables *var, lst_dir *lst, int i, char **keywords);
 int	type_keyword(s_variables *var, lst_dir *lst, int i, char **keywords);
-
-int	empty_until_pos(char *str, int pos);
-
-
-int	ft_strstr_index_nocomented(const char *haystack, const char *needle, int ini);
 
 
 //CHECKER _H
@@ -169,14 +158,12 @@ void			print_error_nopath(char *msg_error, int code_error);
 void	confirmacion_replace(s_variables *var);
 void	grade_the_app(s_variables *var);
 
-//COLORS
-void			red(void);
-void			green(void);
-void			yellow(void);
-void			blue(void);
-void			purple(void);
-void			cyan(void);
-void			reset(void);
+
+//PRINT INFORMATION
+void	print_num_errors(lst_dir *lst);
+void	print_header_program(void);
+void	line_help(char *letter, char *message);
+void	print_help(void);
 
 #endif
 
