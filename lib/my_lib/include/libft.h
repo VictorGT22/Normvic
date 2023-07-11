@@ -81,6 +81,10 @@ int				ft_last_chr_index(char *str, char c);
 int				ft_strrchr_index(const char *str, char c);
 int				ft_str_isupper(char *str);
 void			ft_str_toupper(char *str);
+int				ft_str_islower(char *str);
+int				ft_isupper(char c);
+int				ft_islower(char c);
+
 //t_list		*ft_lstnew(void *content);
 //void			ft_lstadd_front(t_list **lst, t_list *new);
 //int			ft_lstsize(t_list *lst);

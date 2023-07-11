@@ -3,42 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   dentro_carpeta.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victgonz <victorgonzalez@42bcn.fr>         +#+  +:+       +#+        */
+/*   By:  <victgonz>                                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/08 23:29:01 by victgonz          #+#    #+#             */
-/*   Updated: 2023/07/08 23:29:01 by victgonz         ###   ########.fr       */
+/*   Created: 2023/07/09 17:50:56 by                   #+#    #+#             */
+/*   Updated: 2023/07/09 17:50:56 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-/*
-	int i;
-	int len;
-	lst_dir *tmp;
 
-	tmp = var->lst_files;
-	while (tmp)
-	{
-		if (get_postfix(tmp->path, ".h"))
-			while (tmp->info[i])
-	{
-		if (ft_strnstr(tmp->info[i], "{", len))
-			tmp->num_key++;
-		i++;
-	}
-	printf("%s\n", tmp->path);
-	tmp = tmp->next;
-}
-*/
-
-lst_dir	*new_node(char*filepath);
-
-void	ft_striteri(char *str, void(*f)(unsigned int, char*))
+unsigned int	check_header(s_variables *var, lst_dir *lst, int *add_i)
 {
-	unsigned int	i;
+	bool	error;
+	int		i;
+	int		len;
+	int		line;
 
-	i = 0;
-	while (str[i])
+	error = false;
+	i = *add_i;
+	line = 0;
+	error = false;
+	while (lst->info[i] && i < 11
+		&& ft_strstr_index_nocomented(lst->info[i], "/*", 0) != -1
+		&& ft_strstr_index_nocomented(lst->info[i], "*/", 0) != -1)
 	{
-		f(i, &str[i]);
+		len = ft_strlen(lst->info[i]);
+		if ((!ft_strnstr(lst->info[i], "/*", len)
+			|| !ft_strnstr(lst->info[i], "*/", len) || len != 81) && !error)
+		{
+			line = i;
+			error = true;
+		}
 		i++;
 	}
+	if (error || i != 11)
+	{
+		print_error(lst, ERROR_HEADER, line + 1, SOLVABLE);
+		correct_header(var, lst, &i);
+		lst->no_error = false;
+	}
+	*add_i = i;
 }

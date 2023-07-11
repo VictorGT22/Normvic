@@ -105,6 +105,8 @@
 # define ERROR_MISALIGNED "Variable misaligned\n"
 # define ERROR_MISALIGNED_PROTO "Prototype misaligned\n"
 # define ERROR_MULTIPLE_SPACES "Unecesary multiple space elements followed\n"
+# define ERROR_MAKEFILE "Wrong Makefile name\n"
+# define ERROR_REPO "You only can execute the NORMVIC inside a repo for security\n"
 
 
 
@@ -161,6 +163,7 @@ void			check_errors_h(s_variables *var, lst_dir *lst);
 //PRINT ERROR
 void			print_error(lst_dir *lst, char *msg_error, int line, int code_error);
 void			print_error_var(lst_dir *lst, char *msg_error, int line, int code_error);
+void			print_error_nopath(char *msg_error, int code_error);
 
 
 void	confirmacion_replace(s_variables *var);
@@ -174,5 +177,6 @@ void			blue(void);
 void			purple(void);
 void			cyan(void);
 void			reset(void);
+
 #endif
 

@@ -76,6 +76,15 @@ void	get_code_color(int code)
 	}
 }
 
+void	print_error_nopath(char *msg_error, int code_error)
+{
+	purple();
+	printf("Error:\t");
+	get_code_color(code_error);
+	printf("%s\n", msg_error);
+	get_code_color(0);
+}
+
 void	print_error(lst_dir *lst, char *msg_error, int line, int code_error)
 {
 	lst->no_error++;

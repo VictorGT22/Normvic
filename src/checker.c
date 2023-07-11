@@ -413,7 +413,6 @@ void	correct_ternarian_2(s_variables *var, lst_dir *lst, int *i)
 
 	int num_tabs = count_indentations(lst->info[*i]);
 
-	printf("entra\n");
 	index = ft_strchr_nocomented(lst->info[*i], '(');
 	asignation = ft_substr(lst->info[*i], 0, index + 1);
 	index_condition = ft_strchr_nocomented(lst->info[*i], '?');

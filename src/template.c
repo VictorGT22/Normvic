@@ -41,10 +41,40 @@ int	get_postfix(char *str, char *postfix)
 	return (1);
 }
 
+void	replace_name_file(char *to_find, char *to_replace)
+{
+	if (rename(to_find, to_replace))
+		printf("Error changing the name");
+}
+
+int	check_repo(s_variables *var)
+{
+	DIR *dp;
+	char *str;
+	struct dirent *dirp;
+	struct stat fileStat;
+
+	dp = opendir(".");
+	while ((dirp = readdir(dp)) != NULL)
+	{
+		stat(str, &fileStat);
+		str = ft_strdup(dirp->d_name);
+		ft_str_toupper(str);
+		if (dirp->d_name[0] != '.' && dirp->d_name[1] != '.' && !ft_strcmp(str, "MAKEFILE"))
+		{
+			closedir(dp);
+			return (1);
+		}
+	}
+	closedir(dp);
+	return (0);
+}
+
 int	get_directories(s_variables *var, char *filepath)
 {
 	DIR *dp;
 	char *str;
+	char *str2;
 	lst_dir *node;
 	struct dirent *dirp;
 	struct stat fileStat;
@@ -57,10 +87,12 @@ int	get_directories(s_variables *var, char *filepath)
 		if (!node)
 			return (-1);
 		stat(str, &fileStat);
+		str2 = ft_strdup(dirp->d_name);
+		ft_str_toupper(str2);
 		if (dirp->d_name[0] != '.' && dirp->d_name[1] != '.' && S_ISDIR(fileStat.st_mode))
 			lstadd_back(&var->lst_dir, node);
 		else if (dirp->d_name[0] != '.' && dirp->d_name[1] != '.'
-		&& (get_postfix(dirp->d_name, ".c") || get_postfix(dirp->d_name, ".h")))
+		&& (get_postfix(dirp->d_name, ".c") || get_postfix(dirp->d_name, ".h") || !ft_strcmp(str2, "MAKEFILE")))
 			lstadd_back(&var->lst_files, node);
 	}
 	closedir(dp);
@@ -335,7 +367,6 @@ void	save_user_data(s_variables *var)
 	fd = open("../settings/config_user", O_RDONLY);
 	if (fd != -1)
 	{
-		printf("entra\n");
 		str = get_next_line(fd);
 		start = ft_strchr_nocomented(str, ':');
 		var->user = ft_substr(str, start, ft_strlen(str) - start);
@@ -346,7 +377,6 @@ void	save_user_data(s_variables *var)
 		var->user_email = ft_substr(str, start, ft_strlen(str) - start);
 		var->user_email = new_old_str(ft_strtrim(var->user_email, " \t\n:"), var->user_email);
 		free(str);
-		printf("%s\n %s\n", var->user, var->user_email);
 	}
 	close(fd);
 }
@@ -374,66 +404,84 @@ int	main(int argc, char **argv)
 		var->var_type = NULL;
 		var->var_bad_decl = NULL;
 		var->var_bad_line = NULL;
-		node = new_node(".");
-		if (!node)
-			return (-1);
-		lstadd_back(&var->lst_dir, node);
-		tmp = var->lst_dir;
-		while (tmp)
-		{
-			get_directories(var, ft_strjoin(tmp->path, "/"));
-			tmp = tmp->next;
-		}
-		print_header_program();
-		/*LINKEDS Y ARR*/
 		var->keywords = ft_split(KEY_WORDS, ',');
 		var->keywords_indent = ft_split(KEY_WORDS_INDENT, ',');
 		var->operators = ft_split(OPPERATORS_BOTH_SPACE, ',');
 		var->operators = ft_add_chr_arr(var->operators, ',', 0);
 		var->op_divide = ft_split(OPPERATORS_DIVIDE, ',');
-		save_header(var);
-		save_user_data(var);
-		int i = 0;
-		t_lst_arr *node2;
-		save_data_files(var);
-		tmp = var->lst_files;
-		if (var->flags->replace)
-			confirmacion_replace(var);
-		int len;
-		while (tmp)
-		{
-			int i = 0;
-			tmp->no_error = 0;
-			tmp->err_solved = 0;
-			tmp->err_nosolved = 0;
-			if (get_postfix(tmp->path, ".h") && (var->flags->only_h || var->flags->all))
-			{
-				check_path(tmp);
-				check_errors_h(var, tmp);
-				print_num_errors(tmp);
-			}
-			else if (get_postfix(tmp->path, ".c") && (var->flags->only_c || var->flags->all))
-			{
-				check_path(tmp);
-				check_errors(var, tmp);
-				print_num_errors(tmp);
-			}
-			
 
-			if (var->flags->replace)
+		if (check_repo(var))
+		{
+			node = new_node(".");
+			if (!node)
+				return (-1);
+			lstadd_back(&var->lst_dir, node);
+			tmp = var->lst_dir;
+			while (tmp)
 			{
-				int fd = open(tmp->path, O_WRONLY | O_TRUNC);
-				while (tmp->info[i])
-				{
-					len = ft_strlen(tmp->info[i]);
-					if (ft_strcmp(tmp->info[i], "@#~#@\n") != 0)
-						write (fd, tmp->info[i], len);
-					i++;
-				}
-				close(fd);
+				get_directories(var, ft_strjoin(tmp->path, "/"));
+				tmp = tmp->next;
 			}
-			tmp = tmp->next;
+			print_header_program();
+			/*LINKEDS Y ARR*/
+			
+			save_header(var);
+			save_user_data(var);
+			int i = 0;
+			t_lst_arr *node2;
+			save_data_files(var);
+			tmp = var->lst_files;
+			if (var->flags->replace)
+				confirmacion_replace(var);
+			int len;
+			while (tmp)
+			{
+				int i = 0;
+				char *str;
+				char *str2;
+
+				tmp->no_error = 0;
+				tmp->err_solved = 0;
+				tmp->err_nosolved = 0;
+				int index = ft_strrchr_index(tmp->path, '/') + 1;
+				str = ft_substr(tmp->path, index, ft_strlen(tmp->path) - index);
+				str2 = strdup(str);
+				ft_str_toupper(str2);
+				if (get_postfix(tmp->path, ".h") && (var->flags->only_h || var->flags->all))
+				{
+					check_path(tmp);
+					check_errors_h(var, tmp);
+					print_num_errors(tmp);
+				}
+				else if (get_postfix(tmp->path, ".c") && (var->flags->only_c || var->flags->all))
+				{
+					check_path(tmp);
+					check_errors(var, tmp);
+					print_num_errors(tmp);
+				}
+				else if (!ft_strcmp(str2, "MAKEFILE") && (!ft_str_islower(&str[1]) || !ft_isupper(str[0])))
+				{
+					print_error(tmp, ERROR_MAKEFILE, 0, SOLVABLE);
+					if (var->flags->replace)
+						replace_name_file(str, "Makefile");
+				}
+				if (var->flags->replace)
+				{
+					int fd = open(tmp->path, O_WRONLY | O_TRUNC);
+					while (tmp->info[i])
+					{
+						len = ft_strlen(tmp->info[i]);
+						if (ft_strcmp(tmp->info[i], "@#~#@\n") != 0)
+							write (fd, tmp->info[i], len);
+						i++;
+					}
+					close(fd);
+				}
+				tmp = tmp->next;
+			}
 		}
+		else
+			print_error_nopath(ERROR_REPO, NOSOLVABLE);
 	}	
 	return (0);
 }
