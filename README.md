@@ -94,6 +94,8 @@ bash -c "$(curl -fsSL https://raw.github.com/VictorGT22/Normvic/master/bin/insta
 |    🟢     | ERROR_MISALIGNED | Variable misaligned|
 |    🟢     | ERROR_MISALIGNED_PROTO | Prototype misaligned|
 |    🟢     | ERROR_MULTIPLE_SPACES | Unecesary multiple space elements followed|
+|    🟢     | ERROR_MAKEFILE | Wrong Makefile name|
+|    🔴     | ERROR_REPO | You only can execute the NORMVIC inside a repo for security|
 
 
 ### Recomendations
