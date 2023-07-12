@@ -14,7 +14,7 @@
 
 void	ft_strpop_pos(char *str, int pos)
 {
-	int x;
+	int	x;
 
 	x = pos;
 	while (str[x + 1])
@@ -27,8 +27,8 @@ void	ft_strpop_pos(char *str, int pos)
 
 void	ft_strpop_interval(char *str, int ini, int end)
 {
-	int i;
-	int x;
+	int	i;
+	int	x;
 
 	i = 0;
 	x = 0;

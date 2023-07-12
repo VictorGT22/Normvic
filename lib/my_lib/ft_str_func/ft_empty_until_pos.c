@@ -14,7 +14,7 @@
 
 int	ft_empty_until_pos(char *str, int pos)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] && i <= pos)

@@ -28,7 +28,7 @@
 
 char	*get_strchr(char *s, int c)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	if (!s)
@@ -43,4 +43,3 @@ char	*get_strchr(char *s, int c)
 	}
 	return (0);
 }
-

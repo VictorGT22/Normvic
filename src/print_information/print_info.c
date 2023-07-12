@@ -6,22 +6,22 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:46:48 by vics              #+#    #+#             */
-/*   Updated: 2023/07/11 13:52:54 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/11 19:20:16 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "normez.h"
 
-void	print_num_errors(lst_dir *lst)
+void	print_num_errors(s_variables *var, lst_dir *lst)
 {
-	if (!lst->no_error)
+	if (!lst->no_error && var->flags->show_ok)
 	{
 		purple();
 		printf("File:\t");
 		green();
 		printf("[%s] -> OK 😊\n", lst->path);
 	}
-	else
+	else if (lst->no_error)
 	{
 		purple();
 		printf("NUM ERRORS:\t");
@@ -63,7 +63,7 @@ void	line_help(char *letter, char *message)
 {
 	purple();
 	printf("║   ");
-	blue();
+	cyan();
 	printf("%-4s:\t", letter);
 	reset();
 	printf("%-25s", message);
@@ -114,6 +114,7 @@ void	print_help(void)
 	line_help("r", "Replace the errors");
 	line_help("C", "Check only .c files");
 	line_help("H", "Check only .h files");
+	line_help("s/S", "Don't show ok files");
 	line_help("R", "Rate the app");
 	line_help("u/U", "Update latest version");
 	printf("╚═════════════════════════════════════════════════╝\n");

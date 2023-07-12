@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/07/11 17:36:59 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/11 19:15:10 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void	save_data_files(s_variables *var)
 		tmp->info = calloc(sizeof(char *), lines + 2);
 		if (!tmp->info)
 		{
-			ft_printf("ERROR MALLOC\n");
+			printf("ERROR MALLOC\n");
 			exit(0);
 		}
 		fd = open(tmp->path, O_RDONLY);
@@ -157,6 +157,7 @@ void	check_flags(s_variables *var, char **arr)
 	var->flags->only_h = false;
 	var->flags->rate = false;
 	var->flags->update = false;
+	var->flags->show_ok = true;
 	
 	
 	if (ft_is_inarr(arr, "h"))
@@ -177,6 +178,8 @@ void	check_flags(s_variables *var, char **arr)
 		var->flags->rate = true;
 	if (ft_is_inarr(arr, "u") || ft_is_inarr(arr, "U"))
 		var->flags->update = true;
+	if (ft_is_inarr(arr, "s") || ft_is_inarr(arr, "S"))
+		var->flags->show_ok = false;
 }
 
 void save_flags(s_variables *var, char **argv)
@@ -343,13 +346,13 @@ int	main(int argc, char **argv)
 				{
 					check_path(tmp);
 					check_errors_h(var, tmp);
-					print_num_errors(tmp);
+					print_num_errors(var, tmp);
 				}
 				else if (get_postfix(tmp->path, ".c") && (var->flags->only_c || var->flags->all))
 				{
 					check_path(tmp);
 					check_errors(var, tmp);
-					print_num_errors(tmp);
+					print_num_errors(var, tmp);
 				}
 				else if (!ft_strcmp(str2, "MAKEFILE") && (!ft_str_islower(&str[1]) || !ft_isupper(str[0])))
 				{

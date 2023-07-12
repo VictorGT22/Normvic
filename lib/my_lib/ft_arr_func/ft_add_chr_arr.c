@@ -14,8 +14,8 @@
 
 char	**ft_add_chr_arr(char **src_arr, char c, int pos)
 {
-	int i;
-	int len;
+	int		i;
+	int		len;
 	char	**arr;
 
 	i = 0;

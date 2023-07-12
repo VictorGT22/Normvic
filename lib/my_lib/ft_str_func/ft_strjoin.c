@@ -50,10 +50,10 @@ char	*ft_strjoin(char *s1, char *s2)
 
 char	*ft_strjoin_accurate(char *str_1, char *str_2, int pos)
 {
-	int	i;
-	int	j;
-	int	x;
-	char *str;
+	int		i;
+	int		j;
+	int		x;
+	char	*str;
 
 	i = 0;
 	x = 0;
@@ -67,4 +67,4 @@ char	*ft_strjoin_accurate(char *str_1, char *str_2, int pos)
 		str[x++] = str_1[i++];
 	str[x] = '\0';
 	return (str);
-} 
+}

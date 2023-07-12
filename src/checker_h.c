@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:00:33 by vics              #+#    #+#             */
-/*   Updated: 2023/07/11 17:25:37 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/11 21:56:42 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,30 @@
 }
 
 */
+
+void	remove_space_pos(s_variables *var, lst_dir *lst, int i, int pos)
+{
+	int j;
+	int	x;
+	char *str;
+	
+	j = 0;
+	x = 0;
+	str = malloc(sizeof(char) * ft_strlen(lst->info[i]) + 1);
+	ft_bzero(str, ft_strlen(lst->info[i]) + 1);
+	while (lst->info[i][j] && j <= pos)
+		str[x++] = lst->info[i][j++];
+	while (lst->info[i][j])
+	{
+		if ((lst->info[i][j] != ' ' && lst->info[i][j] != '\t')
+		|| (lst->info[i][j + 1] != ' ' && lst->info[i][j + 1] != '\t'))
+			str[x++] = lst->info[i][j];
+		j++;
+	}
+	free(lst->info[i]);
+	printf("Remove: %s\n", str);
+	lst->info[i] = str;
+}
 
 void	mark_empty_line(lst_dir *lst, int i, bool error)
 {
@@ -84,7 +108,7 @@ int check_name(lst_dir *lst, int i, int j, char *type)
 	char *spaces;
 	char *name;
 
-	str = type;
+	str = ft_strdup(type);
 	spaces = malloc(sizeof(char) * lst->header_level + 1);
 	ft_bzero(spaces, lst->header_level + 1);
 	ft_memset(spaces, ' ', lst->header_level);
@@ -92,6 +116,7 @@ int check_name(lst_dir *lst, int i, int j, char *type)
 	name = ft_substr(lst->info[i], 0, j);
 	if (ft_strcmp(str, name) != 0)
 	{
+		printf("&%s&, &%s&\n", str, name);
 		ft_strpop_interval(lst->info[i], 0, j - 1);
 		lst->info[i] = new_old_str(ft_strjoin_accurate(lst->info[i], str, 0), lst->info[i]);
 		return (1);
@@ -124,6 +149,7 @@ void	check_define(s_variables *var, lst_dir *lst, int *i)
 	}
 	check_keywords(var, lst, i);
 	check_operators(var, lst, i);
+	remove_space_pos(var, lst, *i, j);
 }
 
 void	check_endif(s_variables *var, lst_dir *lst, int *i)
@@ -444,7 +470,6 @@ void	read_lines_h(s_variables *var, lst_dir *lst, int *add_i)
 		remove_last_spaces(var, lst, i);
 		if (ft_strchr_nocomented(lst->info[i], '#') != -1)
 		{
-			remove_extra_spaces(var, lst, i);
 			if (ft_strstr_index_nocommented(lst->info[i], "ifndef", 0) != -1)
 				check_indef(var, lst, &i);
 			else if (ft_strstr_index_nocommented(lst->info[i], "include", 0) != -1)

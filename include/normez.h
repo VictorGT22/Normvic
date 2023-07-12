@@ -6,15 +6,14 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:43:48 by victgonz          #+#    #+#             */
-/*   Updated: 2023/07/11 17:18:42 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/11 21:46:43 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef NORMEZ_H
 # define NORMEZ_H
 
-# include "libft.h"
-# include "ft_printf.h"
+# include  "libft.h"
 # include "normez_struct.h"
 # include <stdio.h>
 # include <unistd.h>
@@ -32,8 +31,7 @@
 # include <string.h>
 # include <stdbool.h>
 
-
-# define PATH_UPDATE "bin/install/update.sh"
+# define    PATH_UPDATE "bin/install/update.sh"
 
 //MACROS
 # define TAB_SIZE 4
@@ -61,7 +59,7 @@
 # define ERROR_INCLUDE_HEADER_FILE "Error Include in header file\n"
 # define ERROR_INDEF_NAME "Error name ifndef must be in uppercase\n"
 # define ERROR_INDEF "Error ifndef\n"
-# define ERROR_SPACE_HASH "You forgot a space after #"
+# define ERROR_SPACE_HASH "Wrong num spaces after #\n"
 # define ERROR_NO_EMPTY_LINE "Error no empty line\n"
 # define ERROR_WRONG_EMPTY_LINE "Error wrong empty line\n"
 # define ERROR_STRUCT_NAME "Struct abreviation needs to start with 't_'\n"
@@ -108,8 +106,6 @@
 # define ERROR_MAKEFILE "Wrong Makefile name\n"
 # define ERROR_REPO "You only can execute the NORMVIC inside a repo for security\n"
 
-
-
 //PROTOTIPES
 lst_dir			*new_node(char *filepath);
 void			lstadd_back(lst_dir **lst, lst_dir *new);
@@ -142,9 +138,8 @@ int				count_indentations(char *str);
 void			check_operators(s_variables *var, lst_dir *lst, int *i);
 void			check_keywords(s_variables *var, lst_dir *lst, int *i);
 
-int	is_keyword(s_variables *var, lst_dir *lst, int i, char **keywords);
-int	type_keyword(s_variables *var, lst_dir *lst, int i, char **keywords);
-
+int				is_keyword(s_variables *var, lst_dir *lst, int i, char **keywords);
+int				type_keyword(s_variables *var, lst_dir *lst, int i, char **keywords);
 
 //CHECKER _H
 void			check_errors_h(s_variables *var, lst_dir *lst);
@@ -154,16 +149,14 @@ void			print_error(lst_dir *lst, char *msg_error, int line, int code_error);
 void			print_error_var(lst_dir *lst, char *msg_error, int line, int code_error);
 void			print_error_nopath(char *msg_error, int code_error);
 
-
-void	confirmacion_replace(s_variables *var);
-void	grade_the_app(s_variables *var);
-
+void			confirmacion_replace(s_variables *var);
+void			grade_the_app(s_variables *var);
 
 //PRINT INFORMATION
-void	print_num_errors(lst_dir *lst);
-void	print_header_program(void);
-void	line_help(char *letter, char *message);
-void	print_help(void);
+void			print_num_errors(s_variables *var, lst_dir *lst);
+void			print_header_program(void);
+void			line_help(char *letter, char *message);
+void			print_help(void);
 
 #endif
 

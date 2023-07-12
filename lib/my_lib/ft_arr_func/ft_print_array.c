@@ -14,7 +14,7 @@
 
 void	print_array(char **arr, char end_char)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (arr[i])
@@ -22,5 +22,5 @@ void	print_array(char **arr, char end_char)
 		write(1, arr[i], ft_strlen(arr[i]));
 		write(1, &end_char, 1);
 		i++;
-	}	
+	}
 }

@@ -14,7 +14,7 @@
 
 int	ft_str_isupper(char *str)
 {
-	int x;
+	int	x;
 
 	x = 0;
 	while (str[x])

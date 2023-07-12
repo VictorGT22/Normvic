@@ -14,8 +14,8 @@
 
 bool	ft_replace_chrchr(char *str, char find, char replace)
 {
-	int i;
-	bool n;
+	int		i;
+	bool	n;
 
 	i = 0;
 	n = false;

@@ -27,7 +27,7 @@ void	white(void)
 	printf("\033[1;37m");
 }
 
-void	reset()
+void	reset(void)
 {
 	printf("\033[0m");
 }

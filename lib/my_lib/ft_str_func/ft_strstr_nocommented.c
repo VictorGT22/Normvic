@@ -16,8 +16,8 @@ int	ft_strstr_index_nocommented(const char *haystack, const char *needle, int in
 {
 	size_t	i;
 	size_t	j;
-	char c_comment;
-	int num_comment;
+	char	c_comment;
+	int		num_comment;
 
 	i = ini;
 	num_comment = 0;
@@ -34,7 +34,7 @@ int	ft_strstr_index_nocommented(const char *haystack, const char *needle, int in
 			num_comment++;
 			i++;
 		}
-		while(haystack[i] && num_comment != 0)
+		while (haystack[i] && num_comment != 0)
 		{
 			if (haystack[i] == c_comment)
 				num_comment--;

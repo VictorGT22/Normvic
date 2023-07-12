@@ -30,7 +30,7 @@ char	*ft_strchr(const char *str, char c)
 
 int	ft_chr_index(char *str, char c)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (str[i] != '\0')
@@ -39,12 +39,12 @@ int	ft_chr_index(char *str, char c)
 			return (i);
 		i++;
 	}
-	return (i);// he cambiado esto cuidado
+	return (i);
 }
 
  int	ft_last_chr_index(char *str, char c)
 {
-	int		i;
+	int	i;
 
 	i = ft_strlen(str) - 1;
 	while (i >= 0)

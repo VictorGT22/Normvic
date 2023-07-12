@@ -14,7 +14,7 @@
 
 void	ft_str_toupper(char *str)
 {
-	int x;
+	int	x;
 
 	x = 0;
 	while (str[x])

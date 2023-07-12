@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*                                                      :+:      :+:    :+:   */
+/*   normez_struct.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:                                            +#+  +:+       +#+        */
+/*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created:                                          #+#    #+#             */
-/*   Updated:                                         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2023/07/11 19:12:24 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct flags
 	bool	help;
 	bool	update;
 	bool	rate;
+	bool	show_ok;
 }	t_flags;
 
 typedef struct s_variables
@@ -67,7 +68,7 @@ typedef struct s_variables
 	char		**op_divide;
 	char		*user;
 	char		*user_email;
-	char 		**header;
+	char		**header;
 }	s_variables;
 
 #endif

@@ -6,7 +6,7 @@
 #    By: vics <vics@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 15:37:53 by victgonz          #+#    #+#              #
-#    Updated: 2023/07/11 13:48:59 by vics             ###   ########.fr        #
+#    Updated: 2023/07/11 19:15:47 by vics             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,12 +71,12 @@ all: save_previous libft $(EXECUTABLE) write_name
 	cp normez zzzzprueba
 
 $(EXECUTABLE): $(OBJECTS)
-	@$(CC) $(CFLAGS) $(INCLUDES) $(INCLUDES_FT_PRINTF) $(INCLUDES_MY_LIB) $(OBJECTS) $(FT_LIB) $(LIB) -o $(EXECUTABLE)
+	@$(CC) $(CFLAGS) $(INCLUDES) $(INCLUDES_MY_LIB) $(OBJECTS) $(LIB) -o $(EXECUTABLE)
 	@echo "$(MAGENTA)======>$(GREEN)$(EXECUTABLE) compiled! $(MAGENTA)<======$(DEF_COLOR)"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJF)
 	@echo "$(MAGENTA)======>$(GREEN)Compiling: $(YELLOW)$< $(DEF_COLOR)"
-	$(CC) $(CFLAGS) $(INCLUDES) $(INCLUDES_FT_PRINTF) $(INCLUDES_MY_LIB) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) $(INCLUDES_MY_LIB) -c $< -o $@
 
 $(OBJF):
 		@mkdir -p $(OBJ_DIR)
@@ -96,13 +96,11 @@ fclean: clean
 	rm -f $(EXECUTABLE)
 	@echo "$(MAGENTA)======>$(CYAN)$(EXECUTABLE)executable files cleaned!$(DEF_COLOR)"
 	make -C $(LIB_DIR) fclean
-	make -C $(FT_PRINTF_DIR) fclean
 
 re: fclean all
 
 libft:
 	make -C $(LIB_DIR)
-	make -C $(FT_PRINTF_DIR)
 
 save_previous:
 	rm -rf /home/vics/Documents/Copia_Seguridad
