@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/12 19:08:58 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/12 19:59:20 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -342,7 +342,6 @@ int	check_prototipe_func(s_variables *var, lst_dir *lst, int i, bool proto, int 
 		print_error(lst, ERROR_MISALIGNED_PROTO, i + 1, SOLVABLE);
 	check_operators(var, lst, &i);
 	return (aligment);
-	
 }
 
 void	check_variables(s_variables *var, lst_dir *lst, int i)
@@ -990,6 +989,7 @@ void	save_var_bad_line(s_variables *var, lst_dir *lst, int *i)
 
 	index = ft_strchr_nocomented(lst->info[*i], '=');
 	c = index != -1 ? ' ' : '\n';
+	printf("str: %s\n", ft_substr(lst->info[*i], 0, ft_strchr_nocomented(lst->info[*i], c)));
 	node = new_node_arr(ft_substr(lst->info[*i], 0, ft_strchr_nocomented(lst->info[*i], c)));
 	if (index != -1)
 		node->str = new_old_str(ft_strjoin_accurate(node->str, ";\n", ft_strlen(node->str)), node->str);

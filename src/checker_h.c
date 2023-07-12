@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:00:33 by vics              #+#    #+#             */
-/*   Updated: 2023/07/12 18:55:03 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/12 20:04:29 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -373,7 +373,8 @@ int	correct_var(s_variables *var, lst_dir *lst, int *i, int prev_aligment)
 	}
 	int index = ft_strchr_nocomented(lst->info[*i], '=');
 	j = (index == -1) ? ft_strlen(lst->info[*i]) - 3 : index - 2;
-	if (ft_strchr_nocomented(lst->info[*i], '(') != -1)
+	index = ft_strchr_nocomented(lst->info[*i], '(');
+	if (index != -1 && index < j)
 		j = ft_strchr_nocomented(lst->info[*i], '(') + 1;
 	if (ft_replace_chrchr(&lst->info[*i][j], '\t', ' '))
 		print_error(lst, ERROR_WRONG_TAB, *i + 1, SOLVABLE);
