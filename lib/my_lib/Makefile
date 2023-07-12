@@ -34,6 +34,7 @@ SRCS = 	colors/colors_1.c							\
 		ft_mem_func/ft_memset.c						\
 		ft_nbr_func/ft_itoa.c						\
 		ft_str_func/ft_str_toupper.c				\
+		ft_str_func/ft_str_tolower.c				\
 		ft_str_func/ft_add_in_str.c					\
 		ft_str_func/ft_instr.c						\
 		ft_str_func/ft_split.c						\

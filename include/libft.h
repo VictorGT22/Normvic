@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 10:21:08 by victgonz          #+#    #+#             */
-/*   Updated: 2023/07/11 21:47:36 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/12 18:23:59 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void			ft_strpop_pos(char *str, int pos);
 char			*ft_strjoin_accurate(char *str_1, char *str_2, int pos);
 bool			ft_empty_line(char *line);
 bool			ft_replace_chrchr(char *str, char find, char replace);
+void			ft_str_tolower(char *str);
 
 void			gray(void);
 void			red(void);

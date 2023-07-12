@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_empty_until_pos.c                               :+:      :+:    :+:   */
+/*   ft_str_tlower.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/11 13:54:20 by vics              #+#    #+#             */
-/*   Updated: 2023/07/12 19:06:18 by vics             ###   ########.fr       */
+/*   Created: 2023/07/01 22:49:03 by vics              #+#    #+#             */
+/*   Updated: 2023/07/12 18:23:47 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_empty_until_pos(char *str, int pos)
+void	ft_str_tolower(char *str)
 {
-	int	i;
+	int	x;
 
-	i = 0;
-	while (str[i] && i <= pos)
+	x = 0;
+	while (str[x])
 	{
-		if (str[i] != ' ' && str[i] != '\t')
-			return (0);
-		i++;
+		str[x] = ft_tolower(str[x]);
+		x++;
 	}
-	return (1);
 }

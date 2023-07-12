@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/11 20:32:02 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/12 19:08:58 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,27 +237,41 @@ bool	remove_mid_spaces(s_variables *var, lst_dir *lst, int i)
 	return (error);
 }
 
-void	remove_mid_spaces_2(s_variables *var, lst_dir *lst, int i)
+bool	remove_mid_spaces_2(s_variables *var, lst_dir *lst, int i)
 {
 	int j;
 	int	x;
+	char c;
+	bool error;
 	char *str;
 	
 	j = 0;
 	x = 0;
+	error = false;
 	str = malloc(sizeof(char) * ft_strlen(lst->info[i]) + 1);
 	ft_bzero(str, ft_strlen(lst->info[i]) + 1);
 	while (lst->info[i][j] && (lst->info[i][j] == ' ' || lst->info[i][j] == '\t'))
 		str[x++] = lst->info[i][j++];
 	while (lst->info[i][j])
 	{
+		if (lst->info[i][j] == '\'' || lst->info[i][j] == '"')
+		{
+			c = lst->info[i][j];
+			str[x++] = lst->info[i][j++];
+			while (lst->info[i][j] && lst->info[i][j] != c)
+				str[x++] = lst->info[i][j++];
+			str[x++] = lst->info[i][j++];
+		}
 		if ((lst->info[i][j] != ' ' && lst->info[i][j] != '\t')
 		|| (lst->info[i][j + 1] != ' ' && lst->info[i][j + 1] != '\t'))
 			str[x++] = lst->info[i][j];
+		else
+			error = true;
 		j++;
 	}
 	free(lst->info[i]);
 	lst->info[i] = str;
+	return (error);
 }
 
 char	*add_void(s_variables *var, lst_dir *lst, int i, bool empty, bool proto)
@@ -289,62 +303,46 @@ char	*add_void(s_variables *var, lst_dir *lst, int i, bool empty, bool proto)
 	return (lst->info[i]);
 }
 
-void	check_prototipe_func(s_variables *var, lst_dir *lst, int i, bool proto)
+int	check_prototipe_func(s_variables *var, lst_dir *lst, int i, bool proto, int prev_aligment)
 {
 	int 	j;
 	int		x;
-	bool	error;
+	char	*str;
 	bool	empty;
-	int 	bracket;
 
-	bracket = 0;
-	error = false;
-	empty = true;
-	j = ft_strrchr_index(lst->info[i], ')');     //ft_strlen(lst->info[i]);
-	while (j >= 0)
-	{
-		if (lst->info[i][j] == '\t' && bracket > 0)
-		{
-			lst->no_error = false;
-			lst->info[i][j] = ' ';
-			if (!error)
-				print_error(lst, ERROR_WRONG_TAB, i + 1, SOLVABLE);
-			error = true;
-		}
-		if (lst->info[i][j] != ' ' && lst->info[i][j] != '\t' && lst->info[i][j] != '(' && bracket == 1)
-			empty = false;
-		if (lst->info[i][j] == ')')
-			bracket++;
-		else if (lst->info[i][j] == '(')
-			bracket--;
-		if (lst->info[i][j] == '(' && bracket == 0 && (lst->info[i][j - 1] == ' ' || lst->info[i][j - 1] == '\t'))
-		{
-			x = j;
-			j--;
-			while (j >= 0 && lst->info[i][j] == ' ' || lst->info[i][j] == '\t')
-				j--;
-			j++;
-			x = j;
-			while (lst->info[i][x])
-			{
-				if (lst->info[i][x] != ' ' && lst->info[i][x] != '\t')
-				{
-					lst->info[i][j] = lst->info[i][x];
-					j++;
-				}
-				x++;
-			}
-			lst->info[i][j] = '\0';
-			remove_extra_spaces_2(var, lst, i);
-			print_error(lst, ERROR_SPACE_NAME_FUNC, i + 1, SOLVABLE);
-			j--;
-		}
-		else if (bracket == 0 && (lst->info[i][j] == ' ' || lst->info[i][j] == '\t'))
-			j = check_name_prototipe(var, lst, j, i);
+	empty = false;
+	j = ft_strrchr_index(lst->info[i], '(');
+	if (ft_replace_chrchr(&lst->info[i][j + 1], '\t', ' '))
+		print_error(lst, ERROR_WRONG_TAB, i + 1, SOLVABLE);
+	x = ft_strrchr_index(lst->info[i], ')');
+	if (ft_empty_until_pos(&lst->info[i][j + 1], (x - 1) - (j + 1)))
+		empty = true;
+	x = j;
+	j--;
+	while (j >= 0 && ft_isspace(lst->info[i][j]))
 		j--;
+	while (j >= 0 && !ft_isspace(lst->info[i][j]))
+		j--;
+	if (lst->info[i][j] == ' ')
+	{
+		print_error(lst, ERROR_WRONG_SPACE, i + 1, SOLVABLE);
+		lst->info[i][j] = '\t';
+	}
+	str = ft_substr(lst->info[i], j + 1, x - j - 1);
+	if (!ft_str_islower(str))
+	{
+		print_error(lst, ERROR_FUNC_NAME, i + 1, SOLVABLE);
+		ft_str_tolower(str);
+		ft_strpop_interval(lst->info[i], j + 1, x - 1);
+		new_old_str(ft_strjoin_accurate(lst->info[i], str, j + 1), lst->info[i]);
 	}
 	lst->info[i] = add_void(var, lst, i, empty, proto);
+	int aligment = get_real_hor_pos(lst->info[i]);
+	if (aligment != prev_aligment && prev_aligment != -1)
+		print_error(lst, ERROR_MISALIGNED_PROTO, i + 1, SOLVABLE);
 	check_operators(var, lst, &i);
+	return (aligment);
+	
 }
 
 void	check_variables(s_variables *var, lst_dir *lst, int i)
@@ -637,7 +635,7 @@ void	confirmacion_replace(s_variables *var)
 	reset();
 	printf("(Y : N)\n");
 	scanf("%s", &confirmation);
-	if (confirmation == 'n' || confirmation == 'N')
+	if (confirmation != 'y' && confirmation != 'Y')
 		var->flags->replace = false;
 }
 
@@ -841,7 +839,6 @@ void	check_operators(s_variables *var, lst_dir *lst, int *i)
 		op = -1;
 		while (var->operators[x])
 		{
-			//printf("entra ?\n");
 			index = ft_strstr_index_nocommented(lst->info[*i], var->operators[x], prev + prev_len);
 			if (index != -1 && (lower > index || lower == -1))
 			{
@@ -1219,7 +1216,7 @@ void	check_columns(s_variables *var, lst_dir *lst, int *i)
 			reset();
 		}
 		printf("\n\n");
-		correct_line_long(var, lst, i);
+		//correct_line_long(var, lst, i);
 	}
 }
 
@@ -1233,6 +1230,7 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 	t_lst_arr *temp;
 	bool error_empty;
 	int index;
+	int prev_aligment = -1;
 	
 	max = 0;
 	error_empty = false;
@@ -1242,7 +1240,7 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 	lst->line_compensation = 0;
 	start = *i + 1 + check_brackets(var, lst, *i);
 	followed_var = is_var(lst->info[start]);
-	check_prototipe_func(var, lst, *i - 1, false);
+	check_prototipe_func(var, lst, *i - 1, false, -1); // revisar esto
 	if (remove_mid_spaces(var, lst, *i - 1))
 		print_error(lst, ERROR_MULTIPLE_SPACES, *i + 1, SOLVABLE);
 	*i = start;
@@ -1255,11 +1253,11 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 		if (!lst->info[*i + 1] && !ft_strchr(lst->info[*i], '\n'))
 			print_error(lst, ERROR_ENTER_END_FILE, *i + 1, SOLVABLE);
 		remove_last_spaces(var, lst, *i);
-		remove_mid_spaces_2(var, lst, *i);
 		if (is_var(lst->info[*i]) && !is_ternarian(lst, lst->info[*i], i))
 		{
 			num_var++;
-			max = correct_var(var, lst, i, max);
+			prev_aligment = correct_var(var, lst, i, prev_aligment);
+			max = get_max(max, get_real_hor_pos(lst->info[*i]));
 			if (!followed_var)
 			{
 				save_var_bad_line(var, lst, i);
@@ -1270,6 +1268,8 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 		}
 		else
 		{
+			if (remove_mid_spaces_2(var, lst, *i))
+				print_error(lst, ERROR_MULTIPLE_SPACES, *i + 1, SOLVABLE);
 			if (followed_var)
 			{
 				temp = var->var_bad_decl;
@@ -1401,7 +1401,7 @@ void	check_errors(s_variables *var, lst_dir *lst)
 				i++;
 		}
 		if (ft_strstr_index_nocommented(lst->info[i], ";", 0) != -1)
-			check_prototipe_func(var, lst, i, true);
+			check_prototipe_func(var, lst, i, true, -1);
 		if (ft_strnstr(lst->info[i], "{", len))
 		{
 			num_lines = i;

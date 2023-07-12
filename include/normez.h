@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:43:48 by victgonz          #+#    #+#             */
-/*   Updated: 2023/07/11 21:46:43 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/12 18:49:34 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,10 @@
 # define ERROR_MULTIPLE_SPACES "Unecesary multiple space elements followed\n"
 # define ERROR_MAKEFILE "Wrong Makefile name\n"
 # define ERROR_REPO "You only can execute the NORMVIC inside a repo for security\n"
+# define ERROR_TAB_NAME_STRUCT "Must be a tab between } and struct name\n"
+# define ERROR_FUNC_NAME "Functions name must be in lowercase\n"
+
+
 
 //PROTOTIPES
 lst_dir			*new_node(char *filepath);
@@ -122,15 +126,17 @@ void			check_errors(s_variables *var, lst_dir *lst);
 void			remove_extra_spaces(s_variables *var, lst_dir *lst, int i);
 void			remove_last_spaces(s_variables *var, lst_dir *lst, int i);
 bool			remove_mid_spaces(s_variables *var, lst_dir *lst, int i);
+bool			remove_mid_spaces_2(s_variables *var, lst_dir *lst, int i);
 void			remove_extra_spaces_2(s_variables *var, lst_dir *lst, int i);
 void			remove_btw_semicolon(s_variables *var, lst_dir *lst, int i);
 int				check_name_prototipe(s_variables *var, lst_dir *lst, int j, int i);
-void			check_prototipe_func(s_variables *var, lst_dir *lst, int i, bool proto);
+int				check_prototipe_func(s_variables *var, lst_dir *lst, int i, bool proto, int prev_aligment);
 void			correct_misaligned(lst_dir *lst, int i, int max, int num_tabs);
 void			mark_empty_line(lst_dir *lst, int i, bool error);
 bool			ft_empty_line(char *line);
 int				ft_strchr_nocomented(char *str, char c);
 char			*new_old_str(char *new, char *old);
+int				get_max(int num_1, int num_2);
 
 //FUNCIONES UTILES
 int				count_indentations(char *str);

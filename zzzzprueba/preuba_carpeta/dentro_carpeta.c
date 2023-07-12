@@ -5,40 +5,31 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/09 17:50:56 by                   #+#    #+#             */
-/*   Updated: 2023/07/11 14:45:48 by vics             ###   ########.fr       */
+/*   Created: 2023/04/28 12:00:33 by vics              #+#    #+#             */
+/*   Updated: 2023/07/12 19:09:24 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-unsigned int	check_header(s_variables *var, lst_dir *lst, int *add_i)
-{
-	bool	error;
-	int		i;
-	int		len;
-	int		line;
+#include "normez.h"
 
-	error = false;
-	i = *add_i;
-	line = 0;
-	error = false;
-	while (lst->info[i] && i < 11
-		&& ft_strstr_index_nocommented(lst->info[i], "/*", 0) != -1
-		&& ft_strstr_index_nocommented(lst->info[i], "*/", 0) != -1)
+char	*check_name_header(lst_dir *lst, int *i, char *str)
+{
+	char	*name;
+	int		n;
+	int		x;
+
+	x = 0;
+	n = ft_last_chr_index(lst->path, "prueba de comentario ") + 1;
+	name = malloc(sizeof(char) * (ft_strlen(lst->path) - n) + 2);
+	while (lst->path[n] && prueba)
 	{
-		len = ft_strlen(lst->info[i]);
-		if ((!ft_strnstr(lst->info[i], "/*", len)
-			|| !ft_strnstr(lst->info[i], "*/", len) || len != 81) && !error)
-		{
-			line = i;
-			error = true;
-		}
-		i++;
+		if (lst->path[n] == '.')
+			name[x++] = '_';
+		else
+			name[x++] = ft_toupper(lst->path[n]);
+		n++;
 	}
-	if (error || i != 11)
-	{
-		print_error(lst, ERROR_HEADER, line + 1, SOLVABLE);
-		correct_header(var, lst, &i);
-		lst->no_error = false;
-	}
-	*add_i = i;
+	name[x++] = '\n';
+	name[x] = '\0';
+	return ;
 }
