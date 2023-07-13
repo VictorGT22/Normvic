@@ -23,12 +23,13 @@ bash -c "$(curl -fsSL https://raw.github.com/VictorGT22/Normvic/master/bin/insta
 
 |   Flags   |       Action       |
 |-----------|--------------------|
-| -h        | Show help          |
+| -i        | Show help          |
 | no flag   | Evaluate .h and .c |
-| -C        | Evaluate only .c   |
-| -H        | Evaluate only .h   |
-| -r        | Correct the errors |
-| -R        | Rate the app       |
+| -c / C    | Evaluate only .c   |
+| -h / H    | Evaluate only .h   |
+| -r / R    | Correct the errors |
+| -s / S    | Don't show ok files|
+| -g / G    | Rate the app       |
 | -u / U    | Update to latest version|
 
 ### Type error
@@ -96,6 +97,8 @@ bash -c "$(curl -fsSL https://raw.github.com/VictorGT22/Normvic/master/bin/insta
 |    🟢     | ERROR_MULTIPLE_SPACES | Unecesary multiple space elements followed|
 |    🟢     | ERROR_MAKEFILE | Wrong Makefile name|
 |    🔴     | ERROR_REPO | You only can execute the NORMVIC inside a repo for security|
+|    🟢     | ERROR_TAB_NAME_STRUCT | Must be a tab between } and struct name |
+|    🟢     | ERROR_FUNC_NAME | Functions name must be in lowercase |
 
 
 ### Recomendations

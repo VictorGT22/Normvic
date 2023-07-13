@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:46:48 by vics              #+#    #+#             */
-/*   Updated: 2023/07/13 15:40:29 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/13 19:58:40 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,11 +111,11 @@ void	print_help(void)
 	purple();
 	printf("		  ║\n");
 	printf("║						  ║\n");
-	line_help("r", "Replace the errors");
-	line_help("C", "Check only .c files");
-	line_help("H", "Check only .h files");
+	line_help("r/R", "Replace the errors");
+	line_help("c/C", "Check only .c files");
+	line_help("h/H", "Check only .h files");
 	line_help("s/S", "Don't show ok files");
-	line_help("R", "Rate the app");
+	line_help("g/G", "Rate the app");
 	line_help("u/U", "Update latest version");
 	printf("╚═════════════════════════════════════════════════╝\n");
 }

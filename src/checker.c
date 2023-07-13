@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/13 15:39:53 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/13 19:59:13 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ void	remove_last_spaces(s_variables *var, lst_dir *lst, int i)
 		lst->info[i][j] = '\0';
 		j--;
 	}
-	//printf("str: %s\n", lst->info[i]);
 	if (!ft_strchr(lst->info[i], '\n'))
 	{
 		lst->info[i][j + 1] = '\n';

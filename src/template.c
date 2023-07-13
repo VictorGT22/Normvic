@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/07/13 14:59:17 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/13 19:58:07 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,21 +160,21 @@ void	check_flags(s_variables *var, char **arr)
 	var->flags->show_ok = true;
 	
 	
-	if (ft_is_inarr(arr, "h"))
+	if (ft_is_inarr(arr, "i") || ft_is_inarr(arr, "I"))
 		var->flags->help = true;
-	if (ft_is_inarr(arr, "r"))
+	if (ft_is_inarr(arr, "r") || ft_is_inarr(arr, "R"))
 		var->flags->replace = true;
-	if (ft_is_inarr(arr, "C"))
+	if (ft_is_inarr(arr, "c") || ft_is_inarr(arr, "C"))
 	{
 		var->flags->only_c = true;
 		var->flags->all = false;
 	}
-	if (ft_is_inarr(arr, "H"))
+	if (ft_is_inarr(arr, "h") || ft_is_inarr(arr, "H"))
 	{
 		var->flags->all = false;
 		var->flags->only_h = true;
 	}
-	if (ft_is_inarr(arr, "R"))
+	if (ft_is_inarr(arr, "g") || ft_is_inarr(arr, "G"))
 		var->flags->rate = true;
 	if (ft_is_inarr(arr, "u") || ft_is_inarr(arr, "U"))
 		var->flags->update = true;
