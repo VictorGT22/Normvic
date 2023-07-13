@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/13 21:48:28 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/14 01:50:23 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -514,11 +514,14 @@ void	correct_ternarian(s_variables *var, lst_dir *lst, int *i)
 	int	index_condition;
 	char *tabs;
 
-	num_tabs = count_indentations(lst->info[*i - 1]) - count_indentations(lst->info[*i]);
-	
+	if (ft_empty_line(lst->info[*i - 1]))
+		num_tabs = 0;
+	else
+		num_tabs = count_indentations(lst->info[*i - 1]) - count_indentations(lst->info[*i]);
+	printf("%d\n", num_tabs);
 	if (ft_strchr_nocomented(lst->info[*i - 1], '{') != -1 || is_keyword(var, lst, *i - 1, var->keywords) != 0)
 		num_tabs++;
-	if (num_tabs != 0)
+	if (num_tabs > 0)
 	{
 		tabs = malloc(sizeof(char) * num_tabs + 1);
 		ft_bzero(tabs, num_tabs + 1);
@@ -1334,7 +1337,7 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 		}
 		*i += 1;
 	}	
-	check_indentation(var, lst, start);
+	//check_indentation(var, lst, start);
 	free_linked_arr(&var->var_bad_decl);
 	free_linked_arr(&var->var_bad_line);
 

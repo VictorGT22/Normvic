@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/07/13 19:58:07 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/14 00:31:14 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,6 @@ void save_flags(s_variables *var, char **argv)
 		}
 		i++;
 	}
-	print_array(arr, '\n');
 	check_flags(var, arr);
 	
 }
@@ -288,6 +287,8 @@ int	main(int argc, char **argv)
 	var->flags = calloc(sizeof(t_flags), 1);
 
 	save_flags(var, argv);
+	print_logo();
+	print_header_program();
 	if (var->flags->update)
 		update_normvic();
 	else if (var->flags->help)
@@ -319,7 +320,7 @@ int	main(int argc, char **argv)
 				get_directories(var, ft_strjoin(tmp->path, "/"));
 				tmp = tmp->next;
 			}
-			print_header_program();
+			
 			/*LINKEDS Y ARR*/
 			
 			save_header(var);

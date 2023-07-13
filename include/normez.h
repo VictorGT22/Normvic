@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:43:48 by victgonz          #+#    #+#             */
-/*   Updated: 2023/07/13 15:39:39 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/14 00:17:22 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@
 # include <string.h>
 # include <stdbool.h>
 
-# define    PATH_UPDATE "bin/install/update.sh"
+# define PATH_UPDATE "bin/install/update.sh"
+# define PATH_LOGO "bin/media/text/Logo.txt"
 
 //MACROS
 # define TAB_SIZE 4
@@ -163,6 +164,7 @@ void			print_num_errors(s_variables *var, lst_dir *lst);
 void			print_header_program(void);
 void			line_help(char *letter, char *message);
 void			print_help(void);
+void			print_logo(void);
 
 #endif
 

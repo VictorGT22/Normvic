@@ -2,7 +2,7 @@ NAME = libft.a
 
 BONUS = .bonus
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = ##-Wall -Wextra -Werror
 
 SRCS = 	colors/colors_1.c							\
 		colors/colors_2.c							\

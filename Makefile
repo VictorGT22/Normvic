@@ -6,7 +6,7 @@
 #    By: vics <vics@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 15:37:53 by victgonz          #+#    #+#              #
-#    Updated: 2023/07/13 15:41:41 by vics             ###   ########.fr        #
+#    Updated: 2023/07/14 00:55:45 by vics             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ PROJECT = NORMEZ
 
 CC = gcc
 
-CFLAGS = -g ##-Wall -Wextra -Werror -std=c99
+CFLAGS = ##-Wall -Wextra -Werror -std=c99
 
 SRC_DIR = src/
 
@@ -105,4 +105,4 @@ libft:
 
 save_previous:
 	rm -rf /home/vics/Documents/Copia_Seguridad
-	cp -r /home/vics/Documents/normez_rest /home/vics/Documents/Copia_Seguridad
+	cp -r /home/vics/Normvic /home/vics/Documents/Copia_Seguridad

@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 12:56:06 by vics              #+#    #+#             */
-/*   Updated: 2023/07/13 13:34:39 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/14 01:51:01 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	print_error(lst_dir *lst, char *msg_error, int line, int code_error)
 	purple();
 	printf("File:\t");
 	get_code_color(code_error);
-	printf("[%-12s -> Line: %3d]:", lst->path, line - lst->line_compensation);
+	printf("[%-12s:%d]:", lst->path, line - lst->line_compensation);
 	get_code_color(0);
 	printf("\t%s\n", msg_error);
 }
@@ -65,7 +65,7 @@ void	print_error_var(lst_dir *lst, char *msg_error, int line, int code_error)
 	purple();
 	printf("File:\t");
 	get_code_color(code_error);
-	printf("[%-12s -> Line: %3d]:", lst->path, line - lst->line_compensation);
+	printf("[%-12s:%d]:", lst->path, line - lst->line_compensation);
 	get_code_color(0);
 	printf("\t%s", msg_error);
 }

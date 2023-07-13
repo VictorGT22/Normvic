@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:46:48 by vics              #+#    #+#             */
-/*   Updated: 2023/07/13 19:58:40 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/14 00:33:03 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,23 @@ void	line_help(char *letter, char *message)
 	printf("%12s", "║");
 	printf("\n");
 	printf("║						  ║\n");
+}
+
+void	print_logo(void)
+{
+	int fd;
+	char *str;
+
+	fd = open(PATH_LOGO, O_RDONLY);
+	purple();
+	str = get_next_line(fd);
+	while (str)
+	{
+		printf("%s", str);
+		free(str);
+		str = get_next_line(fd);
+	}
+	printf("\n");
 }
 
 void	print_help(void)
