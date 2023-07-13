@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:00:33 by vics              #+#    #+#             */
-/*   Updated: 2023/07/12 20:04:29 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/13 15:04:07 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -487,12 +487,10 @@ void	read_lines_h(s_variables *var, lst_dir *lst, int *add_i)
 	int	first_prototipe;
 	int	prev_aligment;
 	int	max_aligned_proto;
-	bool error;
 	
 	i = *add_i;
 	prev_aligment = -1;
 	first_prototipe = 0;
-	error = false;
 	max_aligned_proto = 0;
 	lst->header_level = 0;
 	while (lst->info[i])

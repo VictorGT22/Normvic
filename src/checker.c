@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/12 19:59:20 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/13 15:04:27 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ void	correct_header_2(s_variables *var, lst_dir *lst, int *i)
 	ft_strpop_interval(lst->info[8], 15, ft_strlen(str) + 14);
 	lst->info[8] = new_old_str(ft_strjoin_accurate(lst->info[8], str, 14), lst->info[8]);
 	free(str);
-
-	printf("str: %s\n", var->user);
 }
 
 void	correct_header(s_variables *var, lst_dir *lst, int *i)
@@ -1196,7 +1194,7 @@ void	check_columns(s_variables *var, lst_dir *lst, int *i)
 {
 	int	num_columns;
 
-	num_columns = get_real_hor_pos(lst->info[*i]);
+	num_columns = 0; //get_real_hor_pos(lst->info[*i]);
 	if (num_columns > 80) // linea muy larga
 	{
 		print_error_var(lst, ERROR_TO_LONG_LINE, *i + 1, NOSOLVABLE);
@@ -1237,7 +1235,6 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 	num_var = 0;
 	lst->num_bracket = 0;
 	lst->inside_comment = 0;
-	lst->line_compensation = 0;
 	start = *i + 1 + check_brackets(var, lst, *i);
 	followed_var = is_var(lst->info[start]);
 	check_prototipe_func(var, lst, *i - 1, false, -1); // revisar esto

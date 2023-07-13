@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 14:50:37 by vics              #+#    #+#             */
-/*   Updated: 2023/07/11 14:51:29 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/13 13:07:04 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**ft_add_chr_arr(char **src_arr, char c, int pos)
 
 	i = 0;
 	len = ft_arrlen(src_arr);
-	arr = malloc(sizeof(char *) * len + 2);
+	arr = malloc(sizeof(char *) * (len + 2));
 	while (src_arr[i] && i < pos)
 	{
 		arr[i] = strdup(src_arr[i]);

@@ -6,7 +6,7 @@
 #    By: vics <vics@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 15:37:53 by victgonz          #+#    #+#              #
-#    Updated: 2023/07/11 19:15:47 by vics             ###   ########.fr        #
+#    Updated: 2023/07/13 14:17:28 by vics             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ PROJECT = NORMEZ
 
 CC = gcc
 
-CFLAGS = ##-Wall -Wextra -Werror -std=c99
+CFLAGS = -g ##-Wall -Wextra -Werror -std=c99
 
 SRC_DIR = src/
 

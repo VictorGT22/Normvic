@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/07/11 19:15:10 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/13 14:59:17 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ int	check_repo(s_variables *var)
 	dp = opendir(".");
 	while ((dirp = readdir(dp)) != NULL)
 	{
-		stat(str, &fileStat);
 		str = ft_strdup(dirp->d_name);
+		stat(str, &fileStat);
 		ft_str_toupper(str);
 		if (dirp->d_name[0] != '.' && dirp->d_name[1] != '.' && !ft_strcmp(str, "MAKEFILE"))
 		{
@@ -202,14 +202,16 @@ void save_flags(s_variables *var, char **argv)
 			str = ft_substr(argv[i], index + 1, ft_strlen(argv[i]));
 			while (str[j])
 			{
-				arr = ft_add_chr_arr(arr, str[j], 1);
+				arr = ft_add_chr_arr(arr, str[j], 0);
 				j++;
 			}
 			//free(str);
 		}
 		i++;
 	}
+	print_array(arr, '\n');
 	check_flags(var, arr);
+	
 }
 
 void	check_path(lst_dir *lst)
@@ -282,8 +284,8 @@ int	main(int argc, char **argv)
 	lst_dir *node;
 	s_variables *var;
 
-	var = malloc(sizeof(s_variables) * 1);
-	var->flags = malloc(sizeof(t_flags) * 1);
+	var = calloc(sizeof(s_variables), 1);
+	var->flags = calloc(sizeof(t_flags), 1);
 
 	save_flags(var, argv);
 	if (var->flags->update)
@@ -338,6 +340,7 @@ int	main(int argc, char **argv)
 				tmp->no_error = 0;
 				tmp->err_solved = 0;
 				tmp->err_nosolved = 0;
+				tmp->line_compensation = 0;
 				int index = ft_strrchr_index(tmp->path, '/') + 1;
 				str = ft_substr(tmp->path, index, ft_strlen(tmp->path) - index);
 				str2 = strdup(str);

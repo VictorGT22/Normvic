@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:28:24 by vics              #+#    #+#             */
-/*   Updated: 2023/04/30 12:06:39 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/13 14:06:25 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ lst_dir	*new_node(char *filepath)
 {
 	lst_dir	*node;
 
-	node = malloc(sizeof(lst_dir) * 1);
+	node = calloc(sizeof(lst_dir), 1);
 	if (!node)
 		return (NULL);
 	node->path = filepath;
