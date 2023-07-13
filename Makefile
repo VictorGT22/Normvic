@@ -6,7 +6,7 @@
 #    By: vics <vics@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 15:37:53 by victgonz          #+#    #+#              #
-#    Updated: 2023/07/13 14:17:28 by vics             ###   ########.fr        #
+#    Updated: 2023/07/13 15:41:41 by vics             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,6 +90,7 @@ write_name:
 
 clean:
 	rm -f $(OBJECTS)
+	make -C $(LIB_DIR) clean
 	@echo "$(MAGENTA)======>$(BLUE)$(EXECUTABLE) object files cleaned!$(DEF_COLOR)"
 
 fclean: clean

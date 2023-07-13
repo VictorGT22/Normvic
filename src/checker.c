@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/13 15:04:27 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/13 15:39:53 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	correct_header(s_variables *var, lst_dir *lst, int *i)
 	correct_header_2(var, lst, i);
 }
 
-unsigned int	check_header(s_variables *var, lst_dir *lst, int *add_i)
+void	check_header(s_variables *var, lst_dir *lst, int *add_i)
 {
 	int i;
 	int len;
@@ -89,7 +89,6 @@ unsigned int	check_header(s_variables *var, lst_dir *lst, int *add_i)
 	{
 		print_error(lst, ERROR_HEADER, line + 1, SOLVABLE);
 		correct_header(var, lst, &i);
-		lst->no_error = false;
 	}
 	*add_i = i;
 }

@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:43:48 by victgonz          #+#    #+#             */
-/*   Updated: 2023/07/12 18:49:34 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/13 15:39:39 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int				get_real_hor_pos(char *str);
 int				correct_var(s_variables *var, lst_dir *lst, int *i, int max);
 
 //CHECKER
-unsigned int	check_header(s_variables *var, lst_dir *lst, int *add_i);
+void			check_header(s_variables *var, lst_dir *lst, int *add_i);
 void			check_errors(s_variables *var, lst_dir *lst);
 void			remove_extra_spaces(s_variables *var, lst_dir *lst, int i);
 void			remove_last_spaces(s_variables *var, lst_dir *lst, int i);

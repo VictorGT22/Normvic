@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:46:48 by vics              #+#    #+#             */
-/*   Updated: 2023/07/11 19:20:16 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/13 15:40:29 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	print_num_errors(s_variables *var, lst_dir *lst)
 
 void	print_header_program(void)
 {
-	cyan();
+	purple();
 	printf("╔═════════════════════════════════════════╗\n");
 	printf("║		");
 	blue();
