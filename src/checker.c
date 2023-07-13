@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/13 19:59:13 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/13 21:48:28 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,7 +307,7 @@ int	check_prototipe_func(s_variables *var, lst_dir *lst, int i, bool proto, int 
 	bool	empty;
 
 	empty = false;
-	j = ft_strrchr_index(lst->info[i], '(');
+	j = ft_strchr_nocomented(lst->info[i], '(');
 	if (ft_replace_chrchr(&lst->info[i][j + 1], '\t', ' '))
 		print_error(lst, ERROR_WRONG_TAB, i + 1, SOLVABLE);
 	x = ft_strrchr_index(lst->info[i], ')');
@@ -657,6 +657,7 @@ int	remove_comment(lst_dir *lst, int lower, int *i, char *op)
 	bool	long_comment;
 	int index;
 
+	//printf("entrada: #%s#\n", lst->info[*i]);
 	long_comment = false;
 	while (lower - 1 >= 0 && (lst->info[*i][lower - 1] == ' ' ||  lst->info[*i][lower - 1] == '\t'))
 		lower--;
@@ -689,6 +690,8 @@ int	remove_comment(lst_dir *lst, int lower, int *i, char *op)
 		else
 			mark_empty_line(lst, *i, true);
 	}
+	//printf("salida: #%s#\n", lst->info[*i]);
+	//printf("salida: #%s#\n", lst->info[*i + 1]);
 }
 
 int	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int lower)
@@ -784,7 +787,7 @@ int	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int lo
 		if (!operator_start(lst, i, lower) && lst->info[*i][lower - 1] == ' ' || lst->info[*i][lower - 1] == '\t')
 		{
 			ft_strpop_pos(lst->info[*i], lower - 1);
-			print_error(lst, ERROR_SPACE_BEFORE_COMMA, *i, SOLVABLE);
+			print_error(lst, ERROR_SPACE_BEFORE_COMMA, *i + 1, SOLVABLE);
 			space++;
 		}
 		if (lst->info[*i][lower + 1 - space] != ' ')
@@ -793,7 +796,7 @@ int	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int lo
 				lst->info[*i][lower + 1 - space] = ' ';
 			else
 				lst->info[*i] = new_old_str(ft_strjoin_accurate(lst->info[*i], " ", lower + 1 - space), lst->info[*i]);
-			print_error(lst, ERROR_SPACE_AFTER_COMMA, *i, SOLVABLE);
+			print_error(lst, ERROR_SPACE_AFTER_COMMA, *i + 1, SOLVABLE);
 			space--;
 		}	
 	}
@@ -941,21 +944,24 @@ void	correct_line_bracket(s_variables *var, lst_dir *lst, int i, int index)
 bool	check_brackets(s_variables *var, lst_dir *lst, int i)
 {
 	int index;
+	int index_2;
 	bool error;
 	char *str;
 	char *tabs_str;
 
 	error = 0;
 	index = ft_strchr_nocomented(lst->info[i], '{');
+	index_2 = ft_strstr_index_nocommented(lst->info[i], "//", 0);
+	//printf("%d, %d\n", index, index_2);
 	if (index != -1)
 	{
-		if (!ft_empty_until_pos(lst->info[i], index - 1))
+		if (!ft_empty_until_pos(lst->info[i], index - 1) && index_2 != -1 && index < index_2)
 		{
 			correct_line_bracket(var, lst, i, index);
 			print_error(lst, ERROR_BRACKET_KEYWORD, i + 1, SOLVABLE);
 			error = true;
 		}
-		else if (!ft_empty_line(&lst->info[i][count_indentations(lst->info[i]) + 1]))
+		else if (!ft_empty_line(&lst->info[i][count_indentations(lst->info[i]) + 1])  && index_2 != -1 && index < index_2)
 		{
 			correct_line_bracket(var, lst, i, index + 1);
 			print_error(lst, ERROR_BRACKET_NOEMPTY, i + 1, SOLVABLE);
@@ -966,7 +972,7 @@ bool	check_brackets(s_variables *var, lst_dir *lst, int i)
 	index = ft_strchr_nocomented(lst->info[i], '}');
 	if (index != -1)
 	{
-		if (!ft_empty_line(&lst->info[i][index + 1]))
+		if (!ft_empty_line(&lst->info[i][index + 1]) && index_2 != -1 && index < index_2)
 		{
 			correct_line_bracket(var, lst, i, index + 1);
 			print_error(lst, ERROR_CLOSE_BRACKET_NOEMPTY, i + 1, SOLVABLE);
@@ -1236,8 +1242,8 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 	start = *i + 1 + check_brackets(var, lst, *i);
 	followed_var = is_var(lst->info[start]);
 	check_prototipe_func(var, lst, *i - 1, false, -1); // revisar esto
-	if (remove_mid_spaces(var, lst, *i - 1))
-		print_error(lst, ERROR_MULTIPLE_SPACES, *i + 1, SOLVABLE);
+	//if (remove_mid_spaces(var, lst, *i - 1))
+	//	print_error(lst, ERROR_MULTIPLE_SPACES, *i + 1, SOLVABLE);
 	*i = start;
 	if (ft_empty_line(lst->info[start]))
 		print_error(lst, ERROR_WRONG_EMPTY_LINE, start + 1, SOLVABLE);
@@ -1278,7 +1284,9 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 			else
 			{
 				check_operators(var, lst, i);
-				check_keywords(var, lst, i);
+				//printf("despues del op: #%s#, linea: %d\n", lst->info[*i], *i);
+				if (ft_strcmp(lst->info[*i], "@#~#@\n") != 0)
+					check_keywords(var, lst, i);
 			}
 			followed_var = false;
 		}
