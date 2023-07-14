@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/07/14 00:31:14 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/14 13:07:40 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,9 +260,12 @@ void	save_user_data(s_variables *var)
 	int start;
 	char *str;
 
-	fd = open("../settings/config_user", O_RDONLY);
+	fd = open("", O_RDONLY);
+	if (fd == -1)
+		printf("ERROR OPEN SETTINGS\n");
 	if (fd != -1)
 	{
+		printf("USER DATA SAVED\n");
 		str = get_next_line(fd);
 		start = ft_strchr_nocomented(str, ':');
 		var->user = ft_substr(str, start, ft_strlen(str) - start);
@@ -302,6 +305,8 @@ int	main(int argc, char **argv)
 		var->var_type = NULL;
 		var->var_bad_decl = NULL;
 		var->var_bad_line = NULL;
+		var->user = "username";
+		var->user = "username@email.42";
 		var->keywords = ft_split(KEY_WORDS, ',');
 		var->keywords_indent = ft_split(KEY_WORDS_INDENT, ',');
 		var->operators = ft_split(OPPERATORS_BOTH_SPACE, ',');
