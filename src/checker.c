@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/14 13:30:12 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/14 13:52:14 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -695,7 +695,7 @@ int	remove_comment(lst_dir *lst, int lower, int *i, char *op)
 	}
 	//printf("salida: #%s#\n", lst->info[*i]);
 	//printf("salida: #%s#\n", lst->info[*i + 1]);
-	return ();
+	return (1);
 }
 
 int	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int lower)
