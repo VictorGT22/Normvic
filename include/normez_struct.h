@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/07/11 19:12:24 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/14 13:19:24 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_variables
 	t_lst_arr	*var_bad_decl;
 	t_lst_arr	*var_bad_line;
 	t_flags		*flags;
+	char		*home_path;
 	char		**keywords_indent;
 	char		**keywords;
 	char		**operators;

@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:43:48 by victgonz          #+#    #+#             */
-/*   Updated: 2023/07/14 00:17:22 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/14 13:19:20 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 # include <string.h>
 # include <stdbool.h>
 
-# define PATH_UPDATE "bin/install/update.sh"
-# define PATH_LOGO "bin/media/text/Logo.txt"
+# define PATH_UPDATE "/Normvic/bin/install/update.sh"
+# define PATH_LOGO "/bin/media/text/Logo.txt"
 
 //MACROS
 # define TAB_SIZE 4

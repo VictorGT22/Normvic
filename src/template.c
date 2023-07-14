@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/07/14 13:07:40 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/14 13:19:14 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,11 +226,18 @@ void	check_path(lst_dir *lst)
 	}
 }
 
-void	update_normvic(void)
+void	update_normvic(s_variables *var)
 {
 	int res;
+	char path[256];
 
-	res = system(PATH_UPDATE);
+
+	if (var->home_path != NULL) {
+        strcpy(path, var->home_path);
+        strcat(path, PATH_UPDATE);
+	}
+	printf("PATH: %s\n", path);
+	res = system(path);
     if (res == -1)
         printf("Can not execute update.sh\n");
 	else
@@ -259,10 +266,14 @@ void	save_user_data(s_variables *var)
 	int fd;
 	int start;
 	char *str;
+    char path[256];
 
-	fd = open("", O_RDONLY);
-	if (fd == -1)
-		printf("ERROR OPEN SETTINGS\n");
+	
+    if (var->home_path != NULL) {
+        strcpy(path, var->home_path);
+        strcat(path, "/Normvic/settings/config_user");
+	}
+	fd = open(path, O_RDONLY);
 	if (fd != -1)
 	{
 		printf("USER DATA SAVED\n");
@@ -277,6 +288,8 @@ void	save_user_data(s_variables *var)
 		var->user_email = new_old_str(ft_strtrim(var->user_email, " \t\n:"), var->user_email);
 		free(str);
 	}
+	else
+		printf("ERROR OPEN SETTINGS\n");
 	close(fd);
 }
 
@@ -292,8 +305,9 @@ int	main(int argc, char **argv)
 	save_flags(var, argv);
 	print_logo();
 	print_header_program();
+	var->home_path = getenv("HOME");
 	if (var->flags->update)
-		update_normvic();
+		update_normvic(var);
 	else if (var->flags->help)
 		print_help();
 	else if (var->flags->rate)
@@ -306,7 +320,7 @@ int	main(int argc, char **argv)
 		var->var_bad_decl = NULL;
 		var->var_bad_line = NULL;
 		var->user = "username";
-		var->user = "username@email.42";
+		var->user_email = "username@email.42";
 		var->keywords = ft_split(KEY_WORDS, ',');
 		var->keywords_indent = ft_split(KEY_WORDS_INDENT, ',');
 		var->operators = ft_split(OPPERATORS_BOTH_SPACE, ',');
