@@ -6,7 +6,7 @@
 #    By: vics <vics@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 15:37:53 by victgonz          #+#    #+#              #
-#    Updated: 2023/07/14 00:55:45 by vics             ###   ########.fr        #
+#    Updated: 2023/07/14 13:30:31 by vics             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,7 @@ WHITE = \033[0;97m
 
 #### COMMANDS ####
 
-all: save_previous libft $(EXECUTABLE) write_name
+all: libft $(EXECUTABLE) write_name
 	cp normez zzzzprueba
 
 $(EXECUTABLE): $(OBJECTS)
