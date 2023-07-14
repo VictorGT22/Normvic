@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/14 01:50:23 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/14 13:30:12 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -695,6 +695,7 @@ int	remove_comment(lst_dir *lst, int lower, int *i, char *op)
 	}
 	//printf("salida: #%s#\n", lst->info[*i]);
 	//printf("salida: #%s#\n", lst->info[*i + 1]);
+	return ();
 }
 
 int	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int lower)
@@ -723,7 +724,8 @@ int	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int lo
 	}
 	else if (!ft_strcmp(var->operators[op], "->") || !ft_strcmp(var->operators[op], "."))
 	{
-		if (!operator_start(lst, i, lower) && lst->info[*i][lower - 1] == ' ' || lst->info[*i][lower - 1] == '\t')
+		if (!operator_start(lst, i, lower) && (lst->info[*i][lower - 1] == ' '
+			|| lst->info[*i][lower - 1] == '\t') && lst->info[*i][lower + 1] != '.')
 		{
 			ft_strpop_pos(lst->info[*i], lower - 1);
 			print_error(lst, ERROR_SPACE_BEFORE_STRUCT_OPERATOR, *i + 1, SOLVABLE);
