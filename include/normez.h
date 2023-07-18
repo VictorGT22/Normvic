@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:43:48 by victgonz          #+#    #+#             */
-/*   Updated: 2023/07/14 13:20:25 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/18 10:50:33 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # include <stdbool.h>
 
 # define PATH_UPDATE "/Normvic/bin/install/update.sh"
-# define PATH_LOGO "bin/media/text/Logo.txt"
+# define PATH_LOGO "/Normvic/bin/media/text/Logo.txt"
 
 //MACROS
 # define TAB_SIZE 4
@@ -164,7 +164,7 @@ void			print_num_errors(s_variables *var, lst_dir *lst);
 void			print_header_program(void);
 void			line_help(char *letter, char *message);
 void			print_help(void);
-void			print_logo(void);
+void			print_logo(s_variables *var);
 
 #endif
 

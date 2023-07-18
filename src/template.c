@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/07/14 13:19:14 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/18 10:50:36 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,18 +302,23 @@ int	main(int argc, char **argv)
 	var = calloc(sizeof(s_variables), 1);
 	var->flags = calloc(sizeof(t_flags), 1);
 
-	save_flags(var, argv);
-	print_logo();
-	print_header_program();
+	save_flags(var, argv);	
 	var->home_path = getenv("HOME");
 	if (var->flags->update)
 		update_normvic(var);
 	else if (var->flags->help)
+	{
+		print_logo(var);
 		print_help();
+	}
 	else if (var->flags->rate)
-			grade_the_app(var);
+	{
+		print_logo(var);
+		grade_the_app(var);
+	}
 	else
 	{
+		print_header_program();
 		var->lst_dir = NULL;
 		var->lst_files = NULL;
 		var->var_type = NULL;
