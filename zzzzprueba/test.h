@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #ifndef TEST_H
-# define PEPE
+# define TEST_H
 
 lst_dir	*new_node(void);
 void	lstadd_back(lst_dir**lst, lst_dir*new);

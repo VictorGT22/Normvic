@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:46:48 by vics              #+#    #+#             */
-/*   Updated: 2023/07/18 12:07:49 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/18 13:41:24 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,13 @@ void	print_logo(s_variables *var)
 {
 	int fd;
 	char *str;
+	char path[256];
 
-	fd = open(PATH_LOGO, O_RDONLY);
+    if (var->home_path != NULL) {
+        strcpy(path, var->home_path);
+        strcat(path, PATH_LOGO);
+	}
+	fd = open(path, O_RDONLY);
 	purple();
 	str = get_next_line(fd);
 	while (str)
@@ -92,6 +97,7 @@ void	print_logo(s_variables *var)
 
 void	print_help(void)
 {
+	
 	purple();
 	printf("╔═════════════════════════════════════════════════╗\n");
 	
