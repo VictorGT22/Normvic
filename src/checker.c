@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/14 13:52:14 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/18 13:20:50 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -336,7 +336,7 @@ int	check_prototipe_func(s_variables *var, lst_dir *lst, int i, bool proto, int 
 	int aligment = get_real_hor_pos(lst->info[i]);
 	if (aligment != prev_aligment && prev_aligment != -1)
 		print_error(lst, ERROR_MISALIGNED_PROTO, i + 1, SOLVABLE);
-	check_operators(var, lst, &i);
+	check_operators(var, lst, &i,  true);
 	return (aligment);
 }
 
@@ -698,7 +698,17 @@ int	remove_comment(lst_dir *lst, int lower, int *i, char *op)
 	return (1);
 }
 
-int	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int lower)
+bool ft_is_simpleop(char *op)
+{
+	char *operators;
+
+	operators = "+-*/&";
+	if (ft_strstr_index(operators, op) != -1)
+		return true;
+	return false;
+}
+
+int	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int lower, bool proto)
 {
 	int x;
 	int space;
@@ -800,30 +810,83 @@ int	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int lo
 			if (lst->info[*i][lower + 1 - space] == '\t')
 				lst->info[*i][lower + 1 - space] = ' ';
 			else
+			{
 				lst->info[*i] = new_old_str(ft_strjoin_accurate(lst->info[*i], " ", lower + 1 - space), lst->info[*i]);
+				space--;
+			}
 			print_error(lst, ERROR_SPACE_AFTER_COMMA, *i + 1, SOLVABLE);
-			space--;
 		}	
 	}
-	else if (ft_strcmp(var->operators[op], "//") != 0 && ft_strcmp(var->operators[op], "/*") != 0)
+	else if (ft_strcmp(var->operators[op], "//") != 0 && ft_strcmp(var->operators[op], "/*") != 0 && !ft_is_simpleop(var->operators[op]))
 	{
 		if (!operator_start(lst, i, lower) && lst->info[*i][lower - 1] != ' ' && lst->info[*i][lower - 2] != '=')
 		{
 			print_error(lst, ERROR_NO_SPACE_BEFORE_OPERATOR, *i + 1, SOLVABLE);
-			space++;
-			lst->info[*i] = new_old_str(ft_strjoin_accurate(lst->info[*i], " ", lower), lst->info[*i]);
+			if ( lst->info[*i][lower - 1] == '\t')
+				 lst->info[*i][lower - 1] = ' ';
+			else
+			{
+				lst->info[*i] = new_old_str(ft_strjoin_accurate(lst->info[*i], " ", lower), lst->info[*i]);
+				space++;
+			}
 		}
 		if (lst->info[*i][lower + len + space] != ' ' && lst->info[*i][lower - 2] != '=')
 		{
 			print_error(lst, ERROR_NO_SPACE_AFTER_OPERATOR, *i + 1, SOLVABLE);
-			lst->info[*i] = new_old_str(ft_strjoin_accurate(lst->info[*i], " ", lower + len + space), lst->info[*i]);
-			space--;
+			if (lst->info[*i][lower + len + space] == '\t')
+				lst->info[*i][lower + len + space] = ' ';
+			else
+			{
+				lst->info[*i] = new_old_str(ft_strjoin_accurate(lst->info[*i], " ", lower + len + space), lst->info[*i]);
+				space--;
+			}
 		}
 	}
+	else if (ft_is_simpleop(var->operators[op]))
+	{
+		int j;
+	
+		j = lower - 1;
+		while (lst->info[*i][j] == ' ' || lst->info[*i][j] == '\t')
+			j--;
+		if (!is_var(lst->info[*i]) && !proto && ft_isalnum(lst->info[*i][j]))
+		{
+			if (lst->info[*i][lower - 1] != ' ')
+			{
+				print_error(lst, ERROR_NO_SPACE_BEFORE_OPERATOR, *i + 1, SOLVABLE);
+				if ( lst->info[*i][lower - 1] == '\t')
+					lst->info[*i][lower - 1] = ' ';
+				else
+				{
+					lst->info[*i] = new_old_str(ft_strjoin_accurate(lst->info[*i], " ", lower), lst->info[*i]);
+					space++;
+				}
+			}
+			if (lst->info[*i][lower + len + space] != ' ')
+			{
+				print_error(lst, ERROR_NO_SPACE_AFTER_OPERATOR, *i + 1, SOLVABLE);
+				if (lst->info[*i][lower + len + space] == '\t')
+					lst->info[*i][lower + len + space] = ' ';
+				else
+				{
+					lst->info[*i] = new_old_str(ft_strjoin_accurate(lst->info[*i], " ", lower + len + space), lst->info[*i]);
+					space--;
+				}
+			}
+		}
+		else
+		{
+			if (lst->info[*i][lower + 1] == ' ')
+			{
+				print_error(lst, ERROR_SPACE_POINTER, *i + 1, SOLVABLE);
+				ft_strpop_pos(lst->info[*i], lower + 1);
+			}
+		}
+	}	
 	return (space);
 }
 
-void	check_operators(s_variables *var, lst_dir *lst, int *i)
+void	check_operators(s_variables *var, lst_dir *lst, int *i, bool proto)
 {
 	int x;
 	int lower;
@@ -861,7 +924,7 @@ void	check_operators(s_variables *var, lst_dir *lst, int *i)
 				&& ft_strcmp(var->operators[op], ";") != 0 && ft_strcmp(var->operators[op], "]") != 0)
 				print_error(lst, ERROR_OPPERATOR_END, *i + 1, SOLVABLE);
 			else //&& (!operator_start(lst, i, lower) || !ft_strcmp(var->operators[op], "//") || !ft_strcmp(var->operators[op], "/*")))
-				lower -= check_spaces_operator(var, lst, i, op, lower);
+				lower -= check_spaces_operator(var, lst, i, op, lower, proto);
 		}
 		if (op != -1)
 			prev_len = ft_strlen(var->operators[op]);
@@ -1288,7 +1351,7 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 			}
 			else
 			{
-				check_operators(var, lst, i);
+				check_operators(var, lst, i, false);
 				//printf("despues del op: #%s#, linea: %d\n", lst->info[*i], *i);
 				if (ft_strcmp(lst->info[*i], "@#~#@\n") != 0)
 					check_keywords(var, lst, i);

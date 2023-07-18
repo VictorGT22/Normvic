@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 13:46:48 by vics              #+#    #+#             */
-/*   Updated: 2023/07/14 00:33:03 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/18 12:07:49 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	line_help(char *letter, char *message)
 	printf("║						  ║\n");
 }
 
-void	print_logo(void)
+void	print_logo(s_variables *var)
 {
 	int fd;
 	char *str;

@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:00:33 by vics              #+#    #+#             */
-/*   Updated: 2023/07/13 15:04:07 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/18 12:48:11 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ void	check_define(s_variables *var, lst_dir *lst, int *i)
 		lst->info[*i] = new_old_str(ft_strjoin_accurate(lst->info[*i], str, j + 1), lst->info[*i]);
 	}
 	check_keywords(var, lst, i);
-	check_operators(var, lst, i);
+	check_operators(var, lst, i, false);
 	if (remove_space_pos(var, lst, *i, j))
 		print_error(lst, ERROR_MULTIPLE_SPACES, *i + 1, SOLVABLE);
 }

@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:43:48 by victgonz          #+#    #+#             */
-/*   Updated: 2023/07/18 10:50:33 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/18 13:19:11 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 # define TYPE_VAR "short,int,long,char,void,unsigned"
 # define KEY_WORDS "return,break,else if,do,else,for,if,switch,while"
 # define KEY_WORDS_INDENT "case,default,do,else,for,if,switch,while"
-# define OPPERATORS_BOTH_SPACE "==,||,++,--,&&,//,/*,*/,+=,*=,-=,%=,/=,!=,->,<=,>=,<,>,=,/,%,.,(,),;,[,]"
+# define OPPERATORS_BOTH_SPACE "==,||,++,--,&&,//,/*,*/,+=,*=,-=,%=,/=,!=,->,<=,>=,<,>,=,/,%,.,(,),;,[,],+,-,/,*"
 # define OPPERATORS_DIVIDE "&&,||,!=,==,<=,>="
 
 //MACROS ERROR COLOR
@@ -74,6 +74,7 @@
 # define ERROR_NO_SPACE_BEFORE_OPERATOR "Need to be a Space before a operator\n"
 # define ERROR_NO_SPACE_AFTER_OPERATOR "Need to be a Space after a operator\n"
 # define ERROR_SPACE_BEFORE_STRUCT_OPERATOR "Space before a struct operator\n"
+# define ERROR_SPACE_POINTER "Must be no space after pointer operator\n"
 # define ERROR_SPACE_AFTER_STRUCT_OPERATOR "Space after a struct operator\n"
 # define ERROR_TO_LONG_LINE "Line to long, more than 80 columns. "
 # define ERROR_VARIBALES_FOLLOWED "Variable declaration must be at the start of the function\n"
@@ -142,7 +143,7 @@ int				get_max(int num_1, int num_2);
 //FUNCIONES UTILES
 int				count_indentations(char *str);
 
-void			check_operators(s_variables *var, lst_dir *lst, int *i);
+void			check_operators(s_variables *var, lst_dir *lst, int *i, bool proto);
 void			check_keywords(s_variables *var, lst_dir *lst, int *i);
 
 int				is_keyword(s_variables *var, lst_dir *lst, int i, char **keywords);
