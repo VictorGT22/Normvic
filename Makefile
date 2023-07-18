@@ -6,7 +6,7 @@
 #    By: vics <vics@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 15:37:53 by victgonz          #+#    #+#              #
-#    Updated: 2023/07/14 13:30:31 by vics             ###   ########.fr        #
+#    Updated: 2023/07/18 17:50:36 by vics             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,7 +76,7 @@ $(EXECUTABLE): $(OBJECTS)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJF)
 	@echo "$(MAGENTA)======>$(GREEN)Compiling: $(YELLOW)$< $(DEF_COLOR)"
-	$(CC) $(CFLAGS) $(INCLUDES) $(INCLUDES_MY_LIB) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INCLUDES) $(INCLUDES_MY_LIB) -c $< -o $@
 
 $(OBJF):
 		@mkdir -p $(OBJ_DIR)
