@@ -1,0 +1,627 @@
+[1;35m╔═════════════════════════════════════════╗
+║		[1;34mNORMVIC  [1;32m(ALFA)[1;35m		  ║
+╚═══════════════╦═════════╦═══════════════╝
+		║  [1;32mVIC's[1;35m  ║
+		╚═════════╝
+USER DATA SAVED
+[1;35mFile:	[1;32m[./src/checker.c:17]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:18]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:19]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:19]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:20]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:20]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:23]:[0m	Wrong Indentation
+
+[1;35mFile:	[1;32m[./src/checker.c:37]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:38]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:38]:[0m	Variable misaligned
+
+[1;35mFile:	[1;31m[./src/checker.c:36]:[0m	Too many lines in a function ([1;32m25 [0m-> [1;31m26[0m)
+
+[1;35mFile:	[1;32m[./src/checker.c:67]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:68]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:69]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:70]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:70]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:81]:[0m	Wrong Indentation
+
+[1;35mFile:	[1;31m[./src/checker.c:66]:[0m	Too many lines in a function ([1;32m25 [0m-> [1;31m27[0m)
+
+[1;35mFile:	[1;32m[./src/checker.c:98]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:99]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:108]:[0m	Needs to be a space after a keyword
+
+[1;35mFile:	[1;32m[./src/checker.c:126]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:127]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:128]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:132]:[0m	Unecesary multiple space elements followed
+
+[1;35mFile:	[1;32m[./src/checker.c:132]:[0m	Needs to be a space after a keyword
+
+[1;35mFile:	[1;32m[./src/checker.c:168]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:170]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:170]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:171]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:181]:[0m	Wrong Indentation
+
+[1;35mFile:	[1;32m[./src/checker.c:191]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:193]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:193]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:194]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:202]:[0m	Wrong Indentation
+
+[1;35mFile:	[1;32m[./src/checker.c:212]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:214]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:214]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:215]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:216]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:225]:[0m	Wrong Indentation
+
+[1;35mFile:	[1;32m[./src/checker.c:238]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:240]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:240]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:241]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:242]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:243]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:262]:[0m	Wrong Indentation
+
+[1;35mFile:	[1;31m[./src/checker.c:237]:[0m	Too many lines in a function ([1;32m25 [0m-> [1;31m33[0m)
+
+[1;35mFile:	[1;32m[./src/checker.c:275]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:276]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:277]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:277]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:278]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:282]:[0m	Unecesary multiple space elements followed
+
+[1;35mFile:	[1;32m[./src/checker.c:304]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:337]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:337]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:337]:[0m	Variable declaration must be at the start of the function
+
+[1;35mFile:	[1;32m[./src/checker.c:340]:[0m	Unecesary multiple space elements followed
+
+[1;35mFile:	[1;31m[./src/checker.c:302]:[0m	Too many lines in a function ([1;32m25 [0m-> [1;31m38[0m)
+
+[1;35mFile:	[1;32m[./src/checker.c:345]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:346]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:347]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:348]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:348]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:370]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:371]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:371]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:383]:[0m	Needs to be a space after a keyword
+
+[1;35mFile:	[1;32m[./src/checker.c:398]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:400]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:400]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:401]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:402]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:403]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:404]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:407]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:407]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:407]:[0m	Variable declaration must be at the start of the function
+
+[1;35mFile:	[1;32m[./src/checker.c:416]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:420]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:439]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:446]:[0m	Comment inside a function
+
+[1;35mFile:	[1;31m[./src/checker.c:398]:[0m	To many variables inside a function
+
+[1;35mFile:	[1;32m[./src/checker.c:405]:[0m	Two o more consecutive new lines
+
+[1;35mFile:	[1;32m[./src/checker.c:407]:[0m	Two o more consecutive new lines
+
+[1;35mFile:	[1;32m[./src/checker.c:415]:[0m	Two o more consecutive new lines
+
+[1;35mFile:	[1;32m[./src/checker.c:419]:[0m	Two o more consecutive new lines
+
+[1;35mFile:	[1;32m[./src/checker.c:422]:[0m	Two o more consecutive new lines
+
+[1;35mFile:	[1;32m[./src/checker.c:429]:[0m	Two o more consecutive new lines
+
+[1;35mFile:	[1;32m[./src/checker.c:435]:[0m	Two o more consecutive new lines
+
+[1;35mFile:	[1;32m[./src/checker.c:438]:[0m	Two o more consecutive new lines
+
+[1;35mFile:	[1;32m[./src/checker.c:444]:[0m	Two o more consecutive new lines
+
+[1;35mFile:	[1;31m[./src/checker.c:396]:[0m	Too many lines in a function ([1;32m25 [0m-> [1;31m49[0m)
+
+[1;35mFile:	[1;32m[./src/checker.c:450]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:452]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:452]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:453]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:454]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:455]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:456]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:459]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:459]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:459]:[0m	Variable declaration must be at the start of the function
+
+[1;35mFile:	[1;32m[./src/checker.c:461]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:473]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:477]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:480]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:499]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;31m[./src/checker.c:450]:[0m	To many variables inside a function
+
+[1;35mFile:	[1;32m[./src/checker.c:459]:[0m	Two o more consecutive new lines
+
+[1;35mFile:	[1;32m[./src/checker.c:460]:[0m	Two o more consecutive new lines
+
+[1;35mFile:	[1;32m[./src/checker.c:472]:[0m	Two o more consecutive new lines
+
+[1;35mFile:	[1;32m[./src/checker.c:476]:[0m	Two o more consecutive new lines
+
+[1;35mFile:	[1;32m[./src/checker.c:479]:[0m	Two o more consecutive new lines
+
+[1;35mFile:	[1;32m[./src/checker.c:486]:[0m	Two o more consecutive new lines
+
+[1;35mFile:	[1;32m[./src/checker.c:495]:[0m	Two o more consecutive new lines
+
+[1;35mFile:	[1;32m[./src/checker.c:498]:[0m	Two o more consecutive new lines
+
+[1;35mFile:	[1;31m[./src/checker.c:448]:[0m	Too many lines in a function ([1;32m25 [0m-> [1;31m58[0m)[1;31m	WTF R U CRAZY?[0m
+
+[1;35mFile:	[1;32m[./src/checker.c:511]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:512]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:514]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:514]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:528]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;31m[./src/checker.c:510]:[0m	Too many lines in a function ([1;32m25 [0m-> [1;31m34[0m)
+
+[1;35mFile:	[1;32m[./src/checker.c:550]:[0m	Wrong Indentation
+
+[1;35mFile:	[1;32m[./src/checker.c:557]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:558]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:559]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:559]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:560]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:560]:[0m	Variable misaligned
+
+[1;35mFile:	[1;31m[./src/checker.c:570]:[0m	Ternarians are forbiden, it sucks but it is what it is
+
+[1;35mFile:	[1;32m[./src/checker.c:579]:[0m	Wrong Indentation
+
+[1;35mFile:	[1;31m[./src/checker.c:556]:[0m	Too many lines in a function ([1;32m25 [0m-> [1;31m29[0m)
+
+[1;35mFile:	[1;32m[./src/checker.c:590]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:600]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:614]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:615]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:632]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:645]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:655]:[0m	Needs to be a space after a keyword
+
+[1;35mFile:	[1;32m[./src/checker.c:664]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:664]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:666]:[0m	Comment inside a function
+
+[1;35mFile:	[1;32m[./src/checker.c:668]:[0m	Unecesary multiple space elements followed
+
+[1;35mFile:	[1;32m[./src/checker.c:699]:[0m	Comment inside a function
+
+[1;35mFile:	[1;32m[./src/checker.c:700]:[0m	Comment inside a function
+
+[1;35mFile:	[1;31m[./src/checker.c:662]:[0m	Too many lines in a function ([1;32m25 [0m-> [1;31m39[0m)
+
+[1;35mFile:	[1;32m[./src/checker.c:704]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:706]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:716]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:717]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:718]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:766]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:766]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:766]:[0m	Variable declaration must be at the start of the function
+
+[1;35mFile:	[1;32m[./src/checker.c:769]:[0m	Need to be a Space before a operator
+
+[1;35mFile:	[1;32m[./src/checker.c:821]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:828]:[0m	Space after parenthesis
+
+[1;35mFile:	[1;32m[./src/checker.c:850]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:850]:[0m	Variable declaration must be at the start of the function
+
+[1;35mFile:	[1;32m[./src/checker.c:851]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:888]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;31m[./src/checker.c:765]:[0m	Ternarians are forbiden, it sucks but it is what it is
+
+[1;35mFile:	[1;32m[./src/checker.c:766]:[0m	Two o more consecutive new lines
+
+[1;35mFile:	[1;31m[./src/checker.c:782]:[0m	Ternarians are forbiden, it sucks but it is what it is
+
+[1;35mFile:	[1;32m[./src/checker.c:849]:[0m	Two o more consecutive new lines
+
+[1;35mFile:	[1;32m[./src/checker.c:753]:[0m	Wrong Indentation
+
+[1;35mFile:	[1;32m[./src/checker.c:764]:[0m	Wrong Indentation
+
+[1;35mFile:	[1;32m[./src/checker.c:827]:[0m	Wrong Indentation
+
+[1;35mFile:	[1;31m[./src/checker.c:713]:[0m	Too many lines in a function ([1;32m25 [0m-> [1;31m174[0m)[1;31m	WTF R U CRAZY?[0m
+
+[1;35mFile:	[1;32m[./src/checker.c:892]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:893]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:894]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:895]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:896]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:897]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:927]:[0m	Comment inside a function
+
+[1;35mFile:	[1;31m[./src/checker.c:892]:[0m	To many variables inside a function
+
+[1;35mFile:	[1;32m[./src/checker.c:933]:[0m	Two o more consecutive new lines
+
+[1;35mFile:	[1;32m[./src/checker.c:913]:[0m	Wrong Indentation
+
+[1;35mFile:	[1;31m[./src/checker.c:891]:[0m	Too many lines in a function ([1;32m25 [0m-> [1;31m43[0m)
+
+[1;35mFile:	[1;32m[./src/checker.c:939]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:940]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:941]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:955]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:956]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:957]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:971]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:972]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:984]:[0m	Unecesary multiple space elements followed
+
+[1;35mFile:	[1;32m[./src/checker.c:994]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:995]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:995]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:996]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:996]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:1009]:[0m	Unecesary multiple space elements followed
+
+[1;35mFile:	[1;32m[./src/checker.c:1015]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1016]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1017]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1017]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:1018]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1019]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1024]:[0m	Comment inside a function
+
+[1;35mFile:	[1;32m[./src/checker.c:1033]:[0m	Unecesary multiple space elements followed
+
+[1;35mFile:	[1;31m[./src/checker.c:1014]:[0m	Too many lines in a function ([1;32m25 [0m-> [1;31m38[0m)
+
+[1;35mFile:	[1;32m[./src/checker.c:1057]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1058]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1058]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:1059]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1059]:[0m	Variable misaligned
+
+[1;35mFile:	[1;31m[./src/checker.c:1062]:[0m	Ternarians are forbiden, it sucks but it is what it is
+
+[1;35mFile:	[1;32m[./src/checker.c:1078]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1098]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1112]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1113]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1114]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1115]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1115]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:1116]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1116]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;31m[./src/checker.c:1111]:[0m	Too many lines in a function ([1;32m25 [0m-> [1;31m35[0m)
+
+[1;35mFile:	[1;32m[./src/checker.c:1154]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;31m[./src/checker.c:1150]:[0m	Too many lines in a function ([1;32m25 [0m-> [1;31m39[0m)
+
+[1;35mFile:	[1;32m[./src/checker.c:1194]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1210]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1211]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1212]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1213]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1214]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1230]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:1235]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:1230]:[0m	Two o more consecutive new lines
+
+[1;35mFile:	[1;31m[./src/checker.c:1209]:[0m	Too many lines in a function ([1;32m25 [0m-> [1;31m26[0m)
+
+[1;35mFile:	[1;32m[./src/checker.c:1240]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1241]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1242]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1242]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:1243]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1249]:[0m	Comment inside a function
+
+[1;35mFile:	[1;32m[./src/checker.c:1250]:[0m	Comment inside a function
+
+[1;35mFile:	[1;32m[./src/checker.c:1251]:[0m	Comment inside a function
+
+[1;35mFile:	[1;32m[./src/checker.c:1252]:[0m	Comment inside a function
+
+[1;35mFile:	[1;32m[./src/checker.c:1261]:[0m	Comment inside a function
+
+[1;35mFile:	[1;32m[./src/checker.c:1270]:[0m	Comment inside a function
+
+[1;35mFile:	[1;32m[./src/checker.c:1271]:[0m	Comment inside a function
+
+[1;35mFile:	[1;32m[./src/checker.c:1274]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:1276]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:1278]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:1280]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:1290]:[0m	Comment inside a function
+
+[1;35mFile:	[1;32m[./src/checker.c:1296]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1297]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1297]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:1298]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:1300]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1301]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1301]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:1302]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1302]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:1303]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1303]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:1304]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1304]:[0m	Variable inicialitzation and asignation in the same line
+
+[1;35mFile:	[1;32m[./src/checker.c:1305]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:1312]:[0m	Comment inside a function
+
+[1;35mFile:	[1;32m[./src/checker.c:1313]:[0m	Comment inside a function
+
+[1;35mFile:	[1;32m[./src/checker.c:1314]:[0m	Comment inside a function
+
+[1;35mFile:	[1;32m[./src/checker.c:1345]:[0m	Comment inside a function
+
+[1;35mFile:	[1;32m[./src/checker.c:1355]:[0m	Comment inside a function
+
+[1;35mFile:	[1;32m[./src/checker.c:1367]:[0m	Comment inside a function
+
+[1;35mFile:	[1;32m[./src/checker.c:1381]:[0m	Unecesary multiple space elements followed
+
+[1;35mFile:	[1;32m[./src/checker.c:1396]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:1400]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:1401]:[0m	Comment inside a function
+
+[1;35mFile:	[1;32m[./src/checker.c:1404]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;31m[./src/checker.c:1295]:[0m	To many variables inside a function
+
+[1;35mFile:	[1;32m[./src/checker.c:1301]:[0m	Error no empty line between Variables and your code
+
+[1;35mFile:	[1;32m[./src/checker.c:1395]:[0m	Two o more consecutive new lines
+
+[1;35mFile:	[1;32m[./src/checker.c:1407]:[0m	Two o more consecutive new lines
+
+[1;35mFile:	[1;31m[./src/checker.c:1293]:[0m	Too many lines in a function ([1;32m25 [0m-> [1;31m123[0m)[1;31m	WTF R U CRAZY?[0m
+
+[1;35mFile:	[1;32m[./src/checker.c:1424]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:1426]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:1428]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:1430]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:1440]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:1440]:[0m	Two o more consecutive new lines
+
+[1;35mFile:	[1;32m[./src/checker.c:1446]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1448]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1448]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:1449]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1450]:[0m	There is a Space, where needs to be a Tab
+
+[1;35mFile:	[1;32m[./src/checker.c:1450]:[0m	Variable misaligned
+
+[1;35mFile:	[1;32m[./src/checker.c:1462]:[0m	Must be no space before a comma
+
+[1;35mFile:	[1;32m[./src/checker.c:1480]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:1489]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:1491]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:1493]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:1495]:[0m	Traling spaces at the end of the line
+
+[1;35mFile:	[1;32m[./src/checker.c:1500]:[0m	Need to be a empty line at the end of the file
+
+[1;35mFile:	[1;31m[./src/checker.c:1446]:[0m	To many variables inside a function
+
+[1;35mFile:	[1;31m[./src/checker.c:1462]:[0m	Ternarians are forbiden, it sucks but it is what it is
+
+[1;35mFile:	[1;32m[./src/checker.c:1499]:[0m	Two o more consecutive new lines
+
+[1;35mFile:	[1;31m[./src/checker.c:1445]:[0m	Too many lines in a function ([1;32m25 [0m-> [1;31m54[0m)[1;31m	WTF R U CRAZY?[0m
+
+[1;35mFile:	[1;31m[./src/checker.c:1501]:[0m	Too many functions inside a file ([1;32m5 [0m-> [1;31m45[0m)
+
+[1;35mNUM ERRORS:	[1;32m[308]
+[1;35mSOLVED:		[1;32m[280]
+[1;35mNO SOLVED:	[1;32m[28]
+
+

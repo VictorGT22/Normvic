@@ -94,13 +94,13 @@ DEPS = $(SRCS:.c=.d)
 DEPS_BONUS = $(SRCSBONUS:.c=.d)
 
 %.o: %.c
-	${CC} ${CFLAGS} -MMD $(INCLUDE) -c $< -o $@
+	@${CC} ${CFLAGS} -MMD $(INCLUDE) -c $< -o $@
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
 
-	ar -rcs $(NAME) $(OBJS)
+	@ar -rcs $(NAME) $(OBJS)
 
 -include $(DEPS)
 
@@ -108,15 +108,15 @@ bonus: $(BONUS)
 
 $(BONUS) : $(OBJS) $(OBJSBONUS)
 
-	ar -rcs $(NAME) $(OBJS) $(OBJSBONUS)
+	@ar -rcs $(NAME) $(OBJS) $(OBJSBONUS)
 
 -include $(DEPS_BONUS)
 
 clean:
-	$(RM) $(OBJS) $(OBJSBONUS) $(DEPS) $(DEPS_BONUS)
+	@$(RM) $(OBJS) $(OBJSBONUS) $(DEPS) $(DEPS_BONUS)
 
 fclean: clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 re: fclean all
 

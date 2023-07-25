@@ -6,7 +6,7 @@
 #    By: vics <vics@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 15:37:53 by victgonz          #+#    #+#              #
-#    Updated: 2023/07/18 17:50:36 by vics             ###   ########.fr        #
+#    Updated: 2023/07/25 20:35:57 by vics             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,19 +89,19 @@ write_name:
 		@echo "$(MAGENTA)                ╚═════════╝     $(DEF_COLOR)"
 
 clean:
-	rm -f $(OBJECTS)
-	make -C $(LIB_DIR) clean
+	@rm -f $(OBJECTS)
+	@make -C $(LIB_DIR) clean
 	@echo "$(MAGENTA)======>$(BLUE)$(EXECUTABLE) object files cleaned!$(DEF_COLOR)"
 
 fclean: clean
-	rm -f $(EXECUTABLE)
+	@rm -f $(EXECUTABLE)
 	@echo "$(MAGENTA)======>$(CYAN)$(EXECUTABLE)executable files cleaned!$(DEF_COLOR)"
-	make -C $(LIB_DIR) fclean
+	@make -C $(LIB_DIR) fclean
 
 re: fclean all
 
 libft:
-	make -C $(LIB_DIR)
+	@make -C $(LIB_DIR)
 
 save_previous:
 	rm -rf /home/vics/Documents/Copia_Seguridad
