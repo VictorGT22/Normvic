@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:38:43 by victgonz          #+#    #+#             */
-/*   Updated: 2023/07/11 21:46:59 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/26 12:11:13 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 char	*get_next_line(int fd);
 char	*ft_read_to_left_str(int fd, char *left_str);
 char	*get_strchr(char *s, int c);
-char	*ft_strjoin(char *left_str, char *buff);
+char	*ft_strjoin_getline(char *left_str, char *buff);
 char	*ft_get_line(char *left_str);
 char	*ft_new_left_str(char *left_str);
 int		ft_chr_index(char *str, char c);
