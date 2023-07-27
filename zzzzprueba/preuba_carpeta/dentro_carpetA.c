@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/07/27 12:25:52 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/27 13:04:48 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,13 @@ int main (int argc, char **argv)
 	printf("vel: %d\n", global_var->bauds_pause);
 	signal(SIGUSR1, &signalHandler);
 	signal(SIGUSR2, &signalHandler_2);
-	eticion = 1;
+	peticion = 1;
 	texto = argv[2];
 	if (peticion)
 	{
-		= 0;
 		while (texto[i])
 		{
+			i = 0;
 			stringToBits(texto[i]);
 			i++;
 		}
