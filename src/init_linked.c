@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:28:24 by vics              #+#    #+#             */
-/*   Updated: 2023/07/13 14:06:25 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/26 13:04:21 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ lst_dir	*new_node(char *filepath)
 	node = calloc(sizeof(lst_dir), 1);
 	if (!node)
 		return (NULL);
-	node->path = filepath;
+	node->path = ft_strdup(filepath);
 	node->next = NULL;
 	return (node);
 }

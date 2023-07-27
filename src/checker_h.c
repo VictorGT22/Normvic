@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:00:33 by vics              #+#    #+#             */
-/*   Updated: 2023/07/18 12:48:11 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/27 10:17:55 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,8 @@ void	check_include(s_variables *var, lst_dir *lst, int *i)
 		free(lst->info[*i]);
 		lst->info[*i] = ft_strdup(str);
 		print_error(lst, ERROR_SPACE_HASH, *i + 1, SOLVABLE);
-		free(str);
 	}
+	free(str);
 }
 
 int check_name(lst_dir *lst, int i, int j, char *type)
@@ -120,15 +120,20 @@ int check_name(lst_dir *lst, int i, int j, char *type)
 	spaces = malloc(sizeof(char) * lst->header_level + 1);
 	ft_bzero(spaces, lst->header_level + 1);
 	ft_memset(spaces, ' ', lst->header_level);
-	str = ft_strjoin_accurate(str, spaces, 1);
+	str = new_old_str(ft_strjoin_accurate(str, spaces, 1), str);
 	name = ft_substr(lst->info[i], 0, j);
 	if (ft_strcmp(str, name) != 0)
 	{
-		printf("&%s&, &%s&\n", str, name);
 		ft_strpop_interval(lst->info[i], 0, j - 1);
 		lst->info[i] = new_old_str(ft_strjoin_accurate(lst->info[i], str, 0), lst->info[i]);
+		free(name);
+		free(spaces);
+		free(str);
 		return (1);
 	}
+	free(name);
+	free(spaces);
+	free(str);
 	return (0);
 }
 
@@ -155,6 +160,7 @@ void	check_define(s_variables *var, lst_dir *lst, int *i)
 		ft_strpop_interval(lst->info[*i], j + 1, x - 1);
 		lst->info[*i] = new_old_str(ft_strjoin_accurate(lst->info[*i], str, j + 1), lst->info[*i]);
 	}
+	free(str);
 	check_keywords(var, lst, i);
 	check_operators(var, lst, i, false);
 	if (remove_space_pos(var, lst, *i, j))
@@ -241,6 +247,8 @@ void	check_indef(s_variables *var, lst_dir *lst, int *i)
 			lst->info[*i] = new_old_str(str, lst->info[*i]);
 			print_error(lst, ERROR_HEADER_FILE, *i + 1, SOLVABLE);
 		}
+		else
+			free(str);
 		*i += 1;
 		if (ft_replace_chrchr(lst->info[*i], '\t', ' '))
 			print_error(lst, ERROR_WRONG_TAB, *i + 1, SOLVABLE);
@@ -250,6 +258,8 @@ void	check_indef(s_variables *var, lst_dir *lst, int *i)
 			lst->info[*i] = new_old_str(str, lst->info[*i]);
 			print_error(lst, ERROR_HEADER_FILE, *i + 1, SOLVABLE);
 		}
+		else
+			free(str);
 	}
 	else
 	{
@@ -267,6 +277,8 @@ void	check_indef(s_variables *var, lst_dir *lst, int *i)
 			ft_strpop_interval(lst->info[*i], j + 1, x - 1);
 			lst->info[*i] = new_old_str(ft_strjoin_accurate(lst->info[*i], str, j + 1), lst->info[*i]);
 		}
+		else
+			free(str);
 	}
 		
 	lst->header_level++;
@@ -310,7 +322,6 @@ int	get_max(int num_1, int num_2)
 
 void	correct_misaligned(lst_dir *lst, int i, int max, int num_tabs)
 {
-	char *result;
 	char *str;
 
 	num_tabs = (max - num_tabs) / 4;
@@ -319,6 +330,7 @@ void	correct_misaligned(lst_dir *lst, int i, int max, int num_tabs)
 	ft_memset(str, '\t', num_tabs);
 	lst->info[i] = new_old_str(ft_strjoin_accurate(lst->info[i], str,
 	ft_last_chr_index(lst->info[i], '\t')), lst->info[i]);
+	free(str);
 }
 
 void	check_misaligned_prototipes(lst_dir *lst, int max_indent, int start)
@@ -425,8 +437,8 @@ void	check_strcture(s_variables *var, lst_dir *lst, int *i)
 	remove_extra_spaces(var, lst, *i - 1);
 	if (ft_replace_chrchr(lst->info[*i - 1], '\t', ' ')) // cabecera struct
 		print_error(lst, ERROR_WRONG_SPACE, *i, 1);
-	node2 = new_node_arr(ft_strtrim(lst->info[*i - 1], "\n; {"));
-	lstadd_back_arr(&var->var_type, node2);
+	//node2 = new_node_arr(ft_strtrim(lst->info[*i - 1], "\n; {"));
+	//lstadd_back_arr(&var->var_type, node2);
 	if (!ft_empty_line(lst->info[*i - 2]))
 	{
 		remove_last_spaces(var, lst, *i);
@@ -467,8 +479,8 @@ void	check_strcture(s_variables *var, lst_dir *lst, int *i)
 		j = ft_strlen(lst->info[*i]) - 2;
 		while (j >= 0 && lst->info[*i][j] != ' ' && lst->info[*i][j] != '\t')
 			j--;
-		node2 = new_node_arr(ft_strtrim(&lst->info[*i][j + 1], "\n;"));
-		lstadd_back_arr(&var->var_type, node2);
+		//node2 = new_node_arr(ft_strtrim(&lst->info[*i][j + 1], "\n;"));
+		//lstadd_back_arr(&var->var_type, node2);
 	}
 	j = ft_strchr_nocomented(lst->info[*i], '}');
 	if (lst->info[*i][j + 1] != '\t')

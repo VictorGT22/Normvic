@@ -6,14 +6,14 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 23:43:48 by victgonz          #+#    #+#             */
-/*   Updated: 2023/07/18 13:39:57 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/26 13:11:20 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef NORMEZ_H
 # define NORMEZ_H
 
-# include  "libft.h"
+# include "libft.h"
 # include "normez_struct.h"
 # include <stdio.h>
 # include <unistd.h>
@@ -39,7 +39,7 @@
 # define TYPE_VAR "short,int,long,char,void,unsigned"
 # define KEY_WORDS "return,break,else if,do,else,for,if,switch,while"
 # define KEY_WORDS_INDENT "case,default,do,else,for,if,switch,while"
-# define OPPERATORS_BOTH_SPACE "==,||,++,--,&&,//,/*,*/,+=,*=,-=,%=,/=,!=,->,<=,>=,<,>,=,/,%,.,(,),;,[,],+,-,/,*"
+# define OPPERATORS_BOTH_SPACE "== || ++ -- && // /* */ += *= -= %= /= != -> <= >= < > = / % . ( ) ; [ ] + - / * ,"
 # define OPPERATORS_DIVIDE "&&,||,!=,==,<=,>="
 
 //MACROS ERROR COLOR

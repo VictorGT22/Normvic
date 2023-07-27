@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/18 16:23:12 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/26 15:10:53 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -332,6 +332,7 @@ int	check_prototipe_func(s_variables *var, lst_dir *lst, int i, bool proto, int 
 		ft_strpop_interval(lst->info[i], j + 1, x - 1);
 		new_old_str(ft_strjoin_accurate(lst->info[i], str, j + 1), lst->info[i]);
 	}
+	free(str);
 	lst->info[i] = add_void(var, lst, i, empty, proto);
 	int aligment = get_real_hor_pos(lst->info[i]);
 	if (aligment != prev_aligment && prev_aligment != -1)
@@ -851,14 +852,14 @@ int	check_spaces_operator(s_variables *var, lst_dir *lst, int *i, int op, int lo
 		int j;
 	
 		j = lower - 1;
-		while (lst->info[*i][j] == ' ' || lst->info[*i][j] == '\t')
+		while (j >= 0 && lst->info[*i][j] == ' ' || lst->info[*i][j] == '\t')
 			j--;
-		if (!is_var(var, lst, *i, var->keywords) && !proto && (ft_isalnum(lst->info[*i][j]) || lst->info[*i][j] == ')'))
+		if (!is_var(var, lst, *i, var->keywords) && !proto && j >= 0 && (ft_isalnum(lst->info[*i][j]) || lst->info[*i][j] == ')'))
 		{
-			if (lst->info[*i][lower - 1] != ' ')
+			if (j >= 0 && lst->info[*i][lower - 1] != ' ')
 			{
 				print_error(lst, ERROR_NO_SPACE_BEFORE_OPERATOR, *i + 1, SOLVABLE);
-				if ( lst->info[*i][lower - 1] == '\t')
+				if (lst->info[*i][lower - 1] == '\t')
 					lst->info[*i][lower - 1] = ' ';
 				else
 				{
@@ -1063,7 +1064,6 @@ void	save_var_bad_line(s_variables *var, lst_dir *lst, int *i)
 
 	index = ft_strchr_nocomented(lst->info[*i], '=');
 	c = index != -1 ? ' ' : '\n';
-	printf("str: %s\n", ft_substr(lst->info[*i], 0, ft_strchr_nocomented(lst->info[*i], c)));
 	node = new_node_arr(ft_substr(lst->info[*i], 0, ft_strchr_nocomented(lst->info[*i], c)));
 	if (index != -1)
 		node->str = new_old_str(ft_strjoin_accurate(node->str, ";\n", ft_strlen(node->str)), node->str);
@@ -1203,6 +1203,7 @@ void	free_linked_arr(t_lst_arr **lst)
 		{
 			temp = *lst;
 			(*lst) = (*lst)->next;
+			free(temp->str);
 			free(temp);
 		}
 	}

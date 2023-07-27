@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/07/18 13:39:38 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/26 14:49:33 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,13 @@ int	check_repo(s_variables *var)
 		ft_str_toupper(str);
 		if (dirp->d_name[0] != '.' && dirp->d_name[1] != '.' && !ft_strcmp(str, "MAKEFILE"))
 		{
+			free(str);
 			closedir(dp);
 			return (1);
 		}
+		free(str);
 	}
+	free(str);
 	closedir(dp);
 	return (0);
 }
@@ -94,6 +97,13 @@ int	get_directories(s_variables *var, char *filepath)
 		else if (dirp->d_name[0] != '.' && dirp->d_name[1] != '.'
 		&& (get_postfix(dirp->d_name, ".c") || get_postfix(dirp->d_name, ".h") || !ft_strcmp(str2, "MAKEFILE")))
 			lstadd_back(&var->lst_files, node);
+		else
+		{
+			free(node->path);
+			free(node);
+		}
+		free(str);
+		free(str2);
 	}
 	closedir(dp);
 	return (0);
@@ -205,12 +215,12 @@ void save_flags(s_variables *var, char **argv)
 				arr = ft_add_chr_arr(arr, str[j], 0);
 				j++;
 			}
-			//free(str);
+			free(str);
 		}
 		i++;
 	}
 	check_flags(var, arr);
-	
+	free_arr(arr);
 }
 
 void	check_path(lst_dir *lst)
@@ -261,6 +271,38 @@ void	save_header(s_variables *var)
 	var->header[11] = NULL;
 }
 
+void	free_directories(lst_dir *lst, bool file)
+{
+	lst_dir *current;
+	lst_dir *next;
+
+	current = lst;
+	while (current)
+	{
+		next = current->next;
+		if (file)
+			free_arr(current->info);
+		free(current->path);
+		free(current);
+		current = next;
+	}
+}
+
+void	free_all(s_variables *var)
+{
+	free(var->header);
+	free_arr(var->keywords);
+	free_arr(var->keywords_indent);
+	free_arr(var->operators);
+	free_arr(var->op_divide);
+	free_directories(var->lst_dir, false);
+	free_directories(var->lst_files, true);
+	free(var->flags);
+	free(var->user);
+	free(var->user_email);
+	free(var);
+}
+
 void	save_user_data(s_variables *var)
 {
 	int fd;
@@ -276,13 +318,17 @@ void	save_user_data(s_variables *var)
 	fd = open(path, O_RDONLY);
 	if (fd != -1)
 	{
+		str = get_next_line(fd);
+		free(str);
 		printf("USER DATA SAVED\n");
 		str = get_next_line(fd);
+		free(var->user);
 		start = ft_strchr_nocomented(str, ':');
 		var->user = ft_substr(str, start, ft_strlen(str) - start);
 		var->user = new_old_str(ft_strtrim(var->user, " \t\n:"), var->user);
 		free(str);
 		str = get_next_line(fd);
+		free(var->user_email);
 		start = ft_strchr_nocomented(str, ':');
 		var->user_email = ft_substr(str, start, ft_strlen(str) - start);
 		var->user_email = new_old_str(ft_strtrim(var->user_email, " \t\n:"), var->user_email);
@@ -324,12 +370,11 @@ int	main(int argc, char **argv)
 		var->var_type = NULL;
 		var->var_bad_decl = NULL;
 		var->var_bad_line = NULL;
-		var->user = "username";
-		var->user_email = "username@email.42";
+		var->user = ft_strdup("username");
+		var->user_email = ft_strdup("username@email.42");
 		var->keywords = ft_split(KEY_WORDS, ',');
 		var->keywords_indent = ft_split(KEY_WORDS_INDENT, ',');
 		var->operators = ft_split(OPPERATORS_BOTH_SPACE, ',');
-		var->operators = ft_add_chr_arr(var->operators, ',', 0);
 		var->op_divide = ft_split(OPPERATORS_DIVIDE, ',');
 
 		if (check_repo(var))
@@ -339,9 +384,13 @@ int	main(int argc, char **argv)
 				return (-1);
 			lstadd_back(&var->lst_dir, node);
 			tmp = var->lst_dir;
+			char *str;
+
 			while (tmp)
 			{
-				get_directories(var, ft_strjoin(tmp->path, "/"));
+				str = ft_strjoin(tmp->path, "/");
+				get_directories(var, str);
+				free(str);
 				tmp = tmp->next;
 			}
 			
@@ -400,11 +449,14 @@ int	main(int argc, char **argv)
 					}
 					close(fd);
 				}
+				free(str);
+				free(str2);
 				tmp = tmp->next;
 			}
-		}
-		else
-			print_error_nopath(ERROR_REPO, NOSOLVABLE);
-	}	
+		 }
+		// else
+			// print_error_nopath(ERROR_REPO, NOSOLVABLE);
+	}
+	free_all(var);
 	return (0);
 }
