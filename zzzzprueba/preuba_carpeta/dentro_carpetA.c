@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/07/27 12:13:43 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/27 12:25:52 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,6 @@ int main (int argc, char **argv)
 	signal(SIGUSR1, &signalHandler);
 	signal(SIGUSR2, &signalHandler_2);
 	eticion = 1;
-	printf("Peticion conexion: %d\n", peticion);
-	printf("\nENVIANDO TEXTO\n");
 	texto = argv[2];
 	if (peticion)
 	{
