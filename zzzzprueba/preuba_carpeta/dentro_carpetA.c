@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/07/27 13:04:48 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/27 13:19:38 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@
 
 t_variables *global_var = NULL;
 
-void 	signalHandler(int signal)
+void 	signalhandler(int signal)
 {
 	global_var->error_reciving = 1;
 }
 
-void 	signalHandler_2(int signal)
+void 	signalhandler_2(int signal)
 {
 	global_var->error_reciving = 0;
 }
@@ -43,7 +43,7 @@ int	send_bit(char str, int i)
 	return (-1);
 }
 
-void	stringToBits(char c)
+void	stringtobits(char c)
 {
 	int	bit;
 
@@ -59,11 +59,11 @@ void	stringToBits(char c)
 	}
 }
 
-int main (int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	int				i;
-	unsigned int	*texto;
-	int				peticion;
+	int			i;
+	const char	*texto;
+	int			peticion;
 
 	global_var = malloc(sizeof(t_variables));
 	global_var->bauds_pause = 5000;
@@ -76,12 +76,14 @@ int main (int argc, char **argv)
 	signal(SIGUSR1, &signalHandler);
 	signal(SIGUSR2, &signalHandler_2);
 	peticion = 1;
+	printf("Peticion conexion: %d\n", peticion);
+	printf("\nENVIANDO TEXTO\n");
 	texto = argv[2];
 	if (peticion)
 	{
+		i = 0;
 		while (texto[i])
 		{
-			i = 0;
 			stringToBits(texto[i]);
 			i++;
 		}
