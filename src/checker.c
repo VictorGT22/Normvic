@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 11:16:44 by vics              #+#    #+#             */
-/*   Updated: 2023/07/26 15:10:53 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/27 11:19:31 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1314,7 +1314,8 @@ void	inside_function(s_variables *var, lst_dir *lst, int *i)
 	lst->inside_comment = 0;
 	start = *i + 1 + check_brackets(var, lst, *i);
 	followed_var = is_var(var, lst, start, var->keywords);
-	check_prototipe_func(var, lst, *i - 1, false, -1); // revisar esto
+	//if (!is_var(var, lst, start, var->keywords));
+	//	check_prototipe_func(var, lst, *i - 1, false, -1); // revisar esto
 	//if (remove_mid_spaces(var, lst, *i - 1))
 	//	print_error(lst, ERROR_MULTIPLE_SPACES, *i + 1, SOLVABLE);
 	*i = start;
@@ -1476,7 +1477,7 @@ void	check_errors(s_variables *var, lst_dir *lst)
 			while (lst->info[i] && ft_strstr_index_nocommented(lst->info[i], "*/", 0) == -1)
 				i++;
 		}
-		if (ft_strstr_index_nocommented(lst->info[i], ";", 0) != -1)
+		if (ft_strstr_index_nocommented(lst->info[i], ";", 0) != -1 && !is_var(var, lst, i, var->keywords))
 			check_prototipe_func(var, lst, i, true, -1);
 		if (ft_strnstr(lst->info[i], "{", len))
 		{
