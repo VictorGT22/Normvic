@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/07/27 13:19:38 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/27 14:59:03 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	main(int argc, char **argv)
 		i = 0;
 		while (texto[i])
 		{
-			stringToBits(texto[i]);
+			stringtobits(texto[i]);
 			i++;
 		}
 	}
