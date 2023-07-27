@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 18:14:22 by vics              #+#    #+#             */
-/*   Updated: 2023/07/27 11:20:20 by vics             ###   ########.fr       */
+/*   Updated: 2023/07/27 12:13:43 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void 	signalHandler_2(int signal)
 
 int	send_bit(char str, int i)
 {
-	if (str & (1 << i))
+	if (str & (1 < < i))
 	{
 		kill(global_var->pid, SIGUSR1);
 		return (1);
@@ -50,7 +50,7 @@ void	stringToBits(char c)
 	bit = 0;
 	while (bit < 8)
 	{
-		if ((c & (0x01 << bit)))
+		if ((c & (0x01 < < bit)))
 			kill(global_var->pid, SIGUSR1);
 		else
 			kill(global_var->pid, SIGUSR2);
@@ -59,36 +59,33 @@ void	stringToBits(char c)
 	}
 }
 
-int main (int argc, char **argv) 
+int main (int argc, char **argv)
 {
+	int				i;
+	unsigned int	*texto;
+	int				peticion;
+
 	global_var = malloc(sizeof(t_variables));
 	global_var->bauds_pause = 5000;
 	global_var->personal_pid = getpid();
 	global_var->pid = ft_atoi(argv[1]);
 	global_var->error_reciving = false;
-
 	printf("PID CLIENTE: %d\n", global_var->personal_pid);
 	printf("PID SERVER: %d\n", global_var->pid);
-
 	printf("vel: %d\n", global_var->bauds_pause);
 	signal(SIGUSR1, &signalHandler);
 	signal(SIGUSR2, &signalHandler_2);
-/**/
-	// printf("INCICIO TRANSMISION\n");
-	// global_var->error_reciving = true;
-	int peticion = 1;//kill(global_var->pid, SIGUSR1);
+	eticion = 1;
 	printf("Peticion conexion: %d\n", peticion);
-	// usleep(global_var->bauds_pause);
 	printf("\nENVIANDO TEXTO\n");
-	const char	*texto = argv[2];
+	texto = argv[2];
 	if (peticion)
 	{
-		int i = 0;
+		= 0;
 		while (texto[i])
 		{
 			stringToBits(texto[i]);
 			i++;
 		}
-		//stringToBits("\0");
 	}
 }
